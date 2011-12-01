@@ -10,11 +10,13 @@
 
 @implementation ViewController
 
+@synthesize toolbar = _toolbar;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        NSLog(@"initwithnibnameornil");
+        NSLog(@"init");
     }
     return self;
 }
@@ -29,9 +31,52 @@
 
 - (void)loadView
 {
-    [super loadView];
     NSLog(@"loadview");
-    [self.view setBackgroundColor:[UIColor redColor]];
+    [super loadView];
+    float width = 0;
+    float height = 0;
+    switch ([[UIDevice currentDevice] orientation]) {
+        case UIDeviceOrientationPortrait:
+        case UIDeviceOrientationPortraitUpsideDown:
+            width = [UIScreen mainScreen].bounds.size.width;
+            height = [UIScreen mainScreen].bounds.size.height;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+        case UIDeviceOrientationLandscapeRight:
+            width = [UIScreen mainScreen].bounds.size.height;
+            height = [UIScreen mainScreen].bounds.size.width;
+            break;
+            
+        default:
+            width = [UIScreen mainScreen].bounds.size.width;
+            height = [UIScreen mainScreen].bounds.size.height;
+            break;
+    }
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+    
+    UIBarButtonItem *settingsBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-settings.png"] 
+                                                                   style:UIBarButtonItemStyleBordered 
+                                                                  target:self 
+                                                                  action:@selector(didTouchSettings)];
+    UIBarButtonItem *editBtn =[[UIBarButtonItem alloc] 
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemEdit 
+                               target:self 
+                               action:@selector(didTouchEdit)];
+    UIBarButtonItem *addBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-add.png"] 
+                                                              style:UIBarButtonItemStyleBordered 
+                                                             target:self 
+                                                             action:@selector(addCourseModal)];
+    UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    _toolbar = [[UIToolbar alloc] init];
+    [_toolbar setBarStyle:UIBarStyleBlack];
+    [_toolbar sizeToFit];
+    [_toolbar setItems:[NSArray arrayWithObjects:settingsBtn, nil]];
+    
+    [view addSubview:_toolbar];
+    [self setView:view];
+    [_toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [view release];
 }
 
 - (void)viewDidLoad
@@ -71,9 +116,9 @@
 {
     // Return YES for supported orientations
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown && interfaceOrientation != UIInterfaceOrientationLandscapeLeft && interfaceOrientation != UIInterfaceOrientationLandscapeRight);
     } else {
-        return YES;
+        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown && interfaceOrientation != UIInterfaceOrientationPortrait);
     }
 }
 

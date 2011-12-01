@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SettingsTableViewController.h
 //  LCV
 //
 //  Created by David Alkire on 12/1/11.
@@ -8,11 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-{
-    UIToolbar *toolbar;
-}
-
-@property (nonatomic, retain) UIToolbar *toolbar;
+@interface SettingsTableViewController : UITableViewController
 
 @end

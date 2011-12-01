@@ -14,6 +14,9 @@
 		897B5CF81487D10F003EE329 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 897B5CF71487D10F003EE329 /* main.m */; };
 		897B5CFC1487D10F003EE329 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 897B5CFB1487D10F003EE329 /* AppDelegate.m */; };
 		897B5CFF1487D10F003EE329 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897B5CFE1487D10F003EE329 /* ViewController.m */; };
+		89C310821487FA9B00DFAADC /* icon-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C310811487FA9B00DFAADC /* icon-settings.png */; };
+		89C3108D14880D4D00DFAADC /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */; };
+		89C3108F1488154800DFAADC /* icon-home.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C3108E1488154800DFAADC /* icon-home.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,10 @@
 		897B5CFB1487D10F003EE329 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		897B5CFD1487D10F003EE329 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		897B5CFE1487D10F003EE329 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		89C310811487FA9B00DFAADC /* icon-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-settings.png"; sourceTree = "<group>"; };
+		89C3108B14880D4D00DFAADC /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		89C3108E1488154800DFAADC /* icon-home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-home.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +86,10 @@
 				897B5CFB1487D10F003EE329 /* AppDelegate.m */,
 				897B5CFD1487D10F003EE329 /* ViewController.h */,
 				897B5CFE1487D10F003EE329 /* ViewController.m */,
+				89C3108B14880D4D00DFAADC /* SettingsTableViewController.h */,
+				89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */,
+				89C3108E1488154800DFAADC /* icon-home.png */,
+				89C310811487FA9B00DFAADC /* icon-settings.png */,
 				897B5CF21487D10F003EE329 /* Supporting Files */,
 			);
 			path = LCV;
@@ -147,6 +158,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				897B5CF61487D10F003EE329 /* InfoPlist.strings in Resources */,
+				89C310821487FA9B00DFAADC /* icon-settings.png in Resources */,
+				89C3108F1488154800DFAADC /* icon-home.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +173,7 @@
 				897B5CF81487D10F003EE329 /* main.m in Sources */,
 				897B5CFC1487D10F003EE329 /* AppDelegate.m in Sources */,
 				897B5CFF1487D10F003EE329 /* ViewController.m in Sources */,
+				89C3108D14880D4D00DFAADC /* SettingsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,7 +210,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -214,7 +228,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -228,6 +242,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LCV/LCV-Prefix.pch";
 				INFOPLIST_FILE = "LCV/LCV-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -239,6 +254,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LCV/LCV-Prefix.pch";
 				INFOPLIST_FILE = "LCV/LCV-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
