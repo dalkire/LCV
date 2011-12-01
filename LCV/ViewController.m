@@ -3,7 +3,7 @@
 //  LCV
 //
 //  Created by David Alkire on 12/1/11.
-//  Copyright (c) 2011 Harvard Medical School. All rights reserved.
+//  Copyright (c) 2011 PixelSift Studios. All rights reserved.
 //
 
 #import "ViewController.h"
