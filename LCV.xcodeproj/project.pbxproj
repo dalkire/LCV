@@ -17,6 +17,16 @@
 		89C310821487FA9B00DFAADC /* icon-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C310811487FA9B00DFAADC /* icon-settings.png */; };
 		89C3108D14880D4D00DFAADC /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */; };
 		89C3108F1488154800DFAADC /* icon-home.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C3108E1488154800DFAADC /* icon-home.png */; };
+		89C310A1148822A900DFAADC /* BoardImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C31091148822A800DFAADC /* BoardImageView.m */; };
+		89C310A2148822A900DFAADC /* BoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C31093148822A800DFAADC /* BoardView.m */; };
+		89C310A3148822A900DFAADC /* BoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C31095148822A800DFAADC /* BoardViewController.m */; };
+		89C310A4148822A900DFAADC /* CurrentGamesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C31097148822A800DFAADC /* CurrentGamesViewController.m */; };
+		89C310A5148822A900DFAADC /* Move.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C3109A148822A900DFAADC /* Move.m */; };
+		89C310A6148822A900DFAADC /* MoveListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C3109C148822A900DFAADC /* MoveListView.m */; };
+		89C310A7148822A900DFAADC /* PieceImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C3109E148822A900DFAADC /* PieceImageView.m */; };
+		89C310A8148822A900DFAADC /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C310A0148822A900DFAADC /* StreamController.m */; };
+		89C310AA1488237100DFAADC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C310A91488237100DFAADC /* AudioToolbox.framework */; };
+		89C310AC148824B900DFAADC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C310AB148824B900DFAADC /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +46,25 @@
 		89C3108B14880D4D00DFAADC /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		89C3108E1488154800DFAADC /* icon-home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-home.png"; sourceTree = "<group>"; };
+		89C31090148822A800DFAADC /* BoardImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardImageView.h; sourceTree = "<group>"; };
+		89C31091148822A800DFAADC /* BoardImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardImageView.m; sourceTree = "<group>"; };
+		89C31092148822A800DFAADC /* BoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardView.h; sourceTree = "<group>"; };
+		89C31093148822A800DFAADC /* BoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardView.m; sourceTree = "<group>"; };
+		89C31094148822A800DFAADC /* BoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardViewController.h; sourceTree = "<group>"; };
+		89C31095148822A800DFAADC /* BoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardViewController.m; sourceTree = "<group>"; };
+		89C31096148822A800DFAADC /* CurrentGamesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentGamesViewController.h; sourceTree = "<group>"; };
+		89C31097148822A800DFAADC /* CurrentGamesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentGamesViewController.m; sourceTree = "<group>"; };
+		89C31098148822A800DFAADC /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
+		89C31099148822A900DFAADC /* Move.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Move.h; sourceTree = "<group>"; };
+		89C3109A148822A900DFAADC /* Move.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Move.m; sourceTree = "<group>"; };
+		89C3109B148822A900DFAADC /* MoveListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveListView.h; sourceTree = "<group>"; };
+		89C3109C148822A900DFAADC /* MoveListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveListView.m; sourceTree = "<group>"; };
+		89C3109D148822A900DFAADC /* PieceImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieceImageView.h; sourceTree = "<group>"; };
+		89C3109E148822A900DFAADC /* PieceImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieceImageView.m; sourceTree = "<group>"; };
+		89C3109F148822A900DFAADC /* StreamController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamController.h; sourceTree = "<group>"; };
+		89C310A0148822A900DFAADC /* StreamController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamController.m; sourceTree = "<group>"; };
+		89C310A91488237100DFAADC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		89C310AB148824B900DFAADC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +72,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89C310AC148824B900DFAADC /* MessageUI.framework in Frameworks */,
+				89C310AA1488237100DFAADC /* AudioToolbox.framework in Frameworks */,
 				897B5CEC1487D10F003EE329 /* UIKit.framework in Frameworks */,
 				897B5CEE1487D10F003EE329 /* Foundation.framework in Frameworks */,
 				897B5CF01487D10F003EE329 /* CoreGraphics.framework in Frameworks */,
@@ -72,6 +103,8 @@
 		897B5CEA1487D10F003EE329 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				89C310AB148824B900DFAADC /* MessageUI.framework */,
+				89C310A91488237100DFAADC /* AudioToolbox.framework */,
 				897B5CEB1487D10F003EE329 /* UIKit.framework */,
 				897B5CED1487D10F003EE329 /* Foundation.framework */,
 				897B5CEF1487D10F003EE329 /* CoreGraphics.framework */,
@@ -86,6 +119,23 @@
 				897B5CFB1487D10F003EE329 /* AppDelegate.m */,
 				897B5CFD1487D10F003EE329 /* ViewController.h */,
 				897B5CFE1487D10F003EE329 /* ViewController.m */,
+				89C31090148822A800DFAADC /* BoardImageView.h */,
+				89C31091148822A800DFAADC /* BoardImageView.m */,
+				89C31092148822A800DFAADC /* BoardView.h */,
+				89C31093148822A800DFAADC /* BoardView.m */,
+				89C31094148822A800DFAADC /* BoardViewController.h */,
+				89C31095148822A800DFAADC /* BoardViewController.m */,
+				89C31096148822A800DFAADC /* CurrentGamesViewController.h */,
+				89C31097148822A800DFAADC /* CurrentGamesViewController.m */,
+				89C31098148822A800DFAADC /* Definitions.h */,
+				89C31099148822A900DFAADC /* Move.h */,
+				89C3109A148822A900DFAADC /* Move.m */,
+				89C3109B148822A900DFAADC /* MoveListView.h */,
+				89C3109C148822A900DFAADC /* MoveListView.m */,
+				89C3109D148822A900DFAADC /* PieceImageView.h */,
+				89C3109E148822A900DFAADC /* PieceImageView.m */,
+				89C3109F148822A900DFAADC /* StreamController.h */,
+				89C310A0148822A900DFAADC /* StreamController.m */,
 				89C3108B14880D4D00DFAADC /* SettingsTableViewController.h */,
 				89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */,
 				89C3108E1488154800DFAADC /* icon-home.png */,
@@ -174,6 +224,14 @@
 				897B5CFC1487D10F003EE329 /* AppDelegate.m in Sources */,
 				897B5CFF1487D10F003EE329 /* ViewController.m in Sources */,
 				89C3108D14880D4D00DFAADC /* SettingsTableViewController.m in Sources */,
+				89C310A1148822A900DFAADC /* BoardImageView.m in Sources */,
+				89C310A2148822A900DFAADC /* BoardView.m in Sources */,
+				89C310A3148822A900DFAADC /* BoardViewController.m in Sources */,
+				89C310A4148822A900DFAADC /* CurrentGamesViewController.m in Sources */,
+				89C310A5148822A900DFAADC /* Move.m in Sources */,
+				89C310A6148822A900DFAADC /* MoveListView.m in Sources */,
+				89C310A7148822A900DFAADC /* PieceImageView.m in Sources */,
+				89C310A8148822A900DFAADC /* StreamController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

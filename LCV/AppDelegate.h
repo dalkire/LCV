@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StreamController.h"
 
 @class ViewController;
 
