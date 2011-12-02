@@ -55,7 +55,7 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
     view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
     
-    UIBarButtonItem *settingsBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-settings.png"] 
+    UIBarButtonItem *settingsBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-menu.png"] 
                                                                    style:UIBarButtonItemStyleBordered 
                                                                   target:self 
                                                                   action:@selector(didTouchSettings)];
