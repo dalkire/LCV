@@ -11,11 +11,18 @@
 
 @implementation MenuTableViewController
 
+@synthesize delegate = _delegate;
+@synthesize sections = _sections;
+@synthesize actions = _actions;
+@synthesize accounts = _accounts;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        _actions = [[NSMutableArray alloc] initWithObjects:@"Watch", @"Practice", nil];
+        _accounts = [[NSMutableArray alloc] initWithObjects:@"ICC", @"FICS", nil];
+        _sections = [[NSMutableArray alloc] initWithObjects:_actions, _accounts, nil];
     }
     return self;
 }
@@ -35,10 +42,14 @@
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+     self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIBarButtonItem *doneBtn =[[UIBarButtonItem alloc] 
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+                               target:self 
+                               action:@selector(didTouchDone)];
+     self.navigationItem.rightBarButtonItem = doneBtn;
 }
 
 - (void)viewDidUnload
@@ -78,13 +89,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return [_sections count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        
+        return [_actions count];
+    }
+    else if (section == 1) {
+        return [_accounts count];
     }
          
     return 0;
@@ -99,9 +113,20 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
+    [cell.textLabel setText:[[_sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
     
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"Actions";
+    }
+    else if (section == 1) {
+        return @"Accounts";
+    }
+    
+    return @"";
 }
 
 /*
@@ -155,6 +180,14 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+
+#pragma mark - toolbar actions
+
+- (void)didTouchDone
+{
+    NSLog(@"Touched done");
+    [_delegate dismissMenu];
 }
 
 @end

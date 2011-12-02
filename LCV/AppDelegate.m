@@ -8,17 +8,17 @@
 
 #import "AppDelegate.h"
 
-#import "ViewController.h"
+#import "RootViewController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize viewController = _viewController;
+@synthesize rootViewController = _rootViewController;
 
 - (void)dealloc
 {
     [_window release];
-    [_viewController release];
+    [_rootViewController release];
     [super dealloc];
 }
 
@@ -28,16 +28,16 @@
 	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackOpaque;
 	[StreamController sharedStreamController];
 	[[StreamController sharedStreamController] connect];
-	[StreamController sharedStreamController].mainViewController = _viewController;
+	[StreamController sharedStreamController].mainViewController = _rootViewController;
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[[ViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+        _rootViewController = [[[RootViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     } else {
-        self.viewController = [[[ViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+        _rootViewController = [[[RootViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     }
-    self.window.rootViewController = self.viewController;
+    self.window.rootViewController = _rootViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }

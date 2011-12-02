@@ -13,9 +13,10 @@
 		897B5CF61487D10F003EE329 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 897B5CF41487D10F003EE329 /* InfoPlist.strings */; };
 		897B5CF81487D10F003EE329 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 897B5CF71487D10F003EE329 /* main.m */; };
 		897B5CFC1487D10F003EE329 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 897B5CFB1487D10F003EE329 /* AppDelegate.m */; };
-		897B5CFF1487D10F003EE329 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897B5CFE1487D10F003EE329 /* ViewController.m */; };
+		897B5CFF1487D10F003EE329 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897B5CFE1487D10F003EE329 /* RootViewController.m */; };
 		899387A514892D0C006FF9DA /* icon-menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 899387A414892D0C006FF9DA /* icon-menu.png */; };
 		899387A9148930AC006FF9DA /* MenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899387A8148930AC006FF9DA /* MenuTableViewController.m */; };
+		899387B91489661C006FF9DA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 899387B7148965FB006FF9DA /* QuartzCore.framework */; };
 		89C310821487FA9B00DFAADC /* icon-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C310811487FA9B00DFAADC /* icon-settings.png */; };
 		89C3108D14880D4D00DFAADC /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */; };
 		89C3108F1488154800DFAADC /* icon-home.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C3108E1488154800DFAADC /* icon-home.png */; };
@@ -42,11 +43,12 @@
 		897B5CF91487D10F003EE329 /* LCV-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LCV-Prefix.pch"; sourceTree = "<group>"; };
 		897B5CFA1487D10F003EE329 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		897B5CFB1487D10F003EE329 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		897B5CFD1487D10F003EE329 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		897B5CFE1487D10F003EE329 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		897B5CFD1487D10F003EE329 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		897B5CFE1487D10F003EE329 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		899387A414892D0C006FF9DA /* icon-menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-menu.png"; sourceTree = "<group>"; };
 		899387A7148930AC006FF9DA /* MenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewController.h; sourceTree = "<group>"; };
 		899387A8148930AC006FF9DA /* MenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewController.m; sourceTree = "<group>"; };
+		899387B7148965FB006FF9DA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		89C310811487FA9B00DFAADC /* icon-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-settings.png"; sourceTree = "<group>"; };
 		89C3108B14880D4D00DFAADC /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				899387B91489661C006FF9DA /* QuartzCore.framework in Frameworks */,
 				89C310AC148824B900DFAADC /* MessageUI.framework in Frameworks */,
 				89C310AA1488237100DFAADC /* AudioToolbox.framework in Frameworks */,
 				897B5CEC1487D10F003EE329 /* UIKit.framework in Frameworks */,
@@ -108,6 +111,7 @@
 		897B5CEA1487D10F003EE329 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				899387B7148965FB006FF9DA /* QuartzCore.framework */,
 				89C310AB148824B900DFAADC /* MessageUI.framework */,
 				89C310A91488237100DFAADC /* AudioToolbox.framework */,
 				897B5CEB1487D10F003EE329 /* UIKit.framework */,
@@ -122,8 +126,8 @@
 			children = (
 				897B5CFA1487D10F003EE329 /* AppDelegate.h */,
 				897B5CFB1487D10F003EE329 /* AppDelegate.m */,
-				897B5CFD1487D10F003EE329 /* ViewController.h */,
-				897B5CFE1487D10F003EE329 /* ViewController.m */,
+				897B5CFD1487D10F003EE329 /* RootViewController.h */,
+				897B5CFE1487D10F003EE329 /* RootViewController.m */,
 				89C31090148822A800DFAADC /* BoardImageView.h */,
 				89C31091148822A800DFAADC /* BoardImageView.m */,
 				89C31092148822A800DFAADC /* BoardView.h */,
@@ -239,7 +243,7 @@
 			files = (
 				897B5CF81487D10F003EE329 /* main.m in Sources */,
 				897B5CFC1487D10F003EE329 /* AppDelegate.m in Sources */,
-				897B5CFF1487D10F003EE329 /* ViewController.m in Sources */,
+				897B5CFF1487D10F003EE329 /* RootViewController.m in Sources */,
 				89C3108D14880D4D00DFAADC /* SettingsTableViewController.m in Sources */,
 				89C310A1148822A900DFAADC /* BoardImageView.m in Sources */,
 				89C310A2148822A900DFAADC /* BoardView.m in Sources */,
