@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "StreamController.h"
 #import "MenuTableViewController.h"
 #import "CurrentGamesViewController.h"
 #import "BoardViewController.h"
@@ -15,6 +16,7 @@
 @interface RootViewController : UIViewController <MenuTableViewControllerDelegate>
 {
     UIToolbar *toolbar;
+    StreamController *streamController;
     int currentViewController;
     UINavigationController *navigationController;
     MenuTableViewController *menuTableViewController;
@@ -23,6 +25,7 @@
 }
 
 @property (nonatomic, retain) UIToolbar *toolbar;
+@property (nonatomic, retain) StreamController *streamController;
 @property int currentViewController;
 @property (nonatomic, retain) UINavigationController *navigationController;
 @property (nonatomic, retain) MenuTableViewController *menuTableViewController;

@@ -30,6 +30,7 @@
 		89C310A8148822A900DFAADC /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C310A0148822A900DFAADC /* StreamController.m */; };
 		89C310AA1488237100DFAADC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C310A91488237100DFAADC /* AudioToolbox.framework */; };
 		89C310AC148824B900DFAADC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C310AB148824B900DFAADC /* MessageUI.framework */; };
+		89CD84081489D33600649DBA /* PuzzleBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89CD84071489D33600649DBA /* PuzzleBoardViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,8 @@
 		89C310A0148822A900DFAADC /* StreamController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamController.m; sourceTree = "<group>"; };
 		89C310A91488237100DFAADC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		89C310AB148824B900DFAADC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		89CD84061489D33600649DBA /* PuzzleBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PuzzleBoardViewController.h; sourceTree = "<group>"; };
+		89CD84071489D33600649DBA /* PuzzleBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PuzzleBoardViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +137,7 @@
 				89C31093148822A800DFAADC /* BoardView.m */,
 				89C31094148822A800DFAADC /* BoardViewController.h */,
 				89C31095148822A800DFAADC /* BoardViewController.m */,
+				89CD840A1489D34500649DBA /* Puzzle */,
 				89C31096148822A800DFAADC /* CurrentGamesViewController.h */,
 				89C31097148822A800DFAADC /* CurrentGamesViewController.m */,
 				89C31098148822A800DFAADC /* Definitions.h */,
@@ -174,6 +178,15 @@
 				899387A8148930AC006FF9DA /* MenuTableViewController.m */,
 			);
 			name = Menu;
+			sourceTree = "<group>";
+		};
+		89CD840A1489D34500649DBA /* Puzzle */ = {
+			isa = PBXGroup;
+			children = (
+				89CD84061489D33600649DBA /* PuzzleBoardViewController.h */,
+				89CD84071489D33600649DBA /* PuzzleBoardViewController.m */,
+			);
+			name = Puzzle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +267,7 @@
 				89C310A7148822A900DFAADC /* PieceImageView.m in Sources */,
 				89C310A8148822A900DFAADC /* StreamController.m in Sources */,
 				899387A9148930AC006FF9DA /* MenuTableViewController.m in Sources */,
+				89CD84081489D33600649DBA /* PuzzleBoardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

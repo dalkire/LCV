@@ -17,6 +17,7 @@
 @implementation RootViewController
 
 @synthesize toolbar                     = _toolbar;
+@synthesize streamController            = _streamController;
 @synthesize navigationController        = _navigationController;
 @synthesize currentViewController       = _currentViewController;
 @synthesize menuTableViewController     = _menuTableViewController;
@@ -30,6 +31,7 @@
         NSLog(@"init");
         _currentViewController = 0;
         _navigationController = nil;
+        _streamController = [StreamController sharedStreamController];
         _menuTableViewController  = [[MenuTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
         [_menuTableViewController setDelegate:self];
     }
@@ -148,7 +150,6 @@
                                                         _navigationController.view.frame.origin.y - 20, 
                                                         _navigationController.view.frame.size.width, 
                                                         _navigationController.view.frame.size.height)];
-        [self.toolbar setHidden:YES];
         [self presentModalViewController:_navigationController animated:YES];
     }
 }
@@ -158,7 +159,6 @@
 - (void)dismissMenu
 {
     [self dismissModalViewControllerAnimated:YES];
-    [self.toolbar setHidden:NO];
 }
 
 @end
