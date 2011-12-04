@@ -49,7 +49,6 @@
 - (void)loadView
 {
     NSLog(@"loadview");
-    [super loadView];
     float width = 0;
     float height = 0;
     switch ([[UIDevice currentDevice] orientation]) {
@@ -159,6 +158,17 @@
 - (void)dismissMenu
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)loadTrainingView
+{
+    TrainingViewController *trainingViewController = [[TrainingViewController alloc] initWithNibName:nil bundle:nil];
+    [self dismissMenu];
+    int len = [[self.view subviews] count];
+    for (int i = 0; i < len; i++) {
+        [[[self.view subviews] objectAtIndex:i] removeFromSuperview];
+    }
+    [self.view insertSubview:trainingViewController.view atIndex:0];
 }
 
 @end

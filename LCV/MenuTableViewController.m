@@ -20,9 +20,15 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        _actions = [[NSMutableArray alloc] initWithObjects:@"Watch", @"Practice", nil];
+        _actions = [[NSMutableArray alloc] initWithObjects:@"Watch", @"Training", nil];
         _accounts = [[NSMutableArray alloc] initWithObjects:@"ICC", @"FICS", nil];
         _sections = [[NSMutableArray alloc] initWithObjects:_actions, _accounts, nil];
+        UIView *bg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1000, 1000)];
+        [bg setBackgroundColor:[UIColor colorWithRed:(float)0xDD/0xFF 
+                                               green:(float)0xDD/0xFF 
+                                                blue:(float)0xDD/0xFF 
+                                               alpha:1.0f]];
+        [self.tableView setBackgroundView:bg];
     }
     return self;
 }
@@ -172,14 +178,23 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    if (indexPath.section == 0) {           //actions
+        switch (indexPath.row) {
+            case 0:                         //watch
+                NSLog(@"WATCH");
+                break;
+            case 1:                         //training
+                NSLog(@"TRAINING");
+                [_delegate loadTrainingView];
+                break;
+                
+            default:
+                break;
+        }
+    }
+    else if (indexPath.section == 1) {      //accounts
+        
+    }
 }
 
 #pragma mark - toolbar actions

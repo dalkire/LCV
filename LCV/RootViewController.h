@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "StreamController.h"
 #import "MenuTableViewController.h"
+#import "TrainingViewController.h"
 #import "CurrentGamesViewController.h"
 #import "BoardViewController.h"
 

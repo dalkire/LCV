@@ -28,5 +28,6 @@
 @protocol MenuTableViewControllerDelegate <NSObject>
 
 - (void)dismissMenu;
+- (void)loadTrainingView;
 
 @end

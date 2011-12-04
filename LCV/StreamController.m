@@ -211,7 +211,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 					}
 					streamFirstReady = NO;
 				}
-				//NSLog(@"%@", (NSMutableString *)cfReplyContent);
+				NSLog(@"%@", (NSMutableString *)cfReplyContent);
 				if ([(NSMutableString *)cfReplyContent rangeOfString:@"~~startgames"].location != NSNotFound) {
 					readingCurrentGames = YES;
 				}
