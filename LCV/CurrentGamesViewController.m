@@ -6,6 +6,12 @@
 //  Copyright PixelSift Studios 2010. All rights reserved.
 //
 
+#define NONE        0
+#define WATCHING    200
+#define TRAINING    201
+#define ICC         300
+#define FICS        301
+
 #import "CurrentGamesViewController.h"
 #import "StreamController.h"
 #import "BoardViewController.h"
@@ -83,7 +89,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath { 
 	if (self.observing) {
-		NSMutableString *unobserveCommand = [[NSString alloc] initWithFormat:@"unobserve %@\r\n", self.observing];
+		NSMutableString *unobserveCommand = [[NSMutableString alloc] initWithFormat:@"unobserve %@\r\n", self.observing];
 		[[StreamController sharedStreamController] sendCommand:unobserveCommand];
 		[unobserveCommand release];
 	}
@@ -106,7 +112,7 @@
 	
 	[(BoardViewController *)[StreamController sharedStreamController].boardViewController resetResults];
 	
-	if ([[StreamController sharedStreamController].server isEqualToString:@"icc"]) {
+	if ([StreamController sharedStreamController].server == ICC) {
 		[(BoardViewController *)[StreamController sharedStreamController].boardViewController resetBoard];
 	}
 	
@@ -177,7 +183,7 @@
 	NSLog(@"REFRESH..");
 	[self clearCurrentGamesTable];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if ([[StreamController sharedStreamController].server isEqualToString:@"fics"]) {
+	if ([StreamController sharedStreamController].server == FICS) {
 		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:(UITableViewController *)self];
 	}
 	else {

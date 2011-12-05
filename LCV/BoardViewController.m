@@ -6,6 +6,12 @@
 //  Copyright PixelSift Studios 2010. All rights reserved.
 //
 
+#define NONE        0
+#define WATCHING    200
+#define TRAINING    201
+#define ICC         300
+#define FICS        301
+
 #import "BoardViewController.h"
 #import "StreamController.h"
 #import "BoardView.h"
@@ -649,7 +655,7 @@
 }
 
 - (void)showCurrentGamesView {
-	if ([[StreamController sharedStreamController].server isEqualToString:@"fics"]) {
+	if ([StreamController sharedStreamController].server == FICS) {
 		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:(UITableViewController *)self];
 	}
 	else {
@@ -700,7 +706,7 @@
 }
 
 - (void)sendMail {
-	if ([[StreamController sharedStreamController].server isEqualToString:@"fics"]) {
+	if ([StreamController sharedStreamController].server == FICS) {
 		NSEnumerator *enumerator = [[StreamController sharedStreamController].moveList objectEnumerator];
 		Move *m;// = [[Move alloc] init];
 		NSMutableString *pgnString = [[NSMutableString alloc] initWithString:@""];
@@ -788,12 +794,12 @@
 }
 
 - (void)goBackward {
-	if ([[StreamController sharedStreamController].server isEqualToString:@"fics"]) {
+	if ([StreamController sharedStreamController].server == FICS) {
 		if([StreamController sharedStreamController].currentMoveNumber > 1) {
 			[StreamController sharedStreamController].currentMoveNumber--;
 			NSMutableArray *moveList = [StreamController sharedStreamController].moveList;
 			NSString *style12string = (NSString *)[moveList objectAtIndex:[StreamController sharedStreamController].currentMoveNumber - 1];
-			[self setPositionFromStyle12:style12string direction:@"backward"];
+			[self setPositionFromStyle12:style12string];
 			
 			NSLog(@"MOVE NUM: %d, BACKWARD: %@", [StreamController sharedStreamController].currentMoveNumber, style12string);
 			
@@ -813,12 +819,12 @@
 }
 
 - (void)goForward {
-	if ([[StreamController sharedStreamController].server isEqualToString:@"fics"]) {
+	if ([StreamController sharedStreamController].server == FICS) {
 		if([StreamController sharedStreamController].currentMoveNumber < [StreamController sharedStreamController].absoluteMoveNumber) {
 			NSMutableArray *moveList = [StreamController sharedStreamController].moveList;
 			[StreamController sharedStreamController].currentMoveNumber++;
 			NSString *style12string = (NSString *)[moveList objectAtIndex:[StreamController sharedStreamController].currentMoveNumber - 1];
-			[self setPositionFromStyle12:style12string direction:@"forward"];
+			[self setPositionFromStyle12:style12string];
 			
 			[board.moveListView highlightMoveWithAbsoluteMoveNumber:[StreamController sharedStreamController].currentMoveNumber animated:YES];
 		}

@@ -55,6 +55,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 @synthesize resultText, iccResultText;
 @synthesize server = _server;
 @synthesize mode = _mode;
+@synthesize canMoveColor = _canMoveColor;
 
 #pragma mark ---- singleton object methods ----
 
@@ -80,7 +81,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 - (id)init {
 	NSTimer *timer;
     //[[timer alloc] init];
-	timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+	//timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
 	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
 	firstPass = YES;
 	spaceAvailable = NO;
@@ -108,6 +109,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 	[self setServer:NONE];
 	readingCurrentGames = NO;
     _trainingViewController = (TrainingViewController *)NULL;
+    _canMoveColor = [[NSString alloc] initWithString:@""];
     
 	
 	/*SInt32 port = 5000;
@@ -195,9 +197,6 @@ static StreamController *sharedStreamControllerDelegate = nil;
 	return UINT_MAX;
 }
 
-- (void)release {
-}
-
 - (id)autorelease {
 	return self;
 }
@@ -215,34 +214,37 @@ static StreamController *sharedStreamControllerDelegate = nil;
 				CFStringAppendCString(cfReplyContent, (const char *)rbuf, kCFStringEncodingASCII);
 				
                 if (_server == FICS) {
-                    //NSLog(@"SERVER is FICS");
-                    if ([(NSMutableString *)cfReplyContent rangeOfString:@"\r<12>"].location != NSNotFound) {
-                        NSMutableArray *contentArray = [[NSMutableArray alloc] initWithArray:[(NSMutableString *)cfReplyContent componentsSeparatedByString:@"\r"]];
-                        for (int i=0; i < [contentArray count]; i++) {
-                            if([(NSString *)[contentArray objectAtIndex:i] length] > 4 && [[[contentArray objectAtIndex:i] substringWithRange:NSMakeRange(0, 4)] isEqualToString:@"<12>"]) {
-                                [ficsMoveList addObject:[[contentArray objectAtIndex:i] substringFromIndex:5]];
-                                currentFicsLocalMoveNumber++;
-                                prevStyle12String = currStyle12String;
-                                currStyle12String = (NSMutableString *)[[contentArray objectAtIndex:i] substringFromIndex:5];
+                    if ([self mode] == TRAINING && _trainingViewController) {
+                        if ([(NSMutableString *)cfReplyContent rangeOfString:@"\r<12>"].location != NSNotFound) {
+                            NSMutableArray *contentArray = [[NSMutableArray alloc] initWithArray:[(NSMutableString *)cfReplyContent componentsSeparatedByString:@"\r"]];
+                            for (int i=0; i < [contentArray count]; i++) {
+                                if([(NSString *)[contentArray objectAtIndex:i] length] > 4 && [[[contentArray objectAtIndex:i] substringWithRange:NSMakeRange(0, 4)] isEqualToString:@"<12>"]) {
+                                    [ficsMoveList addObject:[[contentArray objectAtIndex:i] substringFromIndex:5]];
+                                    currentFicsLocalMoveNumber++;
+                                    prevStyle12String = currStyle12String;
+                                    currStyle12String = (NSMutableString *)[[contentArray objectAtIndex:i] substringFromIndex:5];
                                 
+                                    clockRunning = YES;
+                                    [moveList addObject:currStyle12String];
                                 
-                                clockRunning = YES;
-                                [moveList addObject:currStyle12String];
+                                    /*if (currentMoveNumber == absoluteMoveNumber) {
+                                        [(BoardViewController *)boardViewController setPositionFromStyle12:currStyle12String direction:@"forward"];
+                                        currentMoveNumber++;
+                                    }*/
+                                    absoluteMoveNumber++;
+                                    NSLog(@"CLF=%d, CUR=%d, ABS=%d", currentFicsLocalMoveNumber, currentMoveNumber, absoluteMoveNumber);
                                 
-                                /*if (currentMoveNumber == absoluteMoveNumber) {
-                                    [(BoardViewController *)boardViewController setPositionFromStyle12:currStyle12String direction:@"forward"];
-                                    currentMoveNumber++;
-                                }*/
-                                absoluteMoveNumber++;
-                                NSLog(@"CLF=%d, CUR=%d, ABS=%d", currentFicsLocalMoveNumber, currentMoveNumber, absoluteMoveNumber);
-                                
-                                if ([self mode] == TRAINING && _trainingViewController) {
-                                    NSLog(@"currStyle12: %@", currStyle12String);
+                                    NSLog(@"%@", (NSMutableString *)cfReplyContent);
                                     [(TrainingViewController *)_trainingViewController setPositionFromStyle12:currStyle12String];
                                 }
                             }
                         }
-                    }
+                        if ([(NSMutableString *)cfReplyContent rangeOfString:@"\rpuzzlebot has made you an examiner of game "].location != NSNotFound) {
+                            NSString *findExaminingString = [NSString stringWithString:@"\rpuzzlebot has made you an examiner of game "];
+                            NSRange findExaminingRange = [(NSMutableString *)cfReplyContent rangeOfString:findExaminingString];
+                            NSLog(@"examining by puzzlebot: %@", [(NSMutableString *)cfReplyContent substringWithRange:NSMakeRange(findExaminingRange.location + findExaminingRange.length, 5)]);
+                        }
+                    } //TRAINING
                 }
                 else if (_server == ICC) {
                     //NSLog(@"SERVER is ICC");
@@ -621,7 +623,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 }
 
 - (void)timerFireMethod:(NSTimer *)theTimer {
-	if ([server isEqualToString:@"icc"]) {
+	if (_server == ICC) {
 		if (clockRunning) {
 			if (absoluteMoveNumber %2 == 0 && absoluteMoveNumber > 0 && currentMoveNumber == absoluteMoveNumber) {
 				[(BoardViewController *)boardViewController decrementTimeForColor:@"white"];
@@ -631,7 +633,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 			}
 		}
 	}
-	else if ([server isEqualToString:@"fics"]) {
+	else if (_server == FICS) {
 		if (clockRunning) {
 			NSArray *moveArray = [(NSString *)[ficsMoveList objectAtIndex:currentFicsLocalMoveNumber-1] componentsSeparatedByString:@" "];
 			if ([(NSString *)[moveArray objectAtIndex:8] isEqualToString:@"W"]) {

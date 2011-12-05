@@ -24,10 +24,7 @@
         _accounts = [[NSMutableArray alloc] initWithObjects:@"ICC", @"FICS", nil];
         _sections = [[NSMutableArray alloc] initWithObjects:_actions, _accounts, nil];
         UIView *bg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1000, 1000)];
-        [bg setBackgroundColor:[UIColor colorWithRed:(float)0xDD/0xFF 
-                                               green:(float)0xDD/0xFF 
-                                                blue:(float)0xDD/0xFF 
-                                               alpha:1.0f]];
+        [bg setBackgroundColor:[UIColor scrollViewTexturedBackgroundColor]];
         [self.tableView setBackgroundView:bg];
     }
     return self;
@@ -55,7 +52,8 @@
                                initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                target:self 
                                action:@selector(didTouchDone)];
-     self.navigationItem.rightBarButtonItem = doneBtn;
+    
+    self.navigationItem.rightBarButtonItem = doneBtn;
 }
 
 - (void)viewDidUnload
@@ -133,6 +131,27 @@
     }
     
     return @"";
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 30;
+}
+
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
+{
+    UIView *headerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)] autorelease];
+    
+    [headerView setBackgroundColor:[UIColor clearColor]];
+    UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(10, 6, tableView.bounds.size.width - 10, 18)] autorelease];
+    label.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
+    [label setFont:[UIFont boldSystemFontOfSize:16]];
+    label.textColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor clearColor];
+    [headerView addSubview:label];
+    
+    
+    return headerView;
 }
 
 /*

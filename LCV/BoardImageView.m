@@ -475,50 +475,62 @@
 	if ([piece isEqualToString:@"bn"]) {
 		pieceImageView.image = bnImg;
 		pieceImageView.color = @"black";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"bn"]];
 	}
 	else if ([piece isEqualToString:@"bb"]) {
 		pieceImageView.image = bbImg;
 		pieceImageView.color = @"black";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"bb"]];
 	}
 	else if ([piece isEqualToString:@"bq"]) {
 		pieceImageView.image = bqImg;
 		pieceImageView.color = @"black";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"bq"]];
 	}
 	else if ([piece isEqualToString:@"bk"]) {
 		pieceImageView.image = bkImg;
 		pieceImageView.color = @"black";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"bk"]];
 	}
 	else if ([piece isEqualToString:@"br"]) {
 		pieceImageView.image = brImg;
 		pieceImageView.color = @"black";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"br"]];
 	}
 	else if ([piece isEqualToString:@"bp"]) {
 		pieceImageView.image = bpImg;
 		pieceImageView.color = @"black";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"bp"]];
 	}
 	else if ([piece isEqualToString:@"wn"]) {
 		pieceImageView.image = wnImg;
 		pieceImageView.color = @"white";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"wn"]];
 	}
 	else if ([piece isEqualToString:@"wb"]) {
 		pieceImageView.image = wbImg;
 		pieceImageView.color = @"white";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"wb"]];
 	}
 	else if ([piece isEqualToString:@"wq"]) {
 		pieceImageView.image = wqImg;
 		pieceImageView.color = @"white";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"wq"]];
 	}
 	else if ([piece isEqualToString:@"wk"]) {
 		pieceImageView.image = wkImg;
 		pieceImageView.color = @"white";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"wk"]];
 	}
 	else if ([piece isEqualToString:@"wr"]) {
 		pieceImageView.image = wrImg;
 		pieceImageView.color = @"white";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"wr"]];
 	}
 	else if ([piece isEqualToString:@"wp"]) {
 		pieceImageView.image = wpImg;
 		pieceImageView.color = @"white";
+        [pieceImageView setPiece:[NSMutableString stringWithString:@"wp"]];
 	}
 	
 	BoardViewController *bvc = (BoardViewController *)[StreamController sharedStreamController].boardViewController;

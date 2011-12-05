@@ -149,6 +149,7 @@
                                                         _navigationController.view.frame.origin.y - 20, 
                                                         _navigationController.view.frame.size.width, 
                                                         _navigationController.view.frame.size.height)];
+        [_navigationController.navigationBar setBarStyle:UIBarStyleBlack];
         [self presentModalViewController:_navigationController animated:YES];
     }
 }

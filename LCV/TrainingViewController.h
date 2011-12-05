@@ -26,6 +26,7 @@
 @property BOOL inStartingPosition;
 
 - (void)setPositionFromStyle12:(NSString *)style12;
+- (void)movePiece:(NSString *)piece fromSquare:(NSString *)fromSquare toSquare:(NSString *)toSquare;
 
 @end
 

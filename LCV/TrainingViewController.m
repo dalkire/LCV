@@ -65,7 +65,7 @@
                                                                style:UIBarButtonItemStyleBordered 
                                                               target:self 
                                                               action:@selector(didTouchMenu)];
-    UIBarButtonItem *editBtn =[[UIBarButtonItem alloc] 
+    /*UIBarButtonItem *editBtn =[[UIBarButtonItem alloc] 
                                initWithBarButtonSystemItem:UIBarButtonSystemItemEdit 
                                target:self 
                                action:@selector(didTouchEdit)];
@@ -73,7 +73,7 @@
                                                               style:UIBarButtonItemStyleBordered 
                                                              target:self 
                                                              action:@selector(addCourseModal)];
-    UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];*/
     _toolbar = [[UIToolbar alloc] init];
     [_toolbar setBarStyle:UIBarStyleBlack];
     [_toolbar sizeToFit];
@@ -109,7 +109,7 @@
 {
     [[StreamController sharedStreamController] setMode:TRAINING];
     [[StreamController sharedStreamController] setTrainingViewController:self];
-    [[StreamController sharedStreamController] sendCommand:[NSMutableString stringWithString:@"tell puzzlebot getmate1\r\n"]];
+    [[StreamController sharedStreamController] sendCommand:[NSMutableString stringWithString:@"tell puzzlebot gm2\r\n"]];
 }
 
 - (void)viewDidUnload
@@ -338,7 +338,8 @@
 	NSString *verboseMove = [[NSString alloc] initWithString:(NSString *)[style12Array objectAtIndex:26]];
 	//NSString *algebraicMove = [[NSString alloc] initWithString:(NSString *)[style12Array objectAtIndex:28]];
 	NSString *colorForNextMove = [[NSString alloc] initWithString:(NSString *)[style12Array objectAtIndex:8]];
-	
+	[[StreamController sharedStreamController] setCanMoveColor:colorForNextMove];
+    
 	for (int i=0; i < 8; i++) {
 		NSString *row = [style12Array objectAtIndex:i];
 		//NSLog(@"ROW: %@", row);
@@ -440,5 +441,11 @@
     }
 }
 
+- (void)movePiece:(NSString *)piece fromSquare:(NSString *)fromSquare toSquare:(NSString *)toSquare
+{
+    NSLog(@"movePiece:%@ fromSquare:%@ toSquare:%@", piece, fromSquare, toSquare);
+    [[StreamController sharedStreamController] sendCommand:[NSString stringWithFormat:@"%@%@\r\n", fromSquare, toSquare]];
+    [[_board board] placeHighlightsForMove:[NSString stringWithFormat:@"%@%@", fromSquare, toSquare]];
+}
 
 @end

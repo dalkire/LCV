@@ -10,12 +10,18 @@
 
 
 @interface PieceImageView : UIImageView {
+    NSMutableString *piece;
 	NSString *color;
+    NSMutableString *fromSquare;
 }
 
+@property (nonatomic, retain) NSMutableString *piece;
 @property (nonatomic, retain) NSString *color;
+@property (nonatomic, retain) NSMutableString *fromSquare;
 
 - (void)moveToPoint:(CGPoint)point;
 - (NSInteger)getFrame;
+- (NSString *)getSquareForPoint:(CGPoint)point;
+- (CGPoint)getPointForSquare:(NSString *)square;
 
 @end

@@ -46,6 +46,7 @@
 	NSString *iccResultText;
 	int server;
     int mode;
+    NSString *canMoveColor;
 }
 
 @property (nonatomic, retain) NSMutableString *testString;
@@ -83,6 +84,7 @@
 @property (nonatomic, retain) NSString *iccResultText;
 @property int server;
 @property int mode;
+@property (nonatomic, retain) NSString *canMoveColor;
 
 + (StreamController *)sharedStreamController;
 - (void)sendCommand:(NSMutableString *)command fromViewController:(UITableViewController *)viewController;
