@@ -361,15 +361,15 @@
 	}
 }
 
-/*- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	NSLog(@"SQUARE_B2.x=%f", SQUARE_B2.x);
-	CGFloat x = [[touches anyObject] locationInView:[self superview]].x;
-	CGFloat y = [[touches anyObject] locationInView:[self superview]].y;
-	self.center = CGPointMake(x - 20, y - 60);
-	[[self superview] bringSubviewToFront:self];
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	NSLog(@"Touch in BIV");
+	//CGFloat x = [[touches anyObject] locationInView:[self superview]].x;
+	//CGFloat y = [[touches anyObject] locationInView:[self superview]].y;
+	//self.center = CGPointMake(x - 20, y - 60);
+	//[[self superview] bringSubviewToFront:self];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+/*- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 	CGFloat x = [[touches anyObject] locationInView:[self superview]].x;
 	CGFloat y = [[touches anyObject] locationInView:[self superview]].y;
 	self.center = CGPointMake(x - 20, y - 60);
@@ -467,6 +467,7 @@
 }
 
 - (void)addPiece:(NSString *)piece toSquare:(NSString *)square {
+    NSLog(@"AddPiece: %@ toSquare: %@", piece, square);
 	CGPoint dest = [self getPointFromSquare:square];
 	CGRect imageRect = CGRectMake(dest.x - 20, dest.y - 20, 40.0, 40.0);
 	PieceImageView *pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];

@@ -36,7 +36,7 @@
 
 - (void)commandResult:(NSString *)result fromCommand:(NSInteger *)command;
 - (void)moveList:(NSArray *)moveList;
-- (void)setPositionFromStyle12:(NSString *)style12 direction:(NSString *)direction;
+- (void)setPositionFromStyle12:(NSString *)style12;
 - (void)move:(Move *)move direction:(NSString *)direction;
 - (CGPoint)getPointFromSquare:(NSString *)square;
 - (void)showCurrentGamesView;

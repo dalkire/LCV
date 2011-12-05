@@ -16,11 +16,21 @@
 	BoardView *board;
 	NSMutableString *blackName;
 	NSMutableString *whiteName;
+    BOOL inStartingPosition;
 }
 
 @property (nonatomic, retain) UIToolbar *toolbar;
 @property (nonatomic, retain) BoardView *board;
 @property (nonatomic, retain) NSMutableString *blackName;
 @property (nonatomic, retain) NSMutableString *whiteName;
+@property BOOL inStartingPosition;
+
+- (void)setPositionFromStyle12:(NSString *)style12;
+
+@end
+
+@protocol TrainingViewControllerDelegate <NSObject>
+
+//- (void)
 
 @end

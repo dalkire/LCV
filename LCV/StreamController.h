@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TrainingViewController.h"
 
 
 @interface StreamController : NSObject <NSStreamDelegate> {
@@ -39,10 +40,12 @@
 	UIViewController *caller;
 	UIViewController *boardViewController;
 	UIViewController *currentGamesViewController;
+    UIViewController *trainingViewController;
 	UIViewController *mainViewController;
 	NSString *resultText;
 	NSString *iccResultText;
-	NSString *server;
+	int server;
+    int mode;
 }
 
 @property (nonatomic, retain) NSMutableString *testString;
@@ -60,6 +63,7 @@
 @property (nonatomic, retain) UIViewController *caller;
 @property (nonatomic, retain) UIViewController *boardViewController;
 @property (nonatomic, retain) UIViewController *currentGamesViewController;
+@property (nonatomic, retain) UIViewController *trainingViewController;
 @property (nonatomic, retain) UIViewController *mainViewController;
 @property BOOL firstPass;
 @property BOOL spaceAvailable;
@@ -77,7 +81,8 @@
 @property NSUInteger observing;
 @property (nonatomic, retain) NSString *resultText;
 @property (nonatomic, retain) NSString *iccResultText;
-@property (nonatomic, retain) NSString *server;
+@property int server;
+@property int mode;
 
 + (StreamController *)sharedStreamController;
 - (void)sendCommand:(NSMutableString *)command fromViewController:(UITableViewController *)viewController;

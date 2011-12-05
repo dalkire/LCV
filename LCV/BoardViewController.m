@@ -144,8 +144,7 @@
 	}
 }
 
-- (void)setPositionFromStyle12:(NSString *)style12 direction:(NSString *)direction {
-	//NSLog(@"DIRECTION: %@", direction);
+- (void)setPositionFromStyle12:(NSString *)style12 {
 	[(BoardImageView *)[board board] clearBoard];
 	NSArray *style12Array = [style12 componentsSeparatedByString:@" "];
 	NSString *verboseMove = [[NSString alloc] initWithString:(NSString *)[style12Array objectAtIndex:26]];
@@ -249,20 +248,19 @@
 	[board setTime:blackTime forColor:@"black"];
 	[board setTime:whiteTime forColor:@"white"];
 	
-	//if ([direction isEqualToString:@"forward"]) {
-		if([colorForNextMove isEqualToString:@"W"]) {
-			board.whitePlayerLabel.textColor = [UIColor whiteColor];
-			board.whiteTimeLabel.textColor = [UIColor whiteColor];
-			board.blackPlayerLabel.textColor = [UIColor lightTextColor];
-			board.blackTimeLabel.textColor = [UIColor lightTextColor];
-		}
-		else {
-			board.blackPlayerLabel.textColor = [UIColor whiteColor];
-			board.blackTimeLabel.textColor = [UIColor whiteColor];
-			board.whitePlayerLabel.textColor = [UIColor lightTextColor];
-			board.whiteTimeLabel.textColor = [UIColor lightTextColor];
-		}
-	//}
+	
+    if([colorForNextMove isEqualToString:@"W"]) {
+        board.whitePlayerLabel.textColor = [UIColor whiteColor];
+        board.whiteTimeLabel.textColor = [UIColor whiteColor];
+        board.blackPlayerLabel.textColor = [UIColor lightTextColor];
+        board.blackTimeLabel.textColor = [UIColor lightTextColor];
+    }
+    else {
+        board.blackPlayerLabel.textColor = [UIColor whiteColor];
+        board.blackTimeLabel.textColor = [UIColor whiteColor];
+        board.whitePlayerLabel.textColor = [UIColor lightTextColor];
+        board.whiteTimeLabel.textColor = [UIColor lightTextColor];
+    }
 }
 
 - (void)move:(Move *)move direction:(NSString *)direction {

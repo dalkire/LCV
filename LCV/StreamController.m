@@ -6,10 +6,17 @@
 //  Copyright PixelSift Studios 2010. All rights reserved.
 //
 
+#define NONE        0
+#define WATCHING    200
+#define TRAINING    201
+#define ICC         300
+#define FICS        301
+
 #import "StreamController.h"
 #import "Definitions.h"
 #import "BoardViewController.h"
 #import "CurrentGamesViewController.h"
+#import "TrainingViewController.h"
 #import "Move.h"
 
 // This is a singleton class, see below
@@ -43,9 +50,11 @@ static StreamController *sharedStreamControllerDelegate = nil;
 @synthesize caller;
 @synthesize boardViewController;
 @synthesize currentGamesViewController;
+@synthesize trainingViewController = _trainingViewController;
 @synthesize mainViewController;
 @synthesize resultText, iccResultText;
-@synthesize server;
+@synthesize server = _server;
+@synthesize mode = _mode;
 
 #pragma mark ---- singleton object methods ----
 
@@ -96,8 +105,10 @@ static StreamController *sharedStreamControllerDelegate = nil;
 	ficsMoveList = [NSMutableArray new];
 	resultText = [[NSString alloc] initWithString:@""];
 	iccResultText = [[NSString alloc] initWithString:@""];
-	server = [[NSString alloc] initWithString:@""];
+	[self setServer:NONE];
 	readingCurrentGames = NO;
+    _trainingViewController = (TrainingViewController *)NULL;
+    
 	
 	/*SInt32 port = 5000;
 	CFReadStreamRef readStream = NULL;
@@ -125,7 +136,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 	NSString *iccusername = [[defaults valueForKey:@"iccusername"] isEqualToString:@""] || [defaults valueForKey:@"iccusername"] == NULL ? @"guest" : [defaults valueForKey:@"iccusername"];
 	NSString *iccpassword = [defaults valueForKey:@"iccpassword"];
 	if ([iccusername isEqualToString:@"g"] || [iccusername isEqualToString:@"guest"]) {
-		server = @"fics";
+		[self setServer:FICS];
 		serverAddress = CFSTR("freechess.org");
 		UIAlertView *alert = [[UIAlertView alloc] 
 							  initWithTitle:@"Guest Account" 
@@ -138,7 +149,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 		firstCommand = [[NSMutableString alloc] initWithFormat:@"guest\r\n\r\n\r\nstyle 12\r\n"];
 	}
 	else {
-		server = @"icc";
+		[self setServer:ICC];
 		serverAddress = CFSTR("chessclub.com");
 		firstCommand = [[NSMutableString alloc] initWithFormat:@"level1=1\r\n%@\r\n%@\r\nset-2 16 1\r\nset-2 24 1\r\nset-2 25 1\r\nset-2 33 1\r\nset-2 34 1\r\nset-2 36 1\r\n", iccusername, iccpassword];
 	}
@@ -202,10 +213,42 @@ static StreamController *sharedStreamControllerDelegate = nil;
 				rbuf[bytesRead] = 0;
 				CFMutableStringRef cfReplyContent = CFStringCreateMutable(kCFAllocatorDefault, 0);
 				CFStringAppendCString(cfReplyContent, (const char *)rbuf, kCFStringEncodingASCII);
-				unichar prev = 'c';
 				
+                if (_server == FICS) {
+                    //NSLog(@"SERVER is FICS");
+                    if ([(NSMutableString *)cfReplyContent rangeOfString:@"\r<12>"].location != NSNotFound) {
+                        NSMutableArray *contentArray = [[NSMutableArray alloc] initWithArray:[(NSMutableString *)cfReplyContent componentsSeparatedByString:@"\r"]];
+                        for (int i=0; i < [contentArray count]; i++) {
+                            if([(NSString *)[contentArray objectAtIndex:i] length] > 4 && [[[contentArray objectAtIndex:i] substringWithRange:NSMakeRange(0, 4)] isEqualToString:@"<12>"]) {
+                                [ficsMoveList addObject:[[contentArray objectAtIndex:i] substringFromIndex:5]];
+                                currentFicsLocalMoveNumber++;
+                                prevStyle12String = currStyle12String;
+                                currStyle12String = (NSMutableString *)[[contentArray objectAtIndex:i] substringFromIndex:5];
+                                
+                                
+                                clockRunning = YES;
+                                [moveList addObject:currStyle12String];
+                                
+                                /*if (currentMoveNumber == absoluteMoveNumber) {
+                                    [(BoardViewController *)boardViewController setPositionFromStyle12:currStyle12String direction:@"forward"];
+                                    currentMoveNumber++;
+                                }*/
+                                absoluteMoveNumber++;
+                                NSLog(@"CLF=%d, CUR=%d, ABS=%d", currentFicsLocalMoveNumber, currentMoveNumber, absoluteMoveNumber);
+                                
+                                if ([self mode] == TRAINING && _trainingViewController) {
+                                    NSLog(@"currStyle12: %@", currStyle12String);
+                                    [(TrainingViewController *)_trainingViewController setPositionFromStyle12:currStyle12String];
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (_server == ICC) {
+                    //NSLog(@"SERVER is ICC");
+                }
 				
-				if ([(NSMutableString *)cfReplyContent rangeOfString:@"\rfics%"].location != NSNotFound && streamFirstReady) {
+				/*if ([(NSMutableString *)cfReplyContent rangeOfString:@"\rfics%"].location != NSNotFound && streamFirstReady) {
 					if ([[StreamController sharedStreamController].server isEqualToString:@"fics"]) {
 						[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:(UITableViewController *)self];
 					}
@@ -318,7 +361,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 						}
 					}
 					prev = [(NSMutableString *)cfReplyContent characterAtIndex:i];
-				}
+				}*/
 			}
             break;
 		case NSStreamEventHasSpaceAvailable:
