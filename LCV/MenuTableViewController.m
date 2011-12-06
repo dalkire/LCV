@@ -23,9 +23,7 @@
         _actions = [[NSMutableArray alloc] initWithObjects:@"Watch", @"Training", nil];
         _accounts = [[NSMutableArray alloc] initWithObjects:@"ICC", @"FICS", nil];
         _sections = [[NSMutableArray alloc] initWithObjects:_actions, _accounts, nil];
-        UIView *bg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1000, 1000)];
-        [bg setBackgroundColor:[UIColor scrollViewTexturedBackgroundColor]];
-        [self.tableView setBackgroundView:bg];
+        [self.view setBackgroundColor:[UIColor clearColor]];
     }
     return self;
 }
