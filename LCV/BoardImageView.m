@@ -6,12 +6,19 @@
 //  Copyright PixelSift Studios 2010. All rights reserved.
 //
 
+#define NONE        0
+#define WATCHING    200
+#define TRAINING    201
+#define ICC         300
+#define FICS        301
+
 #import "Definitions.h"
 #import "BoardView.h"
 #import "BoardImageView.h"
 #import "PieceImageView.h"
 #import "StreamController.h"
 #import "BoardViewController.h"
+#import "TrainingViewController.h"
 #import "Move.h"
 #import "MoveListView.h"
 
@@ -20,6 +27,7 @@
 
 @synthesize board, wpImg, wrImg, wnImg, wbImg, wqImg, wkImg, bpImg, brImg, bnImg, bbImg, bqImg, bkImg;
 @synthesize gesturePoint, overlay;
+@synthesize fromSquare = _fromSquare;
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -35,6 +43,7 @@
 		
 		overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
 		[self addSubview:overlay];
+        _fromSquare = [[NSString alloc] initWithString:@""];
     }
 	
     return self;
@@ -362,9 +371,6 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	NSLog(@"Touch in BIV");
-	//CGFloat x = [[touches anyObject] locationInView:[self superview]].x;
-	//CGFloat y = [[touches anyObject] locationInView:[self superview]].y;
 	//self.center = CGPointMake(x - 20, y - 60);
 	//[[self superview] bringSubviewToFront:self];
 }
@@ -373,12 +379,22 @@
 	CGFloat x = [[touches anyObject] locationInView:[self superview]].x;
 	CGFloat y = [[touches anyObject] locationInView:[self superview]].y;
 	self.center = CGPointMake(x - 20, y - 60);
-}
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	CGFloat x = [[touches anyObject] locationInView:[self superview]].x;
-	CGFloat y = [[touches anyObject] locationInView:[self superview]].y;
-	self.center = CGPointMake((int)x - ((int)x-20)%40, (int)y - ((int)y-60)%40 - 40);
 }*/
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	CGFloat x = [[touches anyObject] locationInView:self].x;
+	CGFloat y = [[touches anyObject] locationInView:self].y;
+	NSLog(@"Touch in BIV: (%f, %f) = %@", x, y, [self getSquareForPoint:CGPointMake(x, y)]);
+    
+    if ([_fromSquare isEqualToString:@""]) { //This will be the first square selected
+        _fromSquare = [[NSString alloc] initWithString:[self getSquareForPoint:CGPointMake(x, y)]];
+        [self hideHighlights];
+        [self placeHighlightForSquare:_fromSquare];
+    }
+    else {
+        [(TrainingViewController *)[[StreamController sharedStreamController] trainingViewController] movePieceFromSquare:_fromSquare toSquare:[self getSquareForPoint:CGPointMake(x, y)]];
+        _fromSquare = [[NSString alloc] initWithString:@""];
+    }
+}
 
 - (void)moveFromPoint:(CGPoint)src toPoint:(CGPoint)dest promote:(NSString *)promote {
 	//NSInteger source_x, source_y;
@@ -542,6 +558,23 @@
 	
 	[self addSubview:pieceImageView];
 	[pieceImageView release];
+}
+
+- (NSString *)getSquareForPoint:(CGPoint)point
+{
+    int x = (int)point.x/40;
+    int y = (int)point.y/40;
+    
+    NSString *rank = @"";
+    NSString *file = @"";
+    
+    NSArray *ranks = [[NSArray alloc] initWithObjects:@"8", @"7", @"6", @"5", @"4", @"3", @"2", @"1", nil];
+    NSArray *files = [[NSArray alloc] initWithObjects:@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", nil];
+    
+    rank = [ranks objectAtIndex:y];
+    file = [files objectAtIndex:x];
+    
+    return [NSString stringWithFormat:@"%@%@", file, rank];
 }
 
 - (CGPoint)getPointFromSquare:(NSString *)square {
@@ -745,6 +778,26 @@
 		return CGPointMake(300.0, 20.0);
 	}
 	return CGPointMake(0.0, 0.0);
+}
+
+- (void)hideHighlights {
+    for (UIView *piece in [self subviews]) {
+		if (![piece isKindOfClass:[PieceImageView class]] && [piece isKindOfClass:[UIImageView class]]) {
+            [piece setHidden:YES];
+		}
+	}
+}
+
+- (void)placeHighlightForSquare:(NSString *)square {
+	CGPoint firstPoint = [self getPointFromSquare:square];
+    
+    for (UIView *piece in [self subviews]) {
+		if (![piece isKindOfClass:[PieceImageView class]] && [piece isKindOfClass:[UIImageView class]]) {
+            piece.center = CGPointMake(firstPoint.x, firstPoint.y);
+            [piece setHidden:NO];
+            return;
+		}
+	}
 }
 
 - (void)placeHighlightsForMove:(NSString *)moveSmith {

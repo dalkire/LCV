@@ -16,7 +16,6 @@
 #import "Definitions.h"
 #import "BoardViewController.h"
 #import "CurrentGamesViewController.h"
-#import "TrainingViewController.h"
 #import "Move.h"
 
 // This is a singleton class, see below
@@ -215,6 +214,11 @@ static StreamController *sharedStreamControllerDelegate = nil;
 				
                 if (_server == FICS) {
                     if ([self mode] == TRAINING && _trainingViewController) {
+                        NSString *kText = [NSString stringWithString:[[[_trainingViewController trainingView] kibitzTextView] text]];
+                        NSString *kibitzText = [NSString stringWithFormat:@"%@\n%@", kText, (NSMutableString *)cfReplyContent];
+                        [[[_trainingViewController trainingView] kibitzTextView] setText:kibitzText];
+                        [[[_trainingViewController trainingView] kibitzTextView] scrollRangeToVisible:NSMakeRange([kibitzText length], 0)];
+                        
                         if ([(NSMutableString *)cfReplyContent rangeOfString:@"\r<12>"].location != NSNotFound) {
                             NSMutableArray *contentArray = [[NSMutableArray alloc] initWithArray:[(NSMutableString *)cfReplyContent componentsSeparatedByString:@"\r"]];
                             for (int i=0; i < [contentArray count]; i++) {
@@ -408,6 +412,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 								  otherButtonTitles:nil]; 
 			[alert show]; 
 			[alert release]; 
+            //[self connect];
             break;
 		}
 	}

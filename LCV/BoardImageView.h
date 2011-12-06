@@ -28,6 +28,7 @@
 	UIImage *bkImg;
 	UIView *overlay;
 	CGPoint gesturePoint;
+    NSString *fromSquare;
 }
 
 @property (nonatomic, retain) UIImage *board;
@@ -45,13 +46,17 @@
 @property (nonatomic, retain) UIImage *bkImg;
 @property (nonatomic, retain) UIView *overlay;
 @property CGPoint gesturePoint;
+@property (nonatomic, retain) NSString *fromSquare;
 
 - (void)setBoard;
 - (void)moveFromPoint:(CGPoint)src toPoint:(CGPoint)dest promote:(NSString *)promote;
 - (void)playBoardSound;
 - (void)removePieceFromSquare:(NSString *)square;
 - (void)addPiece:(NSString *)piece toSquare:(NSString *)square;
+- (NSString *)getSquareForPoint:(CGPoint)point;
 - (CGPoint)getPointFromSquare:(NSString *)square;
+- (void)hideHighlights;
+- (void)placeHighlightForSquare:(NSString *)square;
 - (void)placeHighlightsForMove:(NSString *)moveSmith;
 - (void)clearBoard;
 

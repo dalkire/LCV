@@ -44,7 +44,7 @@
     [super dealloc];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+/*- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     NSMutableString *canMoveColor = [NSMutableString stringWithString:[[[StreamController sharedStreamController] canMoveColor] lowercaseString]];
     
     if ([canMoveColor characterAtIndex:0] == [_color characterAtIndex:0]) {
@@ -54,7 +54,7 @@
         CGFloat x = [[touches anyObject] locationInView:[self superview]].x;
         CGFloat y = [[touches anyObject] locationInView:[self superview]].y;
     
-        y = y - 40 < 0 + 20 ? 0 + 20    : y - 40;
+        y = y - 60 < 0 + 20 ? 0 + 20    : y - 60;
         y = y > 320 - 20    ? 320 - 20  : y;
         x = x < 0 + 20      ? 0 + 20    : x;
         x = x > 320 - 20    ? 320 - 20  : x;
@@ -71,7 +71,7 @@
         CGFloat x = [[touches anyObject] locationInView:[self superview]].x;
         CGFloat y = [[touches anyObject] locationInView:[self superview]].y;
     
-        y = y - 40 < 0 + 20 ? 0 + 20    : y - 40;
+        y = y - 60 < 0 + 20 ? 0 + 20    : y - 60;
         y = y > 320 - 20    ? 320 - 20  : y;
         x = x < 0 + 20      ? 0 + 20    : x;
         x = x > 320 - 20    ? 320 - 20  : x;
@@ -89,12 +89,11 @@
         self.center = CGPointMake(squareOrigin.x + 20, squareOrigin.y + 20);
     
         if ([[StreamController sharedStreamController] mode] == TRAINING && [[StreamController sharedStreamController] trainingViewController]) {
-            [(TrainingViewController *)[[StreamController sharedStreamController] trainingViewController] movePiece:_piece 
-                                                                                                     fromSquare:_fromSquare 
+            [(TrainingViewController *)[[StreamController sharedStreamController] trainingViewController] movePiecFromSquare:_fromSquare 
                                                                                                        toSquare:square];
         }
     }
-}
+}*/
 
 - (NSString *)getSquareForPoint:(CGPoint)point
 {

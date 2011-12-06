@@ -8,25 +8,25 @@
 
 #import <UIKit/UIKit.h>
 #import "StreamController.h"
-#import "BoardView.h"
+#import "TrainingView.h"
 
 @interface TrainingViewController : UIViewController
 {
 	UIToolbar *toolbar;
-	BoardView *board;
+	TrainingView *trainingView;
 	NSMutableString *blackName;
 	NSMutableString *whiteName;
     BOOL inStartingPosition;
 }
 
 @property (nonatomic, retain) UIToolbar *toolbar;
-@property (nonatomic, retain) BoardView *board;
+@property (nonatomic, retain) TrainingView *trainingView;
 @property (nonatomic, retain) NSMutableString *blackName;
 @property (nonatomic, retain) NSMutableString *whiteName;
 @property BOOL inStartingPosition;
 
 - (void)setPositionFromStyle12:(NSString *)style12;
-- (void)movePiece:(NSString *)piece fromSquare:(NSString *)fromSquare toSquare:(NSString *)toSquare;
+- (void)movePieceFromSquare:(NSString *)fromSquare toSquare:(NSString *)toSquare;
 
 @end
 

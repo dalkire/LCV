@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "TrainingViewController.h"
 
+@class TrainingViewController;
 
 @interface StreamController : NSObject <NSStreamDelegate> {
 	NSMutableString *testString;
@@ -40,7 +41,7 @@
 	UIViewController *caller;
 	UIViewController *boardViewController;
 	UIViewController *currentGamesViewController;
-    UIViewController *trainingViewController;
+    TrainingViewController *trainingViewController;
 	UIViewController *mainViewController;
 	NSString *resultText;
 	NSString *iccResultText;
@@ -64,7 +65,7 @@
 @property (nonatomic, retain) UIViewController *caller;
 @property (nonatomic, retain) UIViewController *boardViewController;
 @property (nonatomic, retain) UIViewController *currentGamesViewController;
-@property (nonatomic, retain) UIViewController *trainingViewController;
+@property (nonatomic, retain) TrainingViewController *trainingViewController;
 @property (nonatomic, retain) UIViewController *mainViewController;
 @property BOOL firstPass;
 @property BOOL spaceAvailable;

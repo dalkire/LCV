@@ -17,6 +17,7 @@
 		899387A514892D0C006FF9DA /* icon-menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 899387A414892D0C006FF9DA /* icon-menu.png */; };
 		899387A9148930AC006FF9DA /* MenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899387A8148930AC006FF9DA /* MenuTableViewController.m */; };
 		899387B91489661C006FF9DA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 899387B7148965FB006FF9DA /* QuartzCore.framework */; };
+		89945492148DBFC80003014A /* TrainingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89945491148DBFC80003014A /* TrainingView.m */; };
 		89C310821487FA9B00DFAADC /* icon-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C310811487FA9B00DFAADC /* icon-settings.png */; };
 		89C3108D14880D4D00DFAADC /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */; };
 		89C3108F1488154800DFAADC /* icon-home.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C3108E1488154800DFAADC /* icon-home.png */; };
@@ -152,6 +153,8 @@
 		899387A7148930AC006FF9DA /* MenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewController.h; sourceTree = "<group>"; };
 		899387A8148930AC006FF9DA /* MenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewController.m; sourceTree = "<group>"; };
 		899387B7148965FB006FF9DA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		89945490148DBFC80003014A /* TrainingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingView.h; sourceTree = "<group>"; };
+		89945491148DBFC80003014A /* TrainingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainingView.m; sourceTree = "<group>"; };
 		89C310811487FA9B00DFAADC /* icon-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-settings.png"; sourceTree = "<group>"; };
 		89C3108B14880D4D00DFAADC /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
@@ -394,6 +397,8 @@
 		89CD840A1489D34500649DBA /* Training */ = {
 			isa = PBXGroup;
 			children = (
+				89945490148DBFC80003014A /* TrainingView.h */,
+				89945491148DBFC80003014A /* TrainingView.m */,
 				89CD84061489D33600649DBA /* TrainingViewController.h */,
 				89CD84071489D33600649DBA /* TrainingViewController.m */,
 			);
@@ -758,6 +763,7 @@
 				89CD84081489D33600649DBA /* TrainingViewController.m in Sources */,
 				89CD840D148A50CC00649DBA /* Model.xcdatamodeld in Sources */,
 				89CD8411148AE77A00649DBA /* KeychainWrapper.m in Sources */,
+				89945492148DBFC80003014A /* TrainingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
