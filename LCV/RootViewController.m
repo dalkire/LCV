@@ -98,6 +98,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [UIApplication sharedApplication].statusBarHidden = NO;
 	// Do any additional setup after loading the view, typically from a nib.
 }
 

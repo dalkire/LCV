@@ -25,7 +25,7 @@
 				<string>LCVicon-ipad.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
-			<false/>
+			<true/>
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
@@ -57,7 +57,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
-	<key>UIPrerenderedIcon</key>
+	<key>UIStatusBarHidden</key>
 	<true/>
 </dict>
 </plist>

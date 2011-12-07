@@ -25,6 +25,7 @@
         
         [_kibitzTextView setText:@"hello"];
         [_kibitzTextView setText:[NSString stringWithFormat:@"%@\n%@", [_kibitzTextView text], @"again"]];
+        [_kibitzTextView setEditable:NO];
 		
 		[self addSubview:_board];
 		[self addSubview:_kibitzTextView];

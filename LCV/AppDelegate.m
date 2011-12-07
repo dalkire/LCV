@@ -24,6 +24,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [UIApplication sharedApplication].statusBarHidden = YES;
 	[UIApplication sharedApplication].idleTimerDisabled = YES;
 	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackOpaque;
 	[StreamController sharedStreamController];
