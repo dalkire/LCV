@@ -10,6 +10,7 @@
 #define VIEW_CONTROLLER_CURRENT_GAMES   101
 #define VIEW_CONTROLLER_WATCH_BOARD     102
 #define VIEW_CONTROLLER_PRACTICE_BOARD  103
+#define VIEW_LOADING_VIEW               104
 
 
 #import "RootViewController.h"
@@ -32,6 +33,7 @@
         _currentViewController = 0;
         _navigationController = nil;
         _streamController = [StreamController sharedStreamController];
+        [_streamController setDelegate:self];
         _menuTableViewController  = [[MenuTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
         [_menuTableViewController setDelegate:self];
     }
@@ -90,15 +92,26 @@
     [_toolbar setItems:[NSArray arrayWithObjects:menuBtn, nil]];
     
     [view addSubview:_toolbar];
+    
+    LoadingView *loadingView = [[LoadingView alloc] init];
+    [loadingView setTag:VIEW_LOADING_VIEW];
+    [view addSubview:loadingView];
+    
     [self setView:view];
     [_toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [view release];
+	[[StreamController sharedStreamController] connect];
+}
+
+- (void)didConnect
+{
+    [[self.view viewWithTag:VIEW_LOADING_VIEW] removeFromSuperview];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [UIApplication sharedApplication].statusBarHidden = NO;
 	// Do any additional setup after loading the view, typically from a nib.
 }
 

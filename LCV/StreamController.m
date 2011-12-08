@@ -23,6 +23,8 @@ static StreamController *sharedStreamControllerDelegate = nil;
 
 @implementation StreamController
 
+@synthesize delegate = _delegate;
+@synthesize sentConnectMessage = _sentConnectMessage;
 @synthesize testString;
 @synthesize iStream;
 @synthesize oStream;
@@ -78,6 +80,8 @@ static StreamController *sharedStreamControllerDelegate = nil;
 }
 
 - (id)init {
+    _delegate = nil;
+    _sentConnectMessage = NO;
 	NSTimer *timer;
     //[[timer alloc] init];
 	//timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
@@ -206,12 +210,17 @@ static StreamController *sharedStreamControllerDelegate = nil;
     switch(eventCode) {
         case NSStreamEventHasBytesAvailable:
 			if (stream == iStream) {
+                if (!_sentConnectMessage) {
+                    [_delegate didConnect];
+                    _sentConnectMessage = YES;
+                }
+                
 				UInt8 rbuf[1024];
 				int bytesRead = CFReadStreamRead((CFReadStreamRef)stream, rbuf, 1000);
 				rbuf[bytesRead] = 0;
 				CFMutableStringRef cfReplyContent = CFStringCreateMutable(kCFAllocatorDefault, 0);
 				CFStringAppendCString(cfReplyContent, (const char *)rbuf, kCFStringEncodingASCII);
-				
+				//NSLog(@"%@", (NSMutableString *)cfReplyContent);
                 if (_server == FICS) {
                     if ([self mode] == TRAINING && _trainingViewController) {
                         NSString *kText = [NSString stringWithString:[[[_trainingViewController trainingView] kibitzTextView] text]];

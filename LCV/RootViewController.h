@@ -13,8 +13,9 @@
 #import "TrainingViewController.h"
 #import "CurrentGamesViewController.h"
 #import "BoardViewController.h"
+#import "LoadingView.h"
 
-@interface RootViewController : UIViewController <MenuTableViewControllerDelegate>
+@interface RootViewController : UIViewController <MenuTableViewControllerDelegate, StreamControllerDelegate>
 {
     UIToolbar *toolbar;
     StreamController *streamController;

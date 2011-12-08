@@ -12,6 +12,8 @@
 @class TrainingViewController;
 
 @interface StreamController : NSObject <NSStreamDelegate> {
+    id delegate;
+    BOOL sentConnectMessage;
 	NSMutableString *testString;
 	NSInputStream *iStream;
 	NSOutputStream *oStream;
@@ -50,6 +52,8 @@
     NSString *canMoveColor;
 }
 
+@property (nonatomic, retain) id delegate;
+@property BOOL sentConnectMessage;
 @property (nonatomic, retain) NSMutableString *testString;
 @property (nonatomic, retain) NSInputStream *iStream;
 @property (nonatomic, retain) NSOutputStream *oStream;
@@ -99,5 +103,11 @@
 - (void)connect;
 - (void)disconnect;
 - (NSString *)toSmithFromPreviousStyle12:(NSMutableString *)previousStyle12 andCurrentStyle12:(NSMutableString *)currentStyle12;
+
+@end
+
+@protocol StreamControllerDelegate <NSObject>
+
+- (void)didConnect;
 
 @end

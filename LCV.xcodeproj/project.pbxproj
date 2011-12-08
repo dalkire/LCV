@@ -14,6 +14,7 @@
 		897B5CF81487D10F003EE329 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 897B5CF71487D10F003EE329 /* main.m */; };
 		897B5CFC1487D10F003EE329 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 897B5CFB1487D10F003EE329 /* AppDelegate.m */; };
 		897B5CFF1487D10F003EE329 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897B5CFE1487D10F003EE329 /* RootViewController.m */; };
+		89858E7F1490504100763B8C /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89858E7E1490504100763B8C /* LoadingView.m */; };
 		899387A514892D0C006FF9DA /* icon-menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 899387A414892D0C006FF9DA /* icon-menu.png */; };
 		899387A9148930AC006FF9DA /* MenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899387A8148930AC006FF9DA /* MenuTableViewController.m */; };
 		899387B91489661C006FF9DA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 899387B7148965FB006FF9DA /* QuartzCore.framework */; };
@@ -156,6 +157,8 @@
 		897B5CFB1487D10F003EE329 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		897B5CFD1487D10F003EE329 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		897B5CFE1487D10F003EE329 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		89858E7D1490504100763B8C /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
+		89858E7E1490504100763B8C /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
 		899387A414892D0C006FF9DA /* icon-menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-menu.png"; sourceTree = "<group>"; };
 		899387A7148930AC006FF9DA /* MenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewController.h; sourceTree = "<group>"; };
 		899387A8148930AC006FF9DA /* MenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewController.m; sourceTree = "<group>"; };
@@ -355,6 +358,8 @@
 				897B5CFB1487D10F003EE329 /* AppDelegate.m */,
 				897B5CFD1487D10F003EE329 /* RootViewController.h */,
 				897B5CFE1487D10F003EE329 /* RootViewController.m */,
+				89858E7D1490504100763B8C /* LoadingView.h */,
+				89858E7E1490504100763B8C /* LoadingView.m */,
 				89CD840F148AE77A00649DBA /* KeychainWrapper.h */,
 				89CD8410148AE77A00649DBA /* KeychainWrapper.m */,
 				89C31090148822A800DFAADC /* BoardImageView.h */,
@@ -792,6 +797,7 @@
 				89CD840D148A50CC00649DBA /* Model.xcdatamodeld in Sources */,
 				89CD8411148AE77A00649DBA /* KeychainWrapper.m in Sources */,
 				89945492148DBFC80003014A /* TrainingView.m in Sources */,
+				89858E7F1490504100763B8C /* LoadingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
