@@ -24,9 +24,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [UIApplication sharedApplication].statusBarHidden = YES;
-	[UIApplication sharedApplication].idleTimerDisabled = YES;
-	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackOpaque;
+    //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    
 	[StreamController sharedStreamController].mainViewController = _rootViewController;
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];

@@ -53,27 +53,24 @@
     NSLog(@"loadview");
     float width = 0;
     float height = 0;
-    switch ([[UIDevice currentDevice] orientation]) {
-        case UIDeviceOrientationPortrait:
-        case UIDeviceOrientationPortraitUpsideDown:
-            width = [UIScreen mainScreen].bounds.size.width;
-            height = [UIScreen mainScreen].bounds.size.height;
-            break;
-        case UIDeviceOrientationLandscapeLeft:
-        case UIDeviceOrientationLandscapeRight:
-            width = [UIScreen mainScreen].bounds.size.height;
-            height = [UIScreen mainScreen].bounds.size.width;
-            break;
-            
-        default:
-            width = [UIScreen mainScreen].bounds.size.width;
-            height = [UIScreen mainScreen].bounds.size.height;
-            break;
-    }
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-    view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
     
-    UIBarButtonItem *menuBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-menu.png"] 
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        NSLog(@"PHONE");
+        width = [UIScreen mainScreen].bounds.size.width;
+        height = [UIScreen mainScreen].bounds.size.height;
+    }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        NSLog(@"PAD");
+        width = [UIScreen mainScreen].bounds.size.height;
+        height = [UIScreen mainScreen].bounds.size.width;
+    }
+    
+    NSLog(@"width: %f, height: %f", width, height);
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    
+    UIView *viewInner = [[UIView alloc] initWithFrame:CGRectMake(0, 20, width, height - 20)];
+    
+    UIBarButtonItem *menuBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-settings.png"] 
                                                                    style:UIBarButtonItemStyleBordered 
                                                                   target:self 
                                                                   action:@selector(didTouchMenu)];
@@ -86,19 +83,19 @@
                                                              target:self 
                                                              action:@selector(addCourseModal)];
     UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    _toolbar = [[UIToolbar alloc] init];
+    _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, width, 44)];
     [_toolbar setBarStyle:UIBarStyleBlack];
-    [_toolbar sizeToFit];
     [_toolbar setItems:[NSArray arrayWithObjects:menuBtn, nil]];
     
-    [view addSubview:_toolbar];
+    [viewInner addSubview:_toolbar];
     
     LoadingView *loadingView = [[LoadingView alloc] init];
     [loadingView setTag:VIEW_LOADING_VIEW];
+    
+    [view addSubview:viewInner];
     [view addSubview:loadingView];
     
     [self setView:view];
-    [_toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [view release];
 	[[StreamController sharedStreamController] connect];
 }
@@ -106,7 +103,7 @@
 - (void)didConnect
 {
     [[self.view viewWithTag:VIEW_LOADING_VIEW] removeFromSuperview];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
 - (void)viewDidLoad
