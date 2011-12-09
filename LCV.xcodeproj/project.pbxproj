@@ -23,7 +23,7 @@
 		899387A514892D0C006FF9DA /* icon-menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 899387A414892D0C006FF9DA /* icon-menu.png */; };
 		899387A9148930AC006FF9DA /* MenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899387A8148930AC006FF9DA /* MenuTableViewController.m */; };
 		899387B91489661C006FF9DA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 899387B7148965FB006FF9DA /* QuartzCore.framework */; };
-		89945492148DBFC80003014A /* TrainingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89945491148DBFC80003014A /* TrainingView.m */; };
+		89945492148DBFC80003014A /* PracticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89945491148DBFC80003014A /* PracticeView.m */; };
 		89C310821487FA9B00DFAADC /* icon-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C310811487FA9B00DFAADC /* icon-settings.png */; };
 		89C3108D14880D4D00DFAADC /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */; };
 		89C3108F1488154800DFAADC /* icon-home.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C3108E1488154800DFAADC /* icon-home.png */; };
@@ -37,7 +37,7 @@
 		89C310A8148822A900DFAADC /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C310A0148822A900DFAADC /* StreamController.m */; };
 		89C310AA1488237100DFAADC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C310A91488237100DFAADC /* AudioToolbox.framework */; };
 		89C310AC148824B900DFAADC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C310AB148824B900DFAADC /* MessageUI.framework */; };
-		89CD84081489D33600649DBA /* TrainingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89CD84071489D33600649DBA /* TrainingViewController.m */; };
+		89CD84081489D33600649DBA /* PracticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89CD84071489D33600649DBA /* PracticeViewController.m */; };
 		89CD840D148A50CC00649DBA /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 89CD840B148A50CC00649DBA /* Model.xcdatamodeld */; };
 		89CD8411148AE77A00649DBA /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 89CD8410148AE77A00649DBA /* KeychainWrapper.m */; };
 		89CD8414148AECD400649DBA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CD8412148AECBF00649DBA /* Security.framework */; };
@@ -174,8 +174,8 @@
 		899387A7148930AC006FF9DA /* MenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewController.h; sourceTree = "<group>"; };
 		899387A8148930AC006FF9DA /* MenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewController.m; sourceTree = "<group>"; };
 		899387B7148965FB006FF9DA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		89945490148DBFC80003014A /* TrainingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingView.h; sourceTree = "<group>"; };
-		89945491148DBFC80003014A /* TrainingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainingView.m; sourceTree = "<group>"; };
+		89945490148DBFC80003014A /* PracticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PracticeView.h; sourceTree = "<group>"; };
+		89945491148DBFC80003014A /* PracticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticeView.m; sourceTree = "<group>"; };
 		89C310811487FA9B00DFAADC /* icon-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-settings.png"; sourceTree = "<group>"; };
 		89C3108B14880D4D00DFAADC /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		89C3108C14880D4D00DFAADC /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
@@ -199,8 +199,8 @@
 		89C310A0148822A900DFAADC /* StreamController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamController.m; sourceTree = "<group>"; };
 		89C310A91488237100DFAADC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		89C310AB148824B900DFAADC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		89CD84061489D33600649DBA /* TrainingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingViewController.h; sourceTree = "<group>"; };
-		89CD84071489D33600649DBA /* TrainingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainingViewController.m; sourceTree = "<group>"; };
+		89CD84061489D33600649DBA /* PracticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PracticeViewController.h; sourceTree = "<group>"; };
+		89CD84071489D33600649DBA /* PracticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticeViewController.m; sourceTree = "<group>"; };
 		89CD840C148A50CC00649DBA /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		89CD840F148AE77A00649DBA /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		89CD8410148AE77A00649DBA /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
@@ -383,7 +383,7 @@
 				89CD8421148AFC0C00649DBA /* images */,
 				89C31094148822A800DFAADC /* BoardViewController.h */,
 				89C31095148822A800DFAADC /* BoardViewController.m */,
-				89CD840A1489D34500649DBA /* Training */,
+				89CD840A1489D34500649DBA /* Practice */,
 				89C31096148822A800DFAADC /* CurrentGamesViewController.h */,
 				89C31097148822A800DFAADC /* CurrentGamesViewController.m */,
 				89C31098148822A800DFAADC /* Definitions.h */,
@@ -426,15 +426,15 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
-		89CD840A1489D34500649DBA /* Training */ = {
+		89CD840A1489D34500649DBA /* Practice */ = {
 			isa = PBXGroup;
 			children = (
-				89945490148DBFC80003014A /* TrainingView.h */,
-				89945491148DBFC80003014A /* TrainingView.m */,
-				89CD84061489D33600649DBA /* TrainingViewController.h */,
-				89CD84071489D33600649DBA /* TrainingViewController.m */,
+				89945490148DBFC80003014A /* PracticeView.h */,
+				89945491148DBFC80003014A /* PracticeView.m */,
+				89CD84061489D33600649DBA /* PracticeViewController.h */,
+				89CD84071489D33600649DBA /* PracticeViewController.m */,
 			);
-			name = Training;
+			name = Practice;
 			sourceTree = "<group>";
 		};
 		89CD840E148A50D500649DBA /* Core Data */ = {
@@ -814,10 +814,10 @@
 				89C310A7148822A900DFAADC /* PieceImageView.m in Sources */,
 				89C310A8148822A900DFAADC /* StreamController.m in Sources */,
 				899387A9148930AC006FF9DA /* MenuTableViewController.m in Sources */,
-				89CD84081489D33600649DBA /* TrainingViewController.m in Sources */,
+				89CD84081489D33600649DBA /* PracticeViewController.m in Sources */,
 				89CD840D148A50CC00649DBA /* Model.xcdatamodeld in Sources */,
 				89CD8411148AE77A00649DBA /* KeychainWrapper.m in Sources */,
-				89945492148DBFC80003014A /* TrainingView.m in Sources */,
+				89945492148DBFC80003014A /* PracticeView.m in Sources */,
 				89858E7F1490504100763B8C /* LoadingView.m in Sources */,
 				8933A3A4149251E2006054C4 /* ActionBadgesViewController.m in Sources */,
 			);

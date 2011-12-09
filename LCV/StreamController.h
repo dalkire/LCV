@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TrainingViewController.h"
+#import "PracticeViewController.h"
 
 @class TrainingViewController;
 

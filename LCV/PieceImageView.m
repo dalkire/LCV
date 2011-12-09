@@ -11,7 +11,7 @@
 
 #import "PieceImageView.h"
 #import "StreamController.h"
-#import "TrainingViewController.h"
+#import "PracticeViewController.h"
 
 
 @implementation PieceImageView

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ActionBadgesViewController : UIViewController {
+    id delegate;
     UIImageView *watchBadge;
     UIImageView *practiceBadge;
     UIImageView *reviewBadge;
@@ -16,10 +17,20 @@
     int device;
 }
 
+@property (nonatomic, retain) id delegate;
 @property (nonatomic, retain) UIImageView *watchBadge;
 @property (nonatomic, retain) UIImageView *practiceBadge;
 @property (nonatomic, retain) UIImageView *reviewBadge;
 @property (nonatomic, retain) UIImageView *playBadge;
 @property int device;
+
+@end
+
+@protocol ActionBadgesViewControllerDelegate <NSObject>
+
+- (void)didTouchWatchBadge;
+- (void)didTouchPracticeBadge;
+- (void)didTouchReviewBadge;
+- (void)didTouchPlayBadge;
 
 @end

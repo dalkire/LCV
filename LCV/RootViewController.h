@@ -10,13 +10,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import "StreamController.h"
 #import "MenuTableViewController.h"
-#import "TrainingViewController.h"
+#import "PracticeViewController.h"
 #import "CurrentGamesViewController.h"
 #import "BoardViewController.h"
 #import "LoadingView.h"
 #import "ActionBadgesViewController.h"
 
-@interface RootViewController : UIViewController <MenuTableViewControllerDelegate, StreamControllerDelegate>
+@interface RootViewController : UIViewController <MenuTableViewControllerDelegate, StreamControllerDelegate, ActionBadgesViewControllerDelegate>
 {
     UIToolbar *toolbar;
     StreamController *streamController;
@@ -36,5 +36,6 @@
 @property (nonatomic, retain) CurrentGamesViewController *boardViewController;
 
 - (void)didTouchMenu;
+- (void)loadPracticeView;
 
 @end

@@ -14,6 +14,7 @@
 
 @implementation ActionBadgesViewController
 
+@synthesize delegate        = _delegate;
 @synthesize watchBadge      = _watchBadge;
 @synthesize practiceBadge   = _practiceBadge;
 @synthesize reviewBadge     = _reviewBadge;
@@ -24,12 +25,49 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        //[self.view setUserInteractionEnabled:YES];
         _watchBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"watch-badge"]];
         _practiceBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"practice-badge"]];
         //_reviewBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"review-badge"]];
         _playBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"play-badge"]];
+        
+        [_watchBadge setUserInteractionEnabled:YES];
+        [_watchBadge addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchWatchBadge)]];
+        
+        [_practiceBadge setUserInteractionEnabled:YES];
+        [_practiceBadge addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchPracticeBadge)]];
+        
+        //[_reviewBadge setUserInteractionEnabled:YES];
+        //[_reviewBadge addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchReviewBadge)]];
+        
+        [_playBadge setUserInteractionEnabled:YES];
+        [_playBadge addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchPlayBadge)]];
     }
     return self;
+}
+
+- (void)didTouchWatchBadge
+{
+    NSLog(@"hit watch badge");
+    [_delegate didTouchWatchBadge];
+}
+
+- (void)didTouchPracticeBadge
+{
+    NSLog(@"hit practice badge");
+    [_delegate didTouchPracticeBadge];
+}
+
+- (void)didTouchReviewBadge
+{
+    NSLog(@"hit review badge");
+    [_delegate didTouchReviewBadge];
+}
+
+- (void)didTouchPlayBadge
+{
+    NSLog(@"hit play badge");
+    [_delegate didTouchPlayBadge];
 }
 
 - (void)didReceiveMemoryWarning

@@ -91,6 +91,7 @@
     [loadingView setTag:VIEW_LOADING_VIEW];
     
     ActionBadgesViewController *actionBadgesViewController = [[ActionBadgesViewController alloc] initWithNibName:nil bundle:nil];
+    [actionBadgesViewController setDelegate:self];
     [viewInner addSubview:actionBadgesViewController.view];
     
     [viewInner addSubview:_toolbar];
@@ -175,15 +176,37 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)loadTrainingView
+- (void)loadPracticeView
 {
-    TrainingViewController *trainingViewController = [[TrainingViewController alloc] initWithNibName:nil bundle:nil];
-    [self dismissMenu];
+    PracticeViewController *practiceViewController = [[PracticeViewController alloc] initWithNibName:nil bundle:nil];
+    //[self dismissMenu];
     int len = [[self.view subviews] count];
     for (int i = 0; i < len; i++) {
         [[[self.view subviews] objectAtIndex:i] removeFromSuperview];
     }
-    [self.view insertSubview:trainingViewController.view atIndex:0];
+    [self.view insertSubview:practiceViewController.view atIndex:0];
+    NSLog(@"load training View");
+}
+
+- (void)didTouchWatchBadge
+{
+    NSLog(@"TOUCHED WATCH");
+}
+
+- (void)didTouchPracticeBadge
+{
+    NSLog(@"TOUCHED PRACTICE");
+    [self loadPracticeView];
+}
+
+- (void)didTouchReviewBadge
+{
+    NSLog(@"TOUCHED REVIEW");
+}
+
+- (void)didTouchPlayBadge
+{
+    NSLog(@"TOUCHED PLAY");
 }
 
 @end
