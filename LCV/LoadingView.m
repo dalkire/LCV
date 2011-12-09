@@ -32,10 +32,10 @@
         CGPoint labelViewOrigin = CGPointMake(frame.size.width/2 - 60, 570); //iPad
         UIImageView *splash = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default@2x.png"]];
         if (_device == IPHONE) { //iPhone
-            labelViewOrigin = CGPointMake(frame.size.width/2 - 70, 800);
+            labelViewOrigin = CGPointMake(frame.size.width/2 - 70, 300);
             if (frame.size.width < 600) {  //Old iPhone
                 splash = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
-                labelViewOrigin = CGPointMake(frame.size.width/2 - 70, 700);
+                labelViewOrigin = CGPointMake(frame.size.width/2 - 70, 300);
             }
         }
         else if (_device == IPAD) {
