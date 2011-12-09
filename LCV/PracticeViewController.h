@@ -1,5 +1,5 @@
 //
-//  PuzzleBoardViewController.h
+//  PracticeViewController.h
 //  LCV
 //
 //  Created by David Alkire on 12/2/11.
@@ -8,19 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "StreamController.h"
-#import "TrainingView.h"
+#import "PracticeView.h"
 
-@interface TrainingViewController : UIViewController
+@interface PracticeViewController : UIViewController
 {
 	UIToolbar *toolbar;
-	TrainingView *trainingView;
+	PracticeView *trainingView;
 	NSMutableString *blackName;
 	NSMutableString *whiteName;
     BOOL inStartingPosition;
 }
 
 @property (nonatomic, retain) UIToolbar *toolbar;
-@property (nonatomic, retain) TrainingView *trainingView;
+@property (nonatomic, retain) PracticeView *trainingView;
 @property (nonatomic, retain) NSMutableString *blackName;
 @property (nonatomic, retain) NSMutableString *whiteName;
 @property BOOL inStartingPosition;
@@ -30,7 +30,7 @@
 
 @end
 
-@protocol TrainingViewControllerDelegate <NSObject>
+@protocol PracticeViewControllerDelegate <NSObject>
 
 //- (void)
 

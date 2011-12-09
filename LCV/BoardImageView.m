@@ -18,7 +18,7 @@
 #import "PieceImageView.h"
 #import "StreamController.h"
 #import "BoardViewController.h"
-#import "TrainingViewController.h"
+#import "PracticeViewController.h"
 #import "Move.h"
 #import "MoveListView.h"
 

@@ -8,9 +8,9 @@
 
 #define TRAINING    201
 
-#import "TrainingViewController.h"
+#import "PracticeViewController.h"
 
-@implementation TrainingViewController
+@implementation PracticeViewController
 
 @synthesize toolbar             = _toolbar;
 @synthesize trainingView        = _trainingView;
@@ -83,7 +83,7 @@
     [view addSubview:_toolbar];
     [view setBackgroundColor:[UIColor yellowColor]];
     
-    _trainingView = [[TrainingView alloc] initWithFrame:CGRectMake(0, 44, 320, 420)];
+    _trainingView = [[PracticeView alloc] initWithFrame:CGRectMake(0, 44, 320, 420)];
     [[_trainingView board] setUserInteractionEnabled:YES];
     [view addSubview:_trainingView];
     [self setInStartingPosition:YES];

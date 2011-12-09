@@ -1,14 +1,14 @@
 //
-//  TrainingView.m
+//  PracticeView.m
 //  Live Chess Viewer
 //
 //  Created by David Alkire on 6/08/10.
 //  Copyright PixelSift Studios 2010. All rights reserved.
 //
 
-#import "TrainingView.h"
+#import "PracticeView.h"
 
-@implementation TrainingView
+@implementation PracticeView
 
 @synthesize board = _board;
 @synthesize kibitzTextView = _kibitzTextView;

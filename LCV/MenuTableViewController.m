@@ -23,7 +23,7 @@
         _actions = [[NSMutableArray alloc] initWithObjects:@"Watch", @"Training", nil];
         _accounts = [[NSMutableArray alloc] initWithObjects:@"ICC", @"FICS", nil];
         _sections = [[NSMutableArray alloc] initWithObjects:_actions, _accounts, nil];
-        [self.view setBackgroundColor:[UIColor clearColor]];
+        //[self.view setBackgroundColor:[UIColor Color]];
     }
     return self;
 }
@@ -131,7 +131,7 @@
     return @"";
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+/*- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 30;
 }
@@ -150,7 +150,7 @@
     
     
     return headerView;
-}
+}*/
 
 /*
 // Override to support conditional editing of the table view.

@@ -1,5 +1,5 @@
 //
-//  TrainingView.h
+//  PracticeView.h
 //  Live Chess Viewer
 //
 //  Created by David Alkire on 6/08/10.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BoardImageView.h"
 
-@interface TrainingView : UIView {
+@interface PracticeView : UIView {
 	BoardImageView *board;
 	UITextView *kibitzTextView;
 }
