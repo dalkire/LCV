@@ -14,6 +14,7 @@
 #import "CurrentGamesViewController.h"
 #import "BoardViewController.h"
 #import "LoadingView.h"
+#import "ActionBadgesViewController.h"
 
 @interface RootViewController : UIViewController <MenuTableViewControllerDelegate, StreamControllerDelegate>
 {

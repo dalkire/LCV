@@ -154,7 +154,7 @@
 - (void)didTouchMenu
 {
     NSLog(@"Did touch menu");
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    /*if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         _navigationController = [[UINavigationController alloc] initWithRootViewController:_menuTableViewController];
         [_navigationController.view setFrame:CGRectMake(_navigationController.view.frame.origin.x, 
                                                         _navigationController.view.frame.origin.y - 20, 
@@ -162,7 +162,10 @@
                                                         _navigationController.view.frame.size.height)];
         [_navigationController.navigationBar setBarStyle:UIBarStyleBlack];
         [self presentModalViewController:_navigationController animated:YES];
-    }
+    }*/
+    
+    ActionBadgesViewController *actionBadgesViewController = [[ActionBadgesViewController alloc] initWithNibName:nil bundle:nil];
+    [self.view addSubview:actionBadgesViewController.view];
 }
 
 #pragma mark - delegate functions
