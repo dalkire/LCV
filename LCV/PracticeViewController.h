@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Definitions.h"
 #import "StreamController.h"
 #import "PracticeView.h"
 
@@ -17,6 +18,7 @@
 	NSMutableString *blackName;
 	NSMutableString *whiteName;
     BOOL inStartingPosition;
+    int device;
 }
 
 @property (nonatomic, retain) UIToolbar *toolbar;
@@ -24,6 +26,7 @@
 @property (nonatomic, retain) NSMutableString *blackName;
 @property (nonatomic, retain) NSMutableString *whiteName;
 @property BOOL inStartingPosition;
+@property int device;
 
 - (void)setPositionFromStyle12:(NSString *)style12;
 - (void)movePieceFromSquare:(NSString *)fromSquare toSquare:(NSString *)toSquare;

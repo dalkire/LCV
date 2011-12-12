@@ -6,8 +6,6 @@
 //  Copyright (c) 2011 PixelSift Studios. All rights reserved.
 //
 
-#define TRAINING    201
-
 #import "PracticeViewController.h"
 
 @implementation PracticeViewController
@@ -17,6 +15,7 @@
 @synthesize blackName           = _blackName;
 @synthesize whiteName           = _whiteName;
 @synthesize inStartingPosition  = _inStartingPosition;
+@synthesize device              = _device;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,24 +40,25 @@
 {    
     float width = 0;
     float height = 0;
-    switch ([[UIDevice currentDevice] orientation]) {
-        case UIDeviceOrientationPortrait:
-        case UIDeviceOrientationPortraitUpsideDown:
-            width = [UIScreen mainScreen].bounds.size.width;
-            height = [UIScreen mainScreen].bounds.size.height;
-            break;
-        case UIDeviceOrientationLandscapeLeft:
-        case UIDeviceOrientationLandscapeRight:
-            width = [UIScreen mainScreen].bounds.size.height;
-            height = [UIScreen mainScreen].bounds.size.width;
-            break;
-            
-        default:
-            width = [UIScreen mainScreen].bounds.size.width;
-            height = [UIScreen mainScreen].bounds.size.height;
-            break;
+    _device = IPHONE_RETINA;
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        NSLog(@"PHONE");
+        width = [UIScreen mainScreen].bounds.size.width;
+        height = [UIScreen mainScreen].bounds.size.height;
+        
+        if (width < 600) {
+            _device = IPHONE_OLD;
+        }
     }
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        NSLog(@"PAD");
+        _device = IPAD;
+        width = [UIScreen mainScreen].bounds.size.height;
+        height = [UIScreen mainScreen].bounds.size.width;
+    }
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 20, width, height)];
     view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
     
     UIBarButtonItem *menuBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-menu.png"] 
@@ -83,7 +83,7 @@
     [view addSubview:_toolbar];
     [view setBackgroundColor:[UIColor yellowColor]];
     
-    _trainingView = [[PracticeView alloc] initWithFrame:CGRectMake(0, 44, 320, 420)];
+    _trainingView = [[PracticeView alloc] initForDevice:_device];
     [[_trainingView board] setUserInteractionEnabled:YES];
     [view addSubview:_trainingView];
     [self setInStartingPosition:YES];

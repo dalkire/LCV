@@ -6,12 +6,6 @@
 //  Copyright PixelSift Studios 2010. All rights reserved.
 //
 
-#define NONE        0
-#define WATCHING    200
-#define TRAINING    201
-#define ICC         300
-#define FICS        301
-
 #import "Definitions.h"
 #import "BoardView.h"
 #import "BoardImageView.h"
@@ -27,10 +21,32 @@
 
 @synthesize board, wpImg, wrImg, wnImg, wbImg, wqImg, wkImg, bpImg, brImg, bnImg, bbImg, bqImg, bkImg;
 @synthesize gesturePoint, overlay;
-@synthesize fromSquare = _fromSquare;
+@synthesize fromSquare  = _fromSquare;
+@synthesize device      = _device;
+@synthesize squareSize  = _squareSize;
 
-- (id)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
+- (id)initForDevice:(int)dvc {
+    int width = 0;
+    int height = 0;
+    _squareSize = 40;
+    switch (dvc) {
+        case IPHONE_OLD:
+            width = 320;
+            height = 320;
+            _squareSize = 40;
+            break;
+        case IPHONE_RETINA:
+        case IPAD:
+            width = 640;
+            height = 640;
+            _squareSize = 80;
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (self = [super initWithFrame:CGRectMake(0, 0, width, height)]) {
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		NSString *boardStyle = [defaults valueForKey:@"board"] ? [[NSString alloc] initWithFormat:@"board_%@.png", [defaults valueForKey:@"board"]] : [[NSString alloc] initWithString:@"board_pinstripes.png"];
 		
@@ -41,7 +57,7 @@
 		[self setBoard];
 		[boardStyle release];
 		
-		overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+		overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
 		[self addSubview:overlay];
         _fromSquare = [[NSString alloc] initWithString:@""];
     }
@@ -86,7 +102,7 @@
 	NSString *pieceStyle = [[NSString alloc] initWithString:ps];
 	
 	UIImage *bg1Img = [UIImage imageNamed:@"bg.png"];
-    CGRect imageRect = CGRectMake(40.0, 0.0, 40.0, 40.0);
+    CGRect imageRect = CGRectMake(_squareSize, 0.0, _squareSize, _squareSize);
     UIImageView *bg1ImageView = [[UIImageView alloc] initWithFrame:imageRect];
     bg1ImageView.image = bg1Img;
 	bg1ImageView.hidden = YES;
@@ -94,7 +110,7 @@
     [bg1ImageView release];
 	
 	UIImage *bg2Img = [UIImage imageNamed:@"bg.png"];
-    imageRect = CGRectMake(40.0, 0.0, 40.0, 40.0);
+    imageRect = CGRectMake(_squareSize, 0.0, _squareSize, _squareSize);
     UIImageView *bg2ImageView = [[UIImageView alloc] initWithFrame:imageRect];
     bg2ImageView.image = bg2Img;
 	bg2ImageView.hidden = YES;
@@ -102,7 +118,7 @@
     [bg2ImageView release];
 	
 	bnImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@bn.png", pieceStyle]];
-    imageRect = CGRectMake(40.0, 0.0, 40.0, 40.0);
+    imageRect = CGRectMake(_squareSize, 0.0, _squareSize, _squareSize);
     PieceImageView *pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bnImg;
     pieceImageView.color = @"black";
@@ -110,7 +126,7 @@
     [pieceImageView release];
 	
 	//UIImage *bn2Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@bn.png", pieceStyle]];
-    imageRect = CGRectMake(240.0, 0.0, 40.0, 40.0);
+    imageRect = CGRectMake(6*_squareSize, 0.0, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bnImg;
     pieceImageView.color = @"black";
@@ -118,7 +134,7 @@
     [pieceImageView release];
 	
 	bbImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@bb.png", pieceStyle]];
-    imageRect = CGRectMake(80.0, 0.0, 40.0, 40.0);
+    imageRect = CGRectMake(2*_squareSize, 0.0, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bbImg;
     pieceImageView.color = @"black";
@@ -126,7 +142,7 @@
     [pieceImageView release];
 	
 	//UIImage *bb2Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@bb.png", pieceStyle]];
-    imageRect = CGRectMake(200.0, 0.0, 40.0, 40.0);
+    imageRect = CGRectMake(5*_squareSize, 0.0, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bbImg;
     pieceImageView.color = @"black";
@@ -134,7 +150,7 @@
     [pieceImageView release];
 	
 	bqImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@bq.png", pieceStyle]];
-    imageRect = CGRectMake(120.0, 0.0, 40.0, 40.0);
+    imageRect = CGRectMake(3*_squareSize, 0.0, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bqImg;
     pieceImageView.color = @"black";
@@ -142,7 +158,7 @@
     [pieceImageView release];
 	
 	bkImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@bk.png", pieceStyle]];
-    imageRect = CGRectMake(160.0, 0.0, 40.0, 40.0);
+    imageRect = CGRectMake(4*_squareSize, 0.0, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bkImg;
     pieceImageView.color = @"black";
@@ -150,7 +166,7 @@
     [pieceImageView release];
 	
 	brImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@br.png", pieceStyle]];
-    imageRect = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    imageRect = CGRectMake(0.0, 0.0, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = brImg;
     pieceImageView.color = @"black";
@@ -158,7 +174,7 @@
     [pieceImageView release];
 	
 	//UIImage *br2Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@br.png", pieceStyle]];
-    imageRect = CGRectMake(280.0, 0.0, 40.0, 40.0);
+    imageRect = CGRectMake(7*_squareSize, 0.0, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = brImg;
     pieceImageView.color = @"black";
@@ -166,7 +182,7 @@
     [pieceImageView release];
 	
 	bpImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@bp.png", pieceStyle]];
-    imageRect = CGRectMake(0.0, 40.0, 40.0, 40.0);
+    imageRect = CGRectMake(0.0, _squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bpImg;
     pieceImageView.color = @"black";
@@ -174,7 +190,7 @@
     [pieceImageView release];
 	
 	//UIImage *bp2Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@bp.png", pieceStyle]];
-    imageRect = CGRectMake(40.0, 40.0, 40.0, 40.0);
+    imageRect = CGRectMake(_squareSize, _squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bpImg;
     pieceImageView.color = @"black";
@@ -182,7 +198,7 @@
     [pieceImageView release];
 	
 	//UIImage *bp3Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@bp.png", pieceStyle]];
-    imageRect = CGRectMake(80.0, 40.0, 40.0, 40.0);
+    imageRect = CGRectMake(2*_squareSize, _squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bpImg;
     pieceImageView.color = @"black";
@@ -190,7 +206,7 @@
     [pieceImageView release];
 	
 	//UIImage *bp4Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@bp.png", pieceStyle]];
-    imageRect = CGRectMake(120.0, 40.0, 40.0, 40.0);
+    imageRect = CGRectMake(3*_squareSize, _squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bpImg;
     pieceImageView.color = @"black";
@@ -198,7 +214,7 @@
     [pieceImageView release];
 	
 	//UIImage *bp5Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@bp.png", pieceStyle]];
-    imageRect = CGRectMake(160.0, 40.0, 40.0, 40.0);
+    imageRect = CGRectMake(4*_squareSize, _squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bpImg;
     pieceImageView.color = @"black";
@@ -206,7 +222,7 @@
     [pieceImageView release];
 	
 	//UIImage *bp6Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@bp.png", pieceStyle]];
-    imageRect = CGRectMake(200.0, 40.0, 40.0, 40.0);
+    imageRect = CGRectMake(5*_squareSize, _squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bpImg;
     pieceImageView.color = @"black";
@@ -214,7 +230,7 @@
     [pieceImageView release];
 	
 	//UIImage *bp7Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@bp.png", pieceStyle]];
-    imageRect = CGRectMake(240.0, 40.0, 40.0, 40.0);
+    imageRect = CGRectMake(6*_squareSize, _squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bpImg;
     pieceImageView.color = @"black";
@@ -222,7 +238,7 @@
     [pieceImageView release];
 	
 	//UIImage *bp8Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@bp.png", pieceStyle]];
-    imageRect = CGRectMake(280.0, 40.0, 40.0, 40.0);
+    imageRect = CGRectMake(7*_squareSize, _squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = bpImg;
     pieceImageView.color = @"black";
@@ -230,7 +246,7 @@
     [pieceImageView release];
 	
 	wnImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@wn.png", pieceStyle]];
-    imageRect = CGRectMake(40.0, 280.0, 40.0, 40.0);
+    imageRect = CGRectMake(_squareSize, 7*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wnImg;
     pieceImageView.color = @"white";
@@ -238,7 +254,7 @@
     [pieceImageView release];
 	
 	//UIImage *wn2Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@wn.png", pieceStyle]];
-    imageRect = CGRectMake(240.0, 280.0, 40.0, 40.0);
+    imageRect = CGRectMake(6*_squareSize, 7*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wnImg;
     pieceImageView.color = @"white";
@@ -246,7 +262,7 @@
     [pieceImageView release];
 	
 	wbImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@wb.png", pieceStyle]];
-    imageRect = CGRectMake(80.0, 280.0, 40.0, 40.0);
+    imageRect = CGRectMake(2*_squareSize, 7*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wbImg;
     pieceImageView.color = @"white";
@@ -254,7 +270,7 @@
     [pieceImageView release];
 	
 	//UIImage *wb2Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@wb.png", pieceStyle]];
-    imageRect = CGRectMake(200.0, 280.0, 40.0, 40.0);
+    imageRect = CGRectMake(5*_squareSize, 7*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wbImg;
     pieceImageView.color = @"white";
@@ -262,7 +278,7 @@
     [pieceImageView release];
 	
 	wqImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@wq.png", pieceStyle]];
-    imageRect = CGRectMake(120.0, 280.0, 40.0, 40.0);
+    imageRect = CGRectMake(3*_squareSize, 7*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wqImg;
     pieceImageView.color = @"white";
@@ -270,7 +286,7 @@
     [pieceImageView release];
 	
 	wkImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@wk.png", pieceStyle]];
-    imageRect = CGRectMake(160.0, 280.0, 40.0, 40.0);
+    imageRect = CGRectMake(4*_squareSize, 7*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wkImg;
     pieceImageView.color = @"white";
@@ -278,7 +294,7 @@
     [pieceImageView release];
 	
 	wrImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@wr.png", pieceStyle]];
-    imageRect = CGRectMake(0.0, 280.0, 40.0, 40.0);
+    imageRect = CGRectMake(0.0, 7*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wrImg;
     pieceImageView.color = @"white";
@@ -286,7 +302,7 @@
     [pieceImageView release];
 	
 	//UIImage *wr2Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@wr.png", pieceStyle]];
-    imageRect = CGRectMake(280.0, 280.0, 40.0, 40.0);
+    imageRect = CGRectMake(7*_squareSize, 7*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wrImg;
     pieceImageView.color = @"white";
@@ -294,7 +310,7 @@
     [pieceImageView release];
 	
 	wpImg = [UIImage imageNamed:[NSString stringWithFormat:@"%@wp.png", pieceStyle]];
-    imageRect = CGRectMake(0.0, 240.0, 40.0, 40.0);
+    imageRect = CGRectMake(0.0, 6*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wpImg;
     pieceImageView.color = @"white";
@@ -302,7 +318,7 @@
     [pieceImageView release];
 	
 	//UIImage *wp2Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@wp.png", pieceStyle]];
-    imageRect = CGRectMake(40.0, 240.0, 40.0, 40.0);
+    imageRect = CGRectMake(_squareSize, 6*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wpImg;
     pieceImageView.color = @"white";
@@ -310,7 +326,7 @@
     [pieceImageView release];
 	
 	//UIImage *wp3Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@wp.png", pieceStyle]];
-    imageRect = CGRectMake(80.0, 240.0, 40.0, 40.0);
+    imageRect = CGRectMake(2*_squareSize, 6*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wpImg;
     pieceImageView.color = @"white";
@@ -318,7 +334,7 @@
     [pieceImageView release];
 	
 	//UIImage *wp4Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@wp.png", pieceStyle]];
-    imageRect = CGRectMake(120.0, 240.0, 40.0, 40.0);
+    imageRect = CGRectMake(3*_squareSize, 6*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wpImg;
     pieceImageView.color = @"white";
@@ -326,7 +342,7 @@
     [pieceImageView release];
 	
 	//UIImage *wp5Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@wp.png", pieceStyle]];
-    imageRect = CGRectMake(160.0, 240.0, 40.0, 40.0);
+    imageRect = CGRectMake(4*_squareSize, 6*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wpImg;
     pieceImageView.color = @"white";
@@ -334,7 +350,7 @@
     [pieceImageView release];
 	
 	//UIImage *wp6Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@wp.png", pieceStyle]];
-    imageRect = CGRectMake(200.0, 240.0, 40.0, 40.0);
+    imageRect = CGRectMake(5*_squareSize, 6*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wpImg;
     pieceImageView.color = @"white";
@@ -342,7 +358,7 @@
     [pieceImageView release];
 	
 	//UIImage *wp7Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@wp.png", pieceStyle]];
-    imageRect = CGRectMake(240.0, 240.0, 40.0, 40.0);
+    imageRect = CGRectMake(6*_squareSize, 6*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wpImg;
     pieceImageView.color = @"white";
@@ -350,7 +366,7 @@
     [pieceImageView release];
 	
 	//UIImage *wp8Img = [UIImage imageNamed:[NSString stringWithFormat:@"%@wp.png", pieceStyle]];
-    imageRect = CGRectMake(280.0, 240.0, 40.0, 40.0);
+    imageRect = CGRectMake(7*_squareSize, 6*_squareSize, _squareSize, _squareSize);
     pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
     pieceImageView.image = wpImg;
     pieceImageView.color = @"white";
@@ -485,7 +501,7 @@
 - (void)addPiece:(NSString *)piece toSquare:(NSString *)square {
     NSLog(@"AddPiece: %@ toSquare: %@", piece, square);
 	CGPoint dest = [self getPointFromSquare:square];
-	CGRect imageRect = CGRectMake(dest.x - 20, dest.y - 20, 40.0, 40.0);
+	CGRect imageRect = CGRectMake(dest.x - _squareSize/2, dest.y - _squareSize/2, _squareSize, _squareSize);
 	PieceImageView *pieceImageView = [[PieceImageView alloc] initWithFrame:imageRect];
 	
 	if ([piece isEqualToString:@"bn"]) {
@@ -562,8 +578,8 @@
 
 - (NSString *)getSquareForPoint:(CGPoint)point
 {
-    int x = (int)point.x/40;
-    int y = (int)point.y/40;
+    int x = (int)point.x/_squareSize;
+    int y = (int)point.y/_squareSize;
     
     NSString *rank = @"";
     NSString *file = @"";
@@ -579,203 +595,203 @@
 
 - (CGPoint)getPointFromSquare:(NSString *)square {
 	if ([square isEqualToString:@"a1"]) {
-		return CGPointMake(20.0, 300.0);
+		return CGPointMake(_squareSize/2, 7*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"a2"]) {
-		return CGPointMake(20.0, 260.0);
+		return CGPointMake(_squareSize/2, 6*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"a3"]) {
-		return CGPointMake(20.0, 220.0);
+		return CGPointMake(_squareSize/2, 5*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"a4"]) {
-		return CGPointMake(20.0, 180.0);
+		return CGPointMake(_squareSize/2, 4*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"a5"]) {
-		return CGPointMake(20.0, 140.0);
+		return CGPointMake(_squareSize/2, 3*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"a6"]) {
-		return CGPointMake(20.0, 100.0);
+		return CGPointMake(_squareSize/2, 2*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"a7"]) {
-		return CGPointMake(20.0, 60.0);
+		return CGPointMake(_squareSize/2, _squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"a8"]) {
-		return CGPointMake(20.0, 20.0);
+		return CGPointMake(_squareSize/2, _squareSize/2);
 	}
 	
 	if ([square isEqualToString:@"b1"]) {
-		return CGPointMake(60.0, 300.0);
+		return CGPointMake(_squareSize + _squareSize/2, 7*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"b2"]) {
-		return CGPointMake(60.0, 260.0);
+		return CGPointMake(_squareSize + _squareSize/2, 6*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"b3"]) {
-		return CGPointMake(60.0, 220.0);
+		return CGPointMake(_squareSize + _squareSize/2, 5*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"b4"]) {
-		return CGPointMake(60.0, 180.0);
+		return CGPointMake(_squareSize + _squareSize/2, 4*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"b5"]) {
-		return CGPointMake(60.0, 140.0);
+		return CGPointMake(_squareSize + _squareSize/2, 3*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"b6"]) {
-		return CGPointMake(60.0, 100.0);
+		return CGPointMake(_squareSize + _squareSize/2, 2*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"b7"]) {
-		return CGPointMake(60.0, 60.0);
+		return CGPointMake(_squareSize + _squareSize/2, _squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"b8"]) {
-		return CGPointMake(60.0, 20.0);
+		return CGPointMake(_squareSize + _squareSize/2, _squareSize/2);
 	}
 	
 	if ([square isEqualToString:@"c1"]) {
-		return CGPointMake(100.0, 300.0);
+		return CGPointMake(2*_squareSize + _squareSize/2, 7*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"c2"]) {
-		return CGPointMake(100.0, 260.0);
+		return CGPointMake(2*_squareSize + _squareSize/2, 6*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"c3"]) {
-		return CGPointMake(100.0, 220.0);
+		return CGPointMake(2*_squareSize + _squareSize/2, 5*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"c4"]) {
-		return CGPointMake(100.0, 180.0);
+		return CGPointMake(2*_squareSize + _squareSize/2, 4*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"c5"]) {
-		return CGPointMake(100.0, 140.0);
+		return CGPointMake(2*_squareSize + _squareSize/2, 3*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"c6"]) {
-		return CGPointMake(100.0, 100.0);
+		return CGPointMake(2*_squareSize + _squareSize/2, 2*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"c7"]) {
-		return CGPointMake(100.0, 60.0);
+		return CGPointMake(2*_squareSize + _squareSize/2, _squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"c8"]) {
-		return CGPointMake(100.0, 20.0);
+		return CGPointMake(2*_squareSize + _squareSize/2, _squareSize/2);
 	}
 	
 	if ([square isEqualToString:@"d1"]) {
-		return CGPointMake(140.0, 300.0);
+		return CGPointMake(3*_squareSize + _squareSize/2, 7*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"d2"]) {
-		return CGPointMake(140.0, 260.0);
+		return CGPointMake(3*_squareSize + _squareSize/2, 6*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"d3"]) {
-		return CGPointMake(140.0, 220.0);
+		return CGPointMake(3*_squareSize + _squareSize/2, 5*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"d4"]) {
-		return CGPointMake(140.0, 180.0);
+		return CGPointMake(3*_squareSize + _squareSize/2, 4*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"d5"]) {
-		return CGPointMake(140.0, 140.0);
+		return CGPointMake(3*_squareSize + _squareSize/2, 3*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"d6"]) {
-		return CGPointMake(140.0, 100.0);
+		return CGPointMake(3*_squareSize + _squareSize/2, 2*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"d7"]) {
-		return CGPointMake(140.0, 60.0);
+		return CGPointMake(3*_squareSize + _squareSize/2, _squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"d8"]) {
-		return CGPointMake(140.0, 20.0);
+		return CGPointMake(3*_squareSize + _squareSize/2, _squareSize/2);
 	}
 	
 	if ([square isEqualToString:@"e1"]) {
-		return CGPointMake(180.0, 300.0);
+		return CGPointMake(4*_squareSize + _squareSize/2, 7*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"e2"]) {
-		return CGPointMake(180.0, 260.0);
+		return CGPointMake(4*_squareSize + _squareSize/2, 6*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"e3"]) {
-		return CGPointMake(180.0, 220.0);
+		return CGPointMake(4*_squareSize + _squareSize/2, 5*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"e4"]) {
-		return CGPointMake(180.0, 180.0);
+		return CGPointMake(4*_squareSize + _squareSize/2, 4*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"e5"]) {
-		return CGPointMake(180.0, 140.0);
+		return CGPointMake(4*_squareSize + _squareSize/2, 3*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"e6"]) {
-		return CGPointMake(180.0, 100.0);
+		return CGPointMake(4*_squareSize + _squareSize/2, 2*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"e7"]) {
-		return CGPointMake(180.0, 60.0);
+		return CGPointMake(4*_squareSize + _squareSize/2, _squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"e8"]) {
-		return CGPointMake(180.0, 20.0);
+		return CGPointMake(4*_squareSize + _squareSize/2, _squareSize/2);
 	}
 	
 	if ([square isEqualToString:@"f1"]) {
-		return CGPointMake(220.0, 300.0);
+		return CGPointMake(5*_squareSize + _squareSize/2, 7*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"f2"]) {
-		return CGPointMake(220.0, 260.0);
+		return CGPointMake(5*_squareSize + _squareSize/2, 6*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"f3"]) {
-		return CGPointMake(220.0, 220.0);
+		return CGPointMake(5*_squareSize + _squareSize/2, 5*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"f4"]) {
-		return CGPointMake(220.0, 180.0);
+		return CGPointMake(5*_squareSize + _squareSize/2, 4*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"f5"]) {
-		return CGPointMake(220.0, 140.0);
+		return CGPointMake(5*_squareSize + _squareSize/2, 3*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"f6"]) {
-		return CGPointMake(220.0, 100.0);
+		return CGPointMake(5*_squareSize + _squareSize/2, 2*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"f7"]) {
-		return CGPointMake(220.0, 60.0);
+		return CGPointMake(5*_squareSize + _squareSize/2, _squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"f8"]) {
-		return CGPointMake(220.0, 20.0);
+		return CGPointMake(5*_squareSize + _squareSize/2, _squareSize/2);
 	}
 	
 	if ([square isEqualToString:@"g1"]) {
-		return CGPointMake(260.0, 300.0);
+		return CGPointMake(6*_squareSize + _squareSize/2, 7*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"g2"]) {
-		return CGPointMake(260.0, 260.0);
+		return CGPointMake(6*_squareSize + _squareSize/2, 6*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"g3"]) {
-		return CGPointMake(260.0, 220.0);
+		return CGPointMake(6*_squareSize + _squareSize/2, 5*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"g4"]) {
-		return CGPointMake(260.0, 180.0);
+		return CGPointMake(6*_squareSize + _squareSize/2, 4*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"g5"]) {
-		return CGPointMake(260.0, 140.0);
+		return CGPointMake(6*_squareSize + _squareSize/2, 3*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"g6"]) {
-		return CGPointMake(260.0, 100.0);
+		return CGPointMake(6*_squareSize + _squareSize/2, 2*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"g7"]) {
-		return CGPointMake(260.0, 60.0);
+		return CGPointMake(6*_squareSize + _squareSize/2, _squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"g8"]) {
-		return CGPointMake(260.0, 20.0);
+		return CGPointMake(6*_squareSize + _squareSize/2, _squareSize/2);
 	}
 	
 	if ([square isEqualToString:@"h1"]) {
-		return CGPointMake(300.0, 300.0);
+		return CGPointMake(7*_squareSize + _squareSize/2, 7*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"h2"]) {
-		return CGPointMake(300.0, 260.0);
+		return CGPointMake(7*_squareSize + _squareSize/2, 6*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"h3"]) {
-		return CGPointMake(300.0, 220.0);
+		return CGPointMake(7*_squareSize + _squareSize/2, 5*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"h4"]) {
-		return CGPointMake(300.0, 180.0);
+		return CGPointMake(7*_squareSize + _squareSize/2, 4*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"h5"]) {
-		return CGPointMake(300.0, 140.0);
+		return CGPointMake(7*_squareSize + _squareSize/2, 3*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"h6"]) {
-		return CGPointMake(300.0, 100.0);
+		return CGPointMake(7*_squareSize + _squareSize/2, 2*_squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"h7"]) {
-		return CGPointMake(300.0, 60.0);
+		return CGPointMake(7*_squareSize + _squareSize/2, _squareSize + _squareSize/2);
 	}
 	if ([square isEqualToString:@"h8"]) {
-		return CGPointMake(300.0, 20.0);
+		return CGPointMake(7*_squareSize + _squareSize/2, _squareSize/2);
 	}
 	return CGPointMake(0.0, 0.0);
 }

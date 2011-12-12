@@ -12,6 +12,12 @@
 #define VIEW_CONTROLLER_PRACTICE_BOARD  103
 #define VIEW_LOADING_VIEW               104
 
+#define NONE        0
+#define WATCHING    200
+#define TRAINING    201
+#define ICC         300
+#define FICS        301
+
 
 #import "RootViewController.h"
 
@@ -188,9 +194,30 @@
     NSLog(@"load training View");
 }
 
+- (void)loadWatchView
+{
+    _currentGamesViewController = [[CurrentGamesViewController alloc] initWithNibName:nil bundle:nil];
+    //[self dismissMenu];
+    
+	if ([StreamController sharedStreamController].server == FICS) {
+		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:(UITableViewController *)self];
+	}
+	else if ([StreamController sharedStreamController].server == ICC) {
+		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)_currentGamesViewController];
+	}
+    
+    int len = [[self.view subviews] count];
+    for (int i = 0; i < len; i++) {
+        [[[self.view subviews] objectAtIndex:i] removeFromSuperview];
+    }
+    [self.view insertSubview:_currentGamesViewController.view atIndex:0];
+    NSLog(@"load watch View");
+}
+
 - (void)didTouchWatchBadge
 {
     NSLog(@"TOUCHED WATCH");
+    [self loadWatchView];
 }
 
 - (void)didTouchPracticeBadge

@@ -10,15 +10,34 @@
 
 @implementation PracticeView
 
-@synthesize board = _board;
-@synthesize kibitzTextView = _kibitzTextView;
+@synthesize board           = _board;
+@synthesize kibitzTextView  = _kibitzTextView;
+@synthesize device          = _device;
 
-
-- (id)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-        _board = [[BoardImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+- (id)initForDevice:(int)dvc {
+    _device = dvc;
+    int width = 0;
+    int height = 0;
+    switch (dvc) {
+        case IPHONE_OLD:
+            width = 320;
+            height = 320;
+            break;
+        case IPHONE_RETINA:
+        case IPAD:
+            width = 640;
+            height = 640;
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (self = [super initWithFrame:CGRectMake(0, 44, width, height)]) {
+        _board = [[BoardImageView alloc] initForDevice:_device];
+        [_board setBackgroundColor:[UIColor purpleColor]];
 		
-		_kibitzTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 320, 320, 96)];
+		_kibitzTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, height, width, 96)];
         [_kibitzTextView setBackgroundColor:[UIColor blackColor]];
 		[_kibitzTextView setFont:[UIFont systemFontOfSize:14]];
         [_kibitzTextView setTextColor:[UIColor whiteColor]];

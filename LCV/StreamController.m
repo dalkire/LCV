@@ -220,7 +220,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 				rbuf[bytesRead] = 0;
 				CFMutableStringRef cfReplyContent = CFStringCreateMutable(kCFAllocatorDefault, 0);
 				CFStringAppendCString(cfReplyContent, (const char *)rbuf, kCFStringEncodingASCII);
-				//NSLog(@"%@", (NSMutableString *)cfReplyContent);
+				NSLog(@"%@", (NSMutableString *)cfReplyContent);
                 if (_server == FICS) {
                     if ([self mode] == TRAINING && _trainingViewController) {
                         NSString *kText = [NSString stringWithString:[[[_trainingViewController trainingView] kibitzTextView] text]];

@@ -37,5 +37,6 @@
 
 - (void)didTouchMenu;
 - (void)loadPracticeView;
+- (void)loadWatchView;
 
 @end

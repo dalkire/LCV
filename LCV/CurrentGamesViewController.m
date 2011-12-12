@@ -19,29 +19,40 @@
 
 @implementation CurrentGamesViewController
 
-@synthesize currentGames, toolbar, observing, toBeCleared, activityIndicatorView;
+@synthesize currentGames;
+//@synthesize toolbar;
+@synthesize observing;
+@synthesize toBeCleared;
+//@synthesize activityIndicatorView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	activityIndicatorView.hidesWhenStopped = YES;
-	[activityIndicatorView startAnimating];
+    
+    UITableView *tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 300, 400) style:UITableViewStylePlain];
+    [tv setDelegate:self];
+    [tv setDataSource:self];
+    
+    [self.view addSubview:tv];
+    
+//	activityIndicatorView.hidesWhenStopped = YES;
+//	[activityIndicatorView startAnimating];
 	
 	NSArray *arr = [[NSArray alloc] initWithObjects:nil];
 	self.currentGames = arr;
 	[arr release];
-	toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 420.0, 320.0, 40.0)];
-	toolbar.barStyle = UIBarStyleBlack;
+//	toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 420.0, 320.0, 40.0)];
+//	toolbar.barStyle = UIBarStyleBlack;
 	UIBarButtonItem *boardBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"board-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showBoardView)];
 	UIBarButtonItem *infoBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"info-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showInfoView)];
 	UIBarButtonItem *flexibleSpaceBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
 	UIBarButtonItem *refreshBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"refresh-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(refresh)];
 	NSArray *barItems = [[NSArray alloc] initWithObjects:boardBarButton, flexibleSpaceBarButton, refreshBarButton, flexibleSpaceBarButton, infoBarButton, nil];
-	toolbar.items = barItems;
+//	toolbar.items = barItems;
 	[boardBarButton release];
 	[refreshBarButton release];
 	[flexibleSpaceBarButton release];
 	[barItems release];
-	[self.view addSubview:toolbar];
+//	[self.view addSubview:toolbar];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,17 +61,17 @@
 
 - (void)viewDidUnload {
 	self.currentGames = nil;
-	self.toolbar = nil;
+//	self.toolbar = nil;
 	self.observing = nil;
-	self.activityIndicatorView = nil;
+//	self.activityIndicatorView = nil;
 }
 
 
 - (void)dealloc {
 	[currentGames release];
-	[toolbar release];
+//	[toolbar release];
 	[observing release];
-	[activityIndicatorView release];
+//	[activityIndicatorView release];
     [super dealloc];
 }
 
@@ -133,7 +144,7 @@
 }
 
 - (NSArray *)parseCurrentGamesFromCommandResult:(NSString *)result {
-	[activityIndicatorView stopAnimating];
+//	[activityIndicatorView stopAnimating];
 	
 	NSArray *arr;// = [NSArray array];
 	NSMutableArray *resultArray = [[NSMutableArray alloc] init];
@@ -215,7 +226,7 @@
 - (void)clearCurrentGamesTable {
 	self.currentGames = nil;
 	self.currentGames = [[NSArray alloc] init];
-	[activityIndicatorView startAnimating];
+//	[activityIndicatorView startAnimating];
 	[[self.view.subviews objectAtIndex:0] performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO]; 
 }
 

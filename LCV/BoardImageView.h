@@ -29,6 +29,8 @@
 	UIView *overlay;
 	CGPoint gesturePoint;
     NSString *fromSquare;
+    int device;
+    int squareSize;
 }
 
 @property (nonatomic, retain) UIImage *board;
@@ -47,7 +49,10 @@
 @property (nonatomic, retain) UIView *overlay;
 @property CGPoint gesturePoint;
 @property (nonatomic, retain) NSString *fromSquare;
+@property int device;
+@property int squareSize;
 
+- (id)initForDevice:(int)dvc;
 - (void)setBoard;
 - (void)moveFromPoint:(CGPoint)src toPoint:(CGPoint)dest promote:(NSString *)promote;
 - (void)playBoardSound;

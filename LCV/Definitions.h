@@ -6,6 +6,16 @@
 //  Copyright PixelSift Studios 2010. All rights reserved.
 //
 
+#define IPHONE_OLD      1
+#define IPHONE_RETINA   2
+#define IPAD            3
+
+#define NONE        0
+#define WATCHING    200
+#define TRAINING    201
+#define ICC         300
+#define FICS        301
+
 #define CN_NONE				-999
 
 #define CN_TELL				101
