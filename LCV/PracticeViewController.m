@@ -11,7 +11,7 @@
 @implementation PracticeViewController
 
 @synthesize toolbar             = _toolbar;
-@synthesize trainingView        = _trainingView;
+@synthesize practiceView        = _practiceView;
 @synthesize blackName           = _blackName;
 @synthesize whiteName           = _whiteName;
 @synthesize inStartingPosition  = _inStartingPosition;
@@ -83,9 +83,9 @@
     [view addSubview:_toolbar];
     [view setBackgroundColor:[UIColor yellowColor]];
     
-    _trainingView = [[PracticeView alloc] initForDevice:_device];
-    [[_trainingView board] setUserInteractionEnabled:YES];
-    [view addSubview:_trainingView];
+    _practiceView = [[PracticeView alloc] initForDevice:_device];
+    [[_practiceView board] setUserInteractionEnabled:YES];
+    [view addSubview:_practiceView];
     [self setInStartingPosition:YES];
     
     [self setView:view];
@@ -109,7 +109,7 @@
 - (void)didTouchMenu
 {
     [[StreamController sharedStreamController] setMode:TRAINING];
-    [[StreamController sharedStreamController] setTrainingViewController:self];
+    [[StreamController sharedStreamController] setPracticeViewController:self];
     [[StreamController sharedStreamController] sendCommand:[NSMutableString stringWithString:@"tell puzzlebot gm2\r\n"]];
 }
 
@@ -334,7 +334,7 @@
 
 - (void)setPositionFromStyle12:(NSString *)style12 {
     NSLog(@"IN SET 12: %@", style12);
-	[[_trainingView board] clearBoard];
+	[[_practiceView board] clearBoard];
 	NSArray *style12Array = [style12 componentsSeparatedByString:@" "];
 	NSString *verboseMove = [[NSString alloc] initWithString:(NSString *)[style12Array objectAtIndex:26]];
 	//NSString *algebraicMove = [[NSString alloc] initWithString:(NSString *)[style12Array objectAtIndex:28]];
@@ -383,7 +383,7 @@
 					file = [NSString stringWithString:@"h"];
 				}
 				//NSLog(@"%@%@ at %@%d", color, charAsString, file, 8-i);
-				[[_trainingView board] addPiece:[NSString stringWithFormat:@"%@%@", color, charAsString] toSquare:[NSString stringWithFormat:@"%@%d", file, 8-i]];
+				[[_practiceView board] addPiece:[NSString stringWithFormat:@"%@%@", color, charAsString] toSquare:[NSString stringWithFormat:@"%@%d", file, 8-i]];
 			}
 		}
 	}
@@ -395,26 +395,26 @@
 		//castle short
 		if ([colorForNextMove isEqualToString:@"B"]) {
 			//white just moved
-			[[_trainingView board] placeHighlightsForMove:@"e1g1"];
+			[[_practiceView board] placeHighlightsForMove:@"e1g1"];
 		}
 		else if ([colorForNextMove isEqualToString:@"W"]) {
 			//black just moved
-			[[_trainingView board] placeHighlightsForMove:@"e8g8"];
+			[[_practiceView board] placeHighlightsForMove:@"e8g8"];
 		} 
 	}
 	else if ([verboseMove isEqualToString:@"o-o-o"]) {
 		//castle long
 		if ([colorForNextMove isEqualToString:@"B"]) {
 			//white just moved
-			[[_trainingView board] placeHighlightsForMove:@"e1c1"];
+			[[_practiceView board] placeHighlightsForMove:@"e1c1"];
 		}
 		else if ([colorForNextMove isEqualToString:@"W"]) {
 			//black just moved
-			[[_trainingView board] placeHighlightsForMove:@"e8c8"];
+			[[_practiceView board] placeHighlightsForMove:@"e8c8"];
 		} 
 	}
 	else {
-		[[_trainingView board] placeHighlightsForMove:[NSString stringWithFormat:@"%@%@", [verboseMove substringWithRange:NSMakeRange(2, 2)], [verboseMove substringWithRange:NSMakeRange(5, 2)]]];
+		[[_practiceView board] placeHighlightsForMove:[NSString stringWithFormat:@"%@%@", [verboseMove substringWithRange:NSMakeRange(2, 2)], [verboseMove substringWithRange:NSMakeRange(5, 2)]]];
 	}
 	
 	NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
@@ -431,8 +431,11 @@
 - (void)movePieceFromSquare:(NSString *)fromSquare toSquare:(NSString *)toSquare
 {
     NSLog(@"movePieceFromSquare:%@ toSquare:%@", fromSquare, toSquare);
+    
+#warning add animation;
+    
     [[StreamController sharedStreamController] sendCommand:[NSString stringWithFormat:@"%@%@\r\n", fromSquare, toSquare]];
-    [[_trainingView board] placeHighlightsForMove:[NSString stringWithFormat:@"%@%@", fromSquare, toSquare]];
+    [[_practiceView board] placeHighlightsForMove:[NSString stringWithFormat:@"%@%@", fromSquare, toSquare]];
 }
 
 @end

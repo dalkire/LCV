@@ -8,7 +8,7 @@
 
 #define NONE        0
 #define WATCHING    200
-#define TRAINING    201
+#define PRACTICE    201
 #define ICC         300
 #define FICS        301
 
@@ -51,7 +51,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 @synthesize caller;
 @synthesize boardViewController;
 @synthesize currentGamesViewController;
-@synthesize trainingViewController = _trainingViewController;
+@synthesize practiceViewController = _practiceViewController;
 @synthesize mainViewController;
 @synthesize resultText, iccResultText;
 @synthesize server = _server;
@@ -111,7 +111,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 	iccResultText = [[NSString alloc] initWithString:@""];
 	[self setServer:NONE];
 	readingCurrentGames = NO;
-    _trainingViewController = (TrainingViewController *)NULL;
+    _practiceViewController = (PracticeViewController *)NULL;
     _canMoveColor = [[NSString alloc] initWithString:@""];
     
 	
@@ -222,11 +222,11 @@ static StreamController *sharedStreamControllerDelegate = nil;
 				CFStringAppendCString(cfReplyContent, (const char *)rbuf, kCFStringEncodingASCII);
 				NSLog(@"%@", (NSMutableString *)cfReplyContent);
                 if (_server == FICS) {
-                    if ([self mode] == TRAINING && _trainingViewController) {
-                        NSString *kText = [NSString stringWithString:[[[_trainingViewController trainingView] kibitzTextView] text]];
+                    if ([self mode] == PRACTICE && _practiceViewController) {
+                        NSString *kText = [NSString stringWithString:[[[_practiceViewController practiceView] kibitzTextView] text]];
                         NSString *kibitzText = [NSString stringWithFormat:@"%@\n%@", kText, (NSMutableString *)cfReplyContent];
-                        [[[_trainingViewController trainingView] kibitzTextView] setText:kibitzText];
-                        [[[_trainingViewController trainingView] kibitzTextView] scrollRangeToVisible:NSMakeRange([kibitzText length], 0)];
+                        [[[_practiceViewController practiceView] kibitzTextView] setText:kibitzText];
+                        [[[_practiceViewController practiceView] kibitzTextView] scrollRangeToVisible:NSMakeRange([kibitzText length], 0)];
                         
                         if ([(NSMutableString *)cfReplyContent rangeOfString:@"\r<12>"].location != NSNotFound) {
                             NSMutableArray *contentArray = [[NSMutableArray alloc] initWithArray:[(NSMutableString *)cfReplyContent componentsSeparatedByString:@"\r"]];
@@ -248,7 +248,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
                                     NSLog(@"CLF=%d, CUR=%d, ABS=%d", currentFicsLocalMoveNumber, currentMoveNumber, absoluteMoveNumber);
                                 
                                     NSLog(@"%@", (NSMutableString *)cfReplyContent);
-                                    [(TrainingViewController *)_trainingViewController setPositionFromStyle12:currStyle12String];
+                                    [(PracticeViewController *)_practiceViewController setPositionFromStyle12:currStyle12String];
                                 }
                             }
                         }
@@ -257,7 +257,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
                             NSRange findExaminingRange = [(NSMutableString *)cfReplyContent rangeOfString:findExaminingString];
                             NSLog(@"examining by puzzlebot: %@", [(NSMutableString *)cfReplyContent substringWithRange:NSMakeRange(findExaminingRange.location + findExaminingRange.length, 5)]);
                         }
-                    } //TRAINING
+                    } //PRACTICE
                 }
                 else if (_server == ICC) {
                     //NSLog(@"SERVER is ICC");

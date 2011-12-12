@@ -407,7 +407,7 @@
         [self placeHighlightForSquare:_fromSquare];
     }
     else {
-        [(TrainingViewController *)[[StreamController sharedStreamController] trainingViewController] movePieceFromSquare:_fromSquare toSquare:[self getSquareForPoint:CGPointMake(x, y)]];
+        [(PracticeViewController *)[[StreamController sharedStreamController] practiceViewController] movePieceFromSquare:_fromSquare toSquare:[self getSquareForPoint:CGPointMake(x, y)]];
         _fromSquare = [[NSString alloc] initWithString:@""];
     }
 }

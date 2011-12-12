@@ -14,7 +14,7 @@
 @interface PracticeViewController : UIViewController
 {
 	UIToolbar *toolbar;
-	PracticeView *trainingView;
+	PracticeView *practiceView;
 	NSMutableString *blackName;
 	NSMutableString *whiteName;
     BOOL inStartingPosition;
@@ -22,7 +22,7 @@
 }
 
 @property (nonatomic, retain) UIToolbar *toolbar;
-@property (nonatomic, retain) PracticeView *trainingView;
+@property (nonatomic, retain) PracticeView *practiceView;
 @property (nonatomic, retain) NSMutableString *blackName;
 @property (nonatomic, retain) NSMutableString *whiteName;
 @property BOOL inStartingPosition;
