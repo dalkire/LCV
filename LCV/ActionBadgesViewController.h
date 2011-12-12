@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Definitions.h"
+#import "StreamController.h"
 
 @interface ActionBadgesViewController : UIViewController {
     id delegate;

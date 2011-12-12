@@ -13,14 +13,14 @@
 	//IBOutlet UIToolbar *toolbar;
 	NSString *observing;
 	BOOL toBeCleared;
-	//IBOutlet UIActivityIndicatorView *activityIndicatorView;
+	UIActivityIndicatorView *activityIndicatorView;
 }
 
 @property (nonatomic, retain) NSArray *currentGames;
 //@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, retain) NSString *observing;
 @property BOOL toBeCleared;
-//@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicatorView;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
 
 - (void)commandResult:(NSString *)result fromCommand:(NSInteger)command;
 - (NSArray *)parseCurrentGamesFromCommandResult:(NSString *)result;

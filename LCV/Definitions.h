@@ -12,7 +12,7 @@
 
 #define NONE        0
 #define WATCHING    200
-#define TRAINING    201
+#define PRACTICING  201
 #define ICC         300
 #define FICS        301
 

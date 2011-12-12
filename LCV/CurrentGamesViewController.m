@@ -23,7 +23,7 @@
 //@synthesize toolbar;
 @synthesize observing;
 @synthesize toBeCleared;
-//@synthesize activityIndicatorView;
+@synthesize activityIndicatorView = _activityIndicatorView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,8 +34,10 @@
     
     [self.view addSubview:tv];
     
-//	activityIndicatorView.hidesWhenStopped = YES;
-//	[activityIndicatorView startAnimating];
+    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [_activityIndicatorView setFrame:CGRectMake((self.view.frame.size.width - 20)/2, (self.view.frame.size.height - 20)/2, 20, 20)];
+    _activityIndicatorView.hidesWhenStopped = YES;
+	[_activityIndicatorView startAnimating];
 	
 	NSArray *arr = [[NSArray alloc] initWithObjects:nil];
 	self.currentGames = arr;
@@ -53,6 +55,7 @@
 	[flexibleSpaceBarButton release];
 	[barItems release];
 //	[self.view addSubview:toolbar];
+    [self.view addSubview:_activityIndicatorView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,7 +66,7 @@
 	self.currentGames = nil;
 //	self.toolbar = nil;
 	self.observing = nil;
-//	self.activityIndicatorView = nil;
+	_activityIndicatorView = nil;
 }
 
 
@@ -71,7 +74,7 @@
 	[currentGames release];
 //	[toolbar release];
 	[observing release];
-//	[activityIndicatorView release];
+	[_activityIndicatorView release];
     [super dealloc];
 }
 
@@ -144,7 +147,7 @@
 }
 
 - (NSArray *)parseCurrentGamesFromCommandResult:(NSString *)result {
-//	[activityIndicatorView stopAnimating];
+	[_activityIndicatorView stopAnimating];
 	
 	NSArray *arr;// = [NSArray array];
 	NSMutableArray *resultArray = [[NSMutableArray alloc] init];

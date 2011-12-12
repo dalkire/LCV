@@ -50,7 +50,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 @synthesize currentLevel2Command;
 @synthesize caller;
 @synthesize boardViewController;
-@synthesize currentGamesViewController;
+@synthesize currentGamesViewController = _currentGamesViewController;
 @synthesize practiceViewController = _practiceViewController;
 @synthesize mainViewController;
 @synthesize resultText, iccResultText;
@@ -222,9 +222,9 @@ static StreamController *sharedStreamControllerDelegate = nil;
 				rbuf[bytesRead] = 0;
 				CFMutableStringRef cfReplyContent = CFStringCreateMutable(kCFAllocatorDefault, 0);
 				CFStringAppendCString(cfReplyContent, (const char *)rbuf, kCFStringEncodingASCII);
-				NSLog(@"%@", (NSMutableString *)cfReplyContent);
+				//NSLog(@"%@", (NSMutableString *)cfReplyContent);
                 if (_server == FICS) {
-                    if ([self mode] == PRACTICE && _practiceViewController) {
+                    if ([self mode] == PRACTICING && _practiceViewController) {
                         
                         if ([(NSMutableString *)cfReplyContent rangeOfString:@"\r<12>"].location != NSNotFound) {
                             NSMutableArray *contentArray = [[NSMutableArray alloc] initWithArray:[(NSMutableString *)cfReplyContent componentsSeparatedByString:@"\r"]];
@@ -280,6 +280,27 @@ static StreamController *sharedStreamControllerDelegate = nil;
                             NSLog(@"Kibitz: %@", [(NSMutableString *)cfReplyContent substringWithRange:NSMakeRange(findExaminingRange.location + findExaminingRange.length, 15)]);
                         }*/
                     } //PRACTICE
+                    else if ([self mode] == WATCHING) {// && _practiceViewController) {
+                        if ([(NSMutableString *)cfReplyContent rangeOfString:@"~~startgames"].location != NSNotFound) {
+                            readingCurrentGames = YES;
+                        }
+                        if (readingCurrentGames) {
+                            [currentGames appendFormat:@"%@", (NSMutableString *)cfReplyContent];
+                        }				
+                        if ([(NSMutableString *)cfReplyContent rangeOfString:@"~~endgames"].location != NSNotFound) {
+                            readingCurrentGames = NO;
+                            NSArray *myarr = [currentGames componentsSeparatedByString:@"\n"];
+                            NSMutableString *fullGames = [[NSMutableString alloc] initWithString:@""];
+                            for (int i = [myarr count] - 1; i >= 0; i--) {
+                                NSArray *mya = [[myarr objectAtIndex:i] componentsSeparatedByString:@"\r"];
+                                if ([mya count] > 1 && [[mya objectAtIndex:1] rangeOfString:@"++++"].location == NSNotFound && [[mya objectAtIndex:1] rangeOfString:@"----"].location == NSNotFound && [[mya objectAtIndex:1] rangeOfString:@"(Exam."].location == NSNotFound) {
+                                    NSLog(@"%@", [mya objectAtIndex:1]);
+                                    [fullGames appendFormat:@"%@\r\n", [mya objectAtIndex:1]];
+                                }
+                            }
+                            [(CurrentGamesViewController *)_currentGamesViewController commandResult:(NSString *)fullGames fromCommand:155];
+                        }	
+                    }
                 }
                 else if (_server == ICC) {
                     //NSLog(@"SERVER is ICC");
@@ -510,7 +531,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 		NSUInteger startLocation = ([command rangeOfString:@"\031[155 *\r\n"].location != NSNotFound) ? [command rangeOfString:@"\031[155 *\r\n"].location : 0;
 		NSRange range = NSMakeRange(startLocation, [command rangeOfString:@"\031]"].location + 2);
 		[currentGames appendString:[command substringWithRange:range]];
-		[(CurrentGamesViewController *)currentGamesViewController commandResult:currentGames fromCommand:155];
+		[(CurrentGamesViewController *)_currentGamesViewController commandResult:currentGames fromCommand:155];
 		
 	}
 	else {
@@ -522,11 +543,11 @@ static StreamController *sharedStreamControllerDelegate = nil;
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		if ([defaults valueForKey:@"iccusername"] == NULL || [[defaults valueForKey:@"iccusername"] isEqualToString:@""] || [[defaults valueForKey:@"iccusername"] isEqualToString:@"g"] || [[defaults valueForKey:@"iccusername"] isEqualToString:@"guest"]) {
 			//NSLog(@"GUEST");
-			[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)currentGamesViewController];
+			[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)_currentGamesViewController];
 		}
 		else {
 			//NSLog(@"NON_GUEST");
-			[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *R-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)currentGamesViewController];
+			[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *R-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)_currentGamesViewController];
 		}
 	}
 	
@@ -580,7 +601,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 		//[msg release];
 		//[lev2 release];
 		clockRunning = NO;
-		CurrentGamesViewController *gvc = (CurrentGamesViewController *)self.currentGamesViewController;
+		CurrentGamesViewController *gvc = (CurrentGamesViewController *)_currentGamesViewController;
 		gvc.observing = NULL;
 	}
 }
@@ -650,7 +671,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 		self.boardViewController = controller;
 	}
 	else if ([controller.title isEqualToString:@"CurrentGamesViewController"]) {
-		self.currentGamesViewController = controller;
+		_currentGamesViewController = controller;
 	}
 }
 

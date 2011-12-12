@@ -6,10 +6,6 @@
 //  Copyright (c) 2011 PixelSift Studios. All rights reserved.
 //
 
-#define IPHONE_OLD      1
-#define IPHONE_RETINA   2
-#define IPAD            3
-
 #import "ActionBadgesViewController.h"
 
 @implementation ActionBadgesViewController
@@ -53,12 +49,14 @@
 - (void)didTouchWatchBadge
 {
     NSLog(@"hit watch badge");
+    [[StreamController sharedStreamController] setMode:WATCHING];
     [_delegate didTouchWatchBadge];
 }
 
 - (void)didTouchPracticeBadge
 {
     NSLog(@"hit practice badge");
+    [[StreamController sharedStreamController] setMode:PRACTICING];
     [_delegate didTouchPracticeBadge];
 }
 

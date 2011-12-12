@@ -205,7 +205,7 @@
 - (void)loadWatchView
 {
     _currentGamesViewController = [[CurrentGamesViewController alloc] initWithNibName:nil bundle:nil];
-    //[self dismissMenu];
+    [[StreamController sharedStreamController] setCurrentGamesViewController:_currentGamesViewController];
     
 	if ([StreamController sharedStreamController].server == FICS) {
 		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:(UITableViewController *)self];

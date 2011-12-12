@@ -108,7 +108,6 @@
 
 - (void)didTouchMenu
 {
-    [[StreamController sharedStreamController] setMode:TRAINING];
     [[StreamController sharedStreamController] setPracticeViewController:self];
     [[StreamController sharedStreamController] sendCommand:[NSMutableString stringWithString:@"tell puzzlebot gm2\r\n"]];
 }
