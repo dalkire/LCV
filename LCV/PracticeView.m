@@ -42,8 +42,7 @@
 		[_kibitzTextView setFont:[UIFont systemFontOfSize:14]];
         [_kibitzTextView setTextColor:[UIColor whiteColor]];
         
-        [_kibitzTextView setText:@"hello"];
-        [_kibitzTextView setText:[NSString stringWithFormat:@"%@\n%@", [_kibitzTextView text], @"again"]];
+        [_kibitzTextView setText:@""];
         [_kibitzTextView setEditable:NO];
 		
 		[self addSubview:_board];

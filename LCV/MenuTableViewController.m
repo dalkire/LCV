@@ -20,9 +20,9 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        _actions = [[NSMutableArray alloc] initWithObjects:@"Watch", @"Training", nil];
         _accounts = [[NSMutableArray alloc] initWithObjects:@"ICC", @"FICS", nil];
-        _sections = [[NSMutableArray alloc] initWithObjects:_actions, _accounts, nil];
+        _actions = [[NSMutableArray alloc] initWithObjects:@"Pieces", @"Board", nil];
+        _sections = [[NSMutableArray alloc] initWithObjects:_accounts, _actions, nil];
         //[self.view setBackgroundColor:[UIColor Color]];
     }
     return self;
@@ -115,6 +115,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
+    [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
     [cell.textLabel setText:[[_sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
     
     return cell;
@@ -122,10 +123,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"Actions";
+        return @"Accounts";
     }
     else if (section == 1) {
-        return @"Accounts";
+        return @"Preferences";
     }
     
     return @"";

@@ -173,6 +173,14 @@
         [_navigationController.navigationBar setBarStyle:UIBarStyleBlack];
         [self presentModalViewController:_navigationController animated:YES];
     }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        _navigationController = [[UINavigationController alloc] initWithRootViewController:_menuTableViewController];
+        [_navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+        [_menuTableViewController setTitle:@"Settings"];
+        
+        UIPopoverController *pop = [[UIPopoverController alloc] initWithContentViewController:_navigationController];
+        [pop presentPopoverFromBarButtonItem:[[_toolbar items] objectAtIndex:0] permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    }
 }
 
 #pragma mark - delegate functions

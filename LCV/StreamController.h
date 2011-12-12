@@ -50,6 +50,7 @@
 	int server;
     int mode;
     NSString *canMoveColor;
+    int puzzleGameNumber;
 }
 
 @property (nonatomic, retain) id delegate;
@@ -90,6 +91,7 @@
 @property int server;
 @property int mode;
 @property (nonatomic, retain) NSString *canMoveColor;
+@property int puzzleGameNumber;
 
 + (StreamController *)sharedStreamController;
 - (void)sendCommand:(NSMutableString *)command fromViewController:(UITableViewController *)viewController;

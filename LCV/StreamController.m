@@ -57,6 +57,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 @synthesize server = _server;
 @synthesize mode = _mode;
 @synthesize canMoveColor = _canMoveColor;
+@synthesize puzzleGameNumber = _puzzleGameNumber;
 
 #pragma mark ---- singleton object methods ----
 
@@ -113,6 +114,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 	readingCurrentGames = NO;
     _practiceViewController = (PracticeViewController *)NULL;
     _canMoveColor = [[NSString alloc] initWithString:@""];
+    _puzzleGameNumber = 0;
     
 	
 	/*SInt32 port = 5000;
@@ -223,10 +225,6 @@ static StreamController *sharedStreamControllerDelegate = nil;
 				NSLog(@"%@", (NSMutableString *)cfReplyContent);
                 if (_server == FICS) {
                     if ([self mode] == PRACTICE && _practiceViewController) {
-                        NSString *kText = [NSString stringWithString:[[[_practiceViewController practiceView] kibitzTextView] text]];
-                        NSString *kibitzText = [NSString stringWithFormat:@"%@\n%@", kText, (NSMutableString *)cfReplyContent];
-                        [[[_practiceViewController practiceView] kibitzTextView] setText:kibitzText];
-                        [[[_practiceViewController practiceView] kibitzTextView] scrollRangeToVisible:NSMakeRange([kibitzText length], 0)];
                         
                         if ([(NSMutableString *)cfReplyContent rangeOfString:@"\r<12>"].location != NSNotFound) {
                             NSMutableArray *contentArray = [[NSMutableArray alloc] initWithArray:[(NSMutableString *)cfReplyContent componentsSeparatedByString:@"\r"]];
@@ -252,11 +250,35 @@ static StreamController *sharedStreamControllerDelegate = nil;
                                 }
                             }
                         }
+                        
+                        NSError *error = NULL;
+                        NSRegularExpression *practiceKibitz = [NSRegularExpression regularExpressionWithPattern:@"\\rpuzzlebot.*kibitzes: (.*)\\n" options:NSRegularExpressionCaseInsensitive error:&error];
+                        NSArray *practiceKibitzMatches = [practiceKibitz matchesInString:(NSMutableString *)cfReplyContent options:0 range:NSMakeRange(0, [(NSMutableString *)cfReplyContent length])];
+                        
+                        for (NSTextCheckingResult *practiceKibitzMatch in practiceKibitzMatches) {
+                            //NSRange matchRange = [practiceKibitzMatch range];
+                            NSRange firstMatchRange = [practiceKibitzMatch rangeAtIndex:1];
+                            NSLog(@"MATCH: %@", [(NSMutableString *)cfReplyContent substringWithRange:firstMatchRange]);
+                            NSString *kText = [NSString stringWithString:[[[_practiceViewController practiceView] kibitzTextView] text]];
+                            NSString *kibitzText = [NSString stringWithFormat:@"%@\n\n%@", kText, [(NSMutableString *)cfReplyContent substringWithRange:firstMatchRange]];
+                            [[[_practiceViewController practiceView] kibitzTextView] setText:kibitzText];
+                            [[[_practiceViewController practiceView] kibitzTextView] scrollRangeToVisible:NSMakeRange([kibitzText length], 0)];
+                        }
+                        
+                        /*if ([puzzleGameNumberRegex matchesInString:(NSMutableString *)cfReplyContent options:0 range:NSMakeRange(0, [(NSMutableString *)cfReplyContent length])]) {
+                            NSLog(@"REGEX: %@", [puzzleGameNumberRegex firstMatchInString:(NSMutableString *)cfReplyContent options:0 range:NSMakeRange(0, [(NSMutableString *)cfReplyContent length])]);
+                        }
+                        
                         if ([(NSMutableString *)cfReplyContent rangeOfString:@"\rpuzzlebot has made you an examiner of game "].location != NSNotFound) {
                             NSString *findExaminingString = [NSString stringWithString:@"\rpuzzlebot has made you an examiner of game "];
                             NSRange findExaminingRange = [(NSMutableString *)cfReplyContent rangeOfString:findExaminingString];
                             NSLog(@"examining by puzzlebot: %@", [(NSMutableString *)cfReplyContent substringWithRange:NSMakeRange(findExaminingRange.location + findExaminingRange.length, 5)]);
                         }
+                        if (_puzzleGameNumber && [(NSMutableString *)cfReplyContent rangeOfString:[NSString stringWithFormat:@"puzzlebot(TD)(----)[%d] kibitzes: ", _puzzleGameNumber]].location != NSNotFound) {
+                            NSString *findExaminingString = [NSString stringWithFormat:@"puzzlebot(TD)(----)[%d] kibitzes: ", _puzzleGameNumber];
+                            NSRange findExaminingRange = [(NSMutableString *)cfReplyContent rangeOfString:findExaminingString];
+                            NSLog(@"Kibitz: %@", [(NSMutableString *)cfReplyContent substringWithRange:NSMakeRange(findExaminingRange.location + findExaminingRange.length, 15)]);
+                        }*/
                     } //PRACTICE
                 }
                 else if (_server == ICC) {
