@@ -11,18 +11,21 @@
 
 @implementation MenuTableViewController
 
-@synthesize delegate = _delegate;
-@synthesize sections = _sections;
-@synthesize actions = _actions;
-@synthesize accounts = _accounts;
+@synthesize delegate    = _delegate;
+@synthesize sections    = _sections;
+@synthesize accounts    = _accounts;
+@synthesize preferences = _preferences;
+@synthesize about       = _about;
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         _accounts = [[NSMutableArray alloc] initWithObjects:@"ICC", @"FICS", nil];
-        _actions = [[NSMutableArray alloc] initWithObjects:@"Pieces", @"Board", nil];
-        _sections = [[NSMutableArray alloc] initWithObjects:_accounts, _actions, nil];
+        _preferences = [[NSMutableArray alloc] initWithObjects:@"Pieces", @"Board", nil];
+        _about = [[NSMutableArray alloc] initWithObjects:@"Help", @"About", @"Donate", nil];
+        _sections = [[NSMutableArray alloc] initWithObjects:_accounts, _preferences, _about, nil];
         //[self.view setBackgroundColor:[UIColor Color]];
     }
     return self;
@@ -97,10 +100,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return [_actions count];
+        return [_accounts count];
     }
     else if (section == 1) {
-        return [_accounts count];
+        return [_preferences count];
+    }
+    else if (section == 2) {
+        return [_about count];
     }
          
     return 0;
@@ -127,6 +133,9 @@
     }
     else if (section == 1) {
         return @"Preferences";
+    }
+    else if (section == 2) {
+        return @"About";
     }
     
     return @"";
@@ -196,22 +205,47 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {           //actions
+    if (indexPath.section == 0) {           //accounts
         switch (indexPath.row) {
-            case 0:                         //watch
-                NSLog(@"WATCH");
+            case 0:                         //ICC
+                NSLog(@"ICC");
                 break;
-            case 1:                         //training
-                NSLog(@"TRAINING");
-                [_delegate loadTrainingView];
+            case 1:                         //FICS
+                NSLog(@"FICS");
                 break;
                 
             default:
                 break;
         }
     }
-    else if (indexPath.section == 1) {      //accounts
-        
+    else if (indexPath.section == 1) {      //actions
+        switch (indexPath.row) {
+            case 0:                         //PIECES
+                NSLog(@"PIECES");
+                break;
+            case 1:                         //BOARD
+                NSLog(@"BOARD");
+                break;
+                
+            default:
+                break;
+        }
+    }
+    else if (indexPath.section == 2) {      //about
+        switch (indexPath.row) {
+            case 0:                         //HELP
+                NSLog(@"HELP");
+                break;
+            case 1:                         //ABOUT
+                NSLog(@"ABOUT");
+                break;
+            case 2:                         //DONATE
+                NSLog(@"DONATE");
+                break;
+                
+            default:
+                break;
+        }
     }
 }
 

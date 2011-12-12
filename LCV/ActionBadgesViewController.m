@@ -15,6 +15,7 @@
 @implementation ActionBadgesViewController
 
 @synthesize delegate        = _delegate;
+@synthesize bg              = _bg;
 @synthesize watchBadge      = _watchBadge;
 @synthesize practiceBadge   = _practiceBadge;
 @synthesize reviewBadge     = _reviewBadge;
@@ -26,10 +27,13 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         //[self.view setUserInteractionEnabled:YES];
-        _watchBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"watch-badge"]];
-        _practiceBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"practice-badge"]];
-        //_reviewBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"review-badge"]];
-        _playBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"play-badge"]];
+        _bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg-red.png"]];
+        [_bg setFrame:CGRectMake(_bg.frame.origin.x, _bg.frame.origin.y - 20, _bg.image.size.width, _bg.image.size.height)];
+        
+        _watchBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"button-watch.png"]];
+        _practiceBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"button-practice.png"]];
+        _reviewBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"button-review.png"]];
+        _playBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"button-play.png"]];
         
         [_watchBadge setUserInteractionEnabled:YES];
         [_watchBadge addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchWatchBadge)]];
@@ -37,8 +41,8 @@
         [_practiceBadge setUserInteractionEnabled:YES];
         [_practiceBadge addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchPracticeBadge)]];
         
-        //[_reviewBadge setUserInteractionEnabled:YES];
-        //[_reviewBadge addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchReviewBadge)]];
+        [_reviewBadge setUserInteractionEnabled:YES];
+        [_reviewBadge addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchReviewBadge)]];
         
         [_playBadge setUserInteractionEnabled:YES];
         [_playBadge addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchPlayBadge)]];
@@ -107,22 +111,27 @@
     switch (_device) {
         case IPHONE_OLD:
         case IPHONE_RETINA:
-            [_watchBadge setFrame:CGRectMake(20, _watchBadge.image.size.height/2 + 20, _watchBadge.image.size.width/2, _watchBadge.image.size.height/2)];
-            [_practiceBadge setFrame:CGRectMake(20, (_practiceBadge.image.size.height/2 + 20)*2, _practiceBadge.image.size.width/2, _practiceBadge.image.size.height/2)];
-            [_playBadge setFrame:CGRectMake(20, (_playBadge.image.size.height/2 + 20)*3, _playBadge.image.size.width/2, _playBadge.image.size.height/2)];
+            [_watchBadge setFrame:CGRectMake((width - _watchBadge.image.size.width/2.2)/2, 60, _watchBadge.image.size.width/2.2, _watchBadge.image.size.height/2.2)];
+            [_practiceBadge setFrame:CGRectMake(_watchBadge.frame.origin.x, _watchBadge.frame.origin.y + _watchBadge.frame.size.height + 8, _practiceBadge.image.size.width/2.2, _practiceBadge.image.size.height/2.2)];
+            [_reviewBadge setFrame:CGRectMake(_watchBadge.frame.origin.x, _practiceBadge.frame.origin.y + _practiceBadge.frame.size.height + 8, _reviewBadge.image.size.width/2.2, _reviewBadge.image.size.height/2.2)];
+            [_playBadge setFrame:CGRectMake(_watchBadge.frame.origin.x, _reviewBadge.frame.origin.y + _reviewBadge.frame.size.height + 8, _playBadge.image.size.width/2.2, _playBadge.image.size.height/2.2)];
             break;
         case IPAD:
-            [_watchBadge setFrame:CGRectMake(_watchBadge.image.size.width + 20, height/2 - _watchBadge.image.size.height, _watchBadge.image.size.width, _watchBadge.image.size.height)];
-            [_practiceBadge setFrame:CGRectMake((_practiceBadge.image.size.width + 20)*2, height/2 - _practiceBadge.image.size.height, _practiceBadge.image.size.width, _practiceBadge.image.size.height)];
-            [_playBadge setFrame:CGRectMake((_playBadge.image.size.width + 20)*3, height/2 - _playBadge.image.size.height, _playBadge.image.size.width, _playBadge.image.size.height)];
+            [_watchBadge setFrame:CGRectMake(10, 140, _watchBadge.image.size.width, _watchBadge.image.size.height)];
+            [_practiceBadge setFrame:CGRectMake(20 + _watchBadge.image.size.width + 10, _watchBadge.frame.origin.y, _practiceBadge.image.size.width, _practiceBadge.image.size.height)];
+            [_reviewBadge setFrame:CGRectMake(_watchBadge.frame.origin.x, _watchBadge.frame.origin.y + _watchBadge.image.size.height + 10, _reviewBadge.image.size.width, _reviewBadge.image.size.height)];
+            [_playBadge setFrame:CGRectMake(_practiceBadge.frame.origin.x, _reviewBadge.frame.origin.y, _playBadge.image.size.width, _playBadge.image.size.height)];
             break;
             
         default:
             break;
     }
     
+    [view addSubview:_bg];
+    
     [view addSubview:_watchBadge];
     [view addSubview:_practiceBadge];
+    [view addSubview:_reviewBadge];
     [view addSubview:_playBadge];
     
     [self setView:view];

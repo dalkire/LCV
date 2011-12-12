@@ -13,6 +13,11 @@
 		8909A16D149161170040188F /* testBoard.png in Resources */ = {isa = PBXBuildFile; fileRef = 8909A169149161170040188F /* testBoard.png */; };
 		8909A16E149161170040188F /* watch-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 8909A16A149161170040188F /* watch-badge.png */; };
 		8933A3A4149251E2006054C4 /* ActionBadgesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8933A3A3149251E2006054C4 /* ActionBadgesViewController.m */; };
+		897722881496857B00B1FC50 /* button-play.png in Resources */ = {isa = PBXBuildFile; fileRef = 897722841496857B00B1FC50 /* button-play.png */; };
+		897722891496857B00B1FC50 /* button-practice.png in Resources */ = {isa = PBXBuildFile; fileRef = 897722851496857B00B1FC50 /* button-practice.png */; };
+		8977228A1496857B00B1FC50 /* button-review.png in Resources */ = {isa = PBXBuildFile; fileRef = 897722861496857B00B1FC50 /* button-review.png */; };
+		8977228B1496857B00B1FC50 /* button-watch.png in Resources */ = {isa = PBXBuildFile; fileRef = 897722871496857B00B1FC50 /* button-watch.png */; };
+		8977228E1496891700B1FC50 /* bg-red.png in Resources */ = {isa = PBXBuildFile; fileRef = 8977228D1496891700B1FC50 /* bg-red.png */; };
 		897B5CEC1487D10F003EE329 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 897B5CEB1487D10F003EE329 /* UIKit.framework */; };
 		897B5CEE1487D10F003EE329 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 897B5CED1487D10F003EE329 /* Foundation.framework */; };
 		897B5CF01487D10F003EE329 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 897B5CEF1487D10F003EE329 /* CoreGraphics.framework */; };
@@ -159,6 +164,11 @@
 		8909A16A149161170040188F /* watch-badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "watch-badge.png"; sourceTree = "<group>"; };
 		8933A3A2149251E2006054C4 /* ActionBadgesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionBadgesViewController.h; sourceTree = "<group>"; };
 		8933A3A3149251E2006054C4 /* ActionBadgesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionBadgesViewController.m; sourceTree = "<group>"; };
+		897722841496857B00B1FC50 /* button-play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-play.png"; sourceTree = "<group>"; };
+		897722851496857B00B1FC50 /* button-practice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-practice.png"; sourceTree = "<group>"; };
+		897722861496857B00B1FC50 /* button-review.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-review.png"; sourceTree = "<group>"; };
+		897722871496857B00B1FC50 /* button-watch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-watch.png"; sourceTree = "<group>"; };
+		8977228D1496891700B1FC50 /* bg-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-red.png"; sourceTree = "<group>"; };
 		897B5CE71487D10F003EE329 /* LCV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		897B5CEB1487D10F003EE329 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		897B5CED1487D10F003EE329 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -453,6 +463,11 @@
 		89CD8421148AFC0C00649DBA /* images */ = {
 			isa = PBXGroup;
 			children = (
+				897722841496857B00B1FC50 /* button-play.png */,
+				8977228D1496891700B1FC50 /* bg-red.png */,
+				897722851496857B00B1FC50 /* button-practice.png */,
+				897722861496857B00B1FC50 /* button-review.png */,
+				897722871496857B00B1FC50 /* button-watch.png */,
 				8909A167149161170040188F /* play-badge.png */,
 				8909A168149161170040188F /* practice-badge.png */,
 				8909A169149161170040188F /* testBoard.png */,
@@ -796,6 +811,11 @@
 				8909A16C149161170040188F /* practice-badge.png in Resources */,
 				8909A16D149161170040188F /* testBoard.png in Resources */,
 				8909A16E149161170040188F /* watch-badge.png in Resources */,
+				897722881496857B00B1FC50 /* button-play.png in Resources */,
+				897722891496857B00B1FC50 /* button-practice.png in Resources */,
+				8977228A1496857B00B1FC50 /* button-review.png in Resources */,
+				8977228B1496857B00B1FC50 /* button-watch.png in Resources */,
+				8977228E1496891700B1FC50 /* bg-red.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

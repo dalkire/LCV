@@ -12,14 +12,16 @@
 {
     id delegate;
     NSMutableArray *sections;
-    NSMutableArray *actions;
     NSMutableArray *accounts;
+    NSMutableArray *preferences;
+    NSMutableArray *about;
 }
 
 @property (nonatomic, retain) id delegate;
 @property (nonatomic, retain) NSMutableArray *sections;
-@property (nonatomic, retain) NSMutableArray *actions;
 @property (nonatomic, retain) NSMutableArray *accounts;
+@property (nonatomic, retain) NSMutableArray *preferences;
+@property (nonatomic, retain) NSMutableArray *about;
 
 - (void)didTouchDone;
 

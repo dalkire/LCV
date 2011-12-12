@@ -10,6 +10,7 @@
 
 @interface ActionBadgesViewController : UIViewController {
     id delegate;
+    UIImageView *bg;
     UIImageView *watchBadge;
     UIImageView *practiceBadge;
     UIImageView *reviewBadge;
@@ -18,6 +19,7 @@
 }
 
 @property (nonatomic, retain) id delegate;
+@property (nonatomic, retain) UIImageView *bg;
 @property (nonatomic, retain) UIImageView *watchBadge;
 @property (nonatomic, retain) UIImageView *practiceBadge;
 @property (nonatomic, retain) UIImageView *reviewBadge;
