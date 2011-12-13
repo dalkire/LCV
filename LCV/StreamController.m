@@ -6,12 +6,6 @@
 //  Copyright PixelSift Studios 2010. All rights reserved.
 //
 
-#define NONE        0
-#define WATCHING    200
-#define PRACTICE    201
-#define ICC         300
-#define FICS        301
-
 #import "StreamController.h"
 #import "Definitions.h"
 #import "BoardViewController.h"
