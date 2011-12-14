@@ -15,12 +15,14 @@
 #import "CurrentGamesViewController.h"
 #import "StreamController.h"
 #import "BoardViewController.h"
+#import "RootViewController.h"
 
 
 @implementation CurrentGamesViewController
 
+@synthesize rootViewController = _rootViewController;
 @synthesize currentGames;
-//@synthesize toolbar;
+@synthesize toolbar = _toolbar;
 @synthesize observing;
 @synthesize toBeCleared;
 @synthesize activityIndicatorView = _activityIndicatorView;
@@ -28,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UITableView *tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 300, 400) style:UITableViewStylePlain];
+    UITableView *tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 460) style:UITableViewStylePlain];
     [tv setDelegate:self];
     [tv setDataSource:self];
     
@@ -36,26 +38,25 @@
     
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [_activityIndicatorView setFrame:CGRectMake((self.view.frame.size.width - 20)/2, (self.view.frame.size.height - 20)/2, 20, 20)];
-    _activityIndicatorView.hidesWhenStopped = YES;
+    [_activityIndicatorView setHidesWhenStopped:YES];
 	[_activityIndicatorView startAnimating];
 	
 	NSArray *arr = [[NSArray alloc] initWithObjects:nil];
 	self.currentGames = arr;
 	[arr release];
-//	toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 420.0, 320.0, 40.0)];
-//	toolbar.barStyle = UIBarStyleBlack;
-	UIBarButtonItem *boardBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"board-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showBoardView)];
-	UIBarButtonItem *infoBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"info-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showInfoView)];
-	UIBarButtonItem *flexibleSpaceBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-	UIBarButtonItem *refreshBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"refresh-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(refresh)];
-	NSArray *barItems = [[NSArray alloc] initWithObjects:boardBarButton, flexibleSpaceBarButton, refreshBarButton, flexibleSpaceBarButton, infoBarButton, nil];
-//	toolbar.items = barItems;
-	[boardBarButton release];
-	[refreshBarButton release];
-	[flexibleSpaceBarButton release];
-	[barItems release];
-//	[self.view addSubview:toolbar];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        tv.frame = CGRectMake(0, 0, 320, 416);
+        UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissModal)];
+        [self.navigationItem setRightBarButtonItem:doneBtn];
+        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+    }
     [self.view addSubview:_activityIndicatorView];
+}
+
+- (void)dismissModal
+{
+    [_rootViewController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -111,7 +112,7 @@
     NSUInteger row = [indexPath row]; 
     NSString *gameID = [[currentGames objectAtIndex:row] valueForKey:@"game_id"];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	BoardViewController *bvc = (BoardViewController *)[StreamController sharedStreamController].boardViewController;
+	BoardViewController *bvc = _rootViewController.boardViewController;
 	
 	NSString *whitePlayerLabel = [[NSString alloc] initWithFormat:@"%@ %@", [[currentGames objectAtIndex:row] valueForKey:@"white_player"], [[currentGames objectAtIndex:row] valueForKey:@"white_rating"]];
 	NSString *blackPlayerLabel = [[NSString alloc] initWithFormat:@"%@ %@", [[currentGames objectAtIndex:row] valueForKey:@"black_player"], [[currentGames objectAtIndex:row] valueForKey:@"black_rating"]];
@@ -124,13 +125,13 @@
 	[whitePlayerLabel release];
 	[blackPlayerLabel release];
 	
-	[(BoardViewController *)[StreamController sharedStreamController].boardViewController resetResults];
+	[_rootViewController.boardViewController resetResults];
 	
 	if ([StreamController sharedStreamController].server == ICC) {
-		[(BoardViewController *)[StreamController sharedStreamController].boardViewController resetBoard];
+		[_rootViewController.boardViewController resetBoard];
 	}
 	
-	[(BoardViewController *)[StreamController sharedStreamController].boardViewController resetMoveListView];
+	[_rootViewController.boardViewController resetMoveListView];
 	NSMutableString *command = [[NSMutableString alloc] initWithFormat:@"observe %@\r\n", gameID];
 	self.observing = gameID;
 	[StreamController sharedStreamController].observing = [self.observing integerValue];
@@ -138,7 +139,7 @@
 	[StreamController sharedStreamController].currentFicsLocalMoveNumber = 0;
 	[[StreamController sharedStreamController] sendCommand:command];
 	[command release];
-	[self showBoardView];
+	[self dismissModal];
 } 
 
 - (void)commandResult:(NSString *)result fromCommand:(NSInteger)command {

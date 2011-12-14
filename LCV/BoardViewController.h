@@ -22,6 +22,7 @@
 	NSString *resultText;
 	NSString *iccResultText;
 	BOOL flipped;
+    int device;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
@@ -33,6 +34,7 @@
 @property (nonatomic, retain) NSString *resultText;
 @property (nonatomic, retain) NSString *iccResultText;
 @property BOOL flipped;
+@property int device;
 
 - (void)commandResult:(NSString *)result fromCommand:(NSInteger *)command;
 - (void)moveList:(NSArray *)moveList;

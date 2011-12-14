@@ -23,10 +23,22 @@
 @implementation BoardViewController
 
 @synthesize toolbar, board, blackName, whiteName, blackElo, whiteElo, resultText, iccResultText, flipped;
+@synthesize device = _device;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad {   
+    float width = [UIScreen mainScreen].bounds.size.width;
+    float height = [UIScreen mainScreen].bounds.size.height - 20;
+    _device = IPHONE;
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        NSLog(@"PAD");
+        _device = IPAD;
+        width = [UIScreen mainScreen].bounds.size.height - 20;
+        height = [UIScreen mainScreen].bounds.size.width;
+    }
+    
     [super viewDidLoad];
-	toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 420, 320, 40)];
+	toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, height - 44, width, 44)];
 	toolbar.barStyle = UIBarStyleBlack;
 	UIBarButtonItem *gamesBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"games-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showCurrentGamesView)];
 	UIBarButtonItem *flipBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"flip-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(flipBoard)];
@@ -42,7 +54,7 @@
 	[self.view addSubview:toolbar];
 	//[self.view setBackgroundColor:[UIColor blackColor]];
 		
-	BoardView *boardView = [[BoardView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
+	BoardView *boardView = [[BoardView alloc] initForDevice:_device];
 	boardView.tag = 1;
 	board = boardView;
 	[self.view addSubview:boardView];

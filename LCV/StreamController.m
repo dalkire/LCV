@@ -45,6 +45,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 @synthesize caller;
 @synthesize boardViewController;
 @synthesize currentGamesViewController = _currentGamesViewController;
+@synthesize watchingViewController = _watchingViewController;
 @synthesize practiceViewController = _practiceViewController;
 @synthesize mainViewController;
 @synthesize resultText, iccResultText;
@@ -216,7 +217,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 				rbuf[bytesRead] = 0;
 				CFMutableStringRef cfReplyContent = CFStringCreateMutable(kCFAllocatorDefault, 0);
 				CFStringAppendCString(cfReplyContent, (const char *)rbuf, kCFStringEncodingASCII);
-				//NSLog(@"%@", (NSMutableString *)cfReplyContent);
+				NSLog(@"%@", (NSMutableString *)cfReplyContent);
                 if (_server == FICS) {
                     if ([self mode] == PRACTICING && _practiceViewController) {
                         
@@ -258,23 +259,8 @@ static StreamController *sharedStreamControllerDelegate = nil;
                             [[[_practiceViewController practiceView] kibitzTextView] setText:kibitzText];
                             [[[_practiceViewController practiceView] kibitzTextView] scrollRangeToVisible:NSMakeRange([kibitzText length], 0)];
                         }
-                        
-                        /*if ([puzzleGameNumberRegex matchesInString:(NSMutableString *)cfReplyContent options:0 range:NSMakeRange(0, [(NSMutableString *)cfReplyContent length])]) {
-                            NSLog(@"REGEX: %@", [puzzleGameNumberRegex firstMatchInString:(NSMutableString *)cfReplyContent options:0 range:NSMakeRange(0, [(NSMutableString *)cfReplyContent length])]);
-                        }
-                        
-                        if ([(NSMutableString *)cfReplyContent rangeOfString:@"\rpuzzlebot has made you an examiner of game "].location != NSNotFound) {
-                            NSString *findExaminingString = [NSString stringWithString:@"\rpuzzlebot has made you an examiner of game "];
-                            NSRange findExaminingRange = [(NSMutableString *)cfReplyContent rangeOfString:findExaminingString];
-                            NSLog(@"examining by puzzlebot: %@", [(NSMutableString *)cfReplyContent substringWithRange:NSMakeRange(findExaminingRange.location + findExaminingRange.length, 5)]);
-                        }
-                        if (_puzzleGameNumber && [(NSMutableString *)cfReplyContent rangeOfString:[NSString stringWithFormat:@"puzzlebot(TD)(----)[%d] kibitzes: ", _puzzleGameNumber]].location != NSNotFound) {
-                            NSString *findExaminingString = [NSString stringWithFormat:@"puzzlebot(TD)(----)[%d] kibitzes: ", _puzzleGameNumber];
-                            NSRange findExaminingRange = [(NSMutableString *)cfReplyContent rangeOfString:findExaminingString];
-                            NSLog(@"Kibitz: %@", [(NSMutableString *)cfReplyContent substringWithRange:NSMakeRange(findExaminingRange.location + findExaminingRange.length, 15)]);
-                        }*/
                     } //PRACTICE
-                    else if ([self mode] == WATCHING) {// && _practiceViewController) {
+                    else if ([self mode] == WATCHING && _watchingViewController) {
                         if ([(NSMutableString *)cfReplyContent rangeOfString:@"~~startgames"].location != NSNotFound) {
                             readingCurrentGames = YES;
                         }
@@ -294,6 +280,27 @@ static StreamController *sharedStreamControllerDelegate = nil;
                             }
                             [(CurrentGamesViewController *)_currentGamesViewController commandResult:(NSString *)fullGames fromCommand:155];
                         }	
+                        if ([(NSMutableString *)cfReplyContent rangeOfString:@"\r<12>"].location != NSNotFound) {
+                            NSMutableArray *contentArray = [[NSMutableArray alloc] initWithArray:[(NSMutableString *)cfReplyContent componentsSeparatedByString:@"\r"]];
+                            for (int i=0; i < [contentArray count]; i++) {
+                                if([(NSString *)[contentArray objectAtIndex:i] length] > 4 && [[[contentArray objectAtIndex:i] substringWithRange:NSMakeRange(0, 4)] isEqualToString:@"<12>"]) {
+                                    [ficsMoveList addObject:[[contentArray objectAtIndex:i] substringFromIndex:5]];
+                                    currentFicsLocalMoveNumber++;
+                                    prevStyle12String = currStyle12String;
+                                    currStyle12String = (NSMutableString *)[[contentArray objectAtIndex:i] substringFromIndex:5];
+                                    
+                                    clockRunning = YES;
+                                    [moveList addObject:currStyle12String];
+                                    
+                                    if (currentMoveNumber == absoluteMoveNumber) {
+                                     [_watchingViewController setPositionFromStyle12:currStyle12String];
+                                     currentMoveNumber++;
+                                     }
+                                    absoluteMoveNumber++;
+                                    NSLog(@"CLF=%d, CUR=%d, ABS=%d", currentFicsLocalMoveNumber, currentMoveNumber, absoluteMoveNumber);
+                                }
+                            }
+                        }
                     }
                 }
                 else if (_server == ICC) {

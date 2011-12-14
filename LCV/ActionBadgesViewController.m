@@ -84,20 +84,11 @@
 
 - (void)loadView
 {
-    float width = 0;
-    float height = 0;
-    _device = IPHONE_RETINA;
+    float width = [UIScreen mainScreen].bounds.size.width;
+    float height = [UIScreen mainScreen].bounds.size.height;
+    _device = IPHONE;
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        NSLog(@"PHONE");
-        width = [UIScreen mainScreen].bounds.size.width;
-        height = [UIScreen mainScreen].bounds.size.height;
-        
-        if (width < 600) {
-            _device = IPHONE_OLD;
-        }
-    }
-    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSLog(@"PAD");
         _device = IPAD;
         width = [UIScreen mainScreen].bounds.size.height;
@@ -107,8 +98,7 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
     
     switch (_device) {
-        case IPHONE_OLD:
-        case IPHONE_RETINA:
+        case IPHONE:
             [_watchBadge setFrame:CGRectMake((width - _watchBadge.image.size.width/2.2)/2, 60, _watchBadge.image.size.width/2.2, _watchBadge.image.size.height/2.2)];
             [_practiceBadge setFrame:CGRectMake(_watchBadge.frame.origin.x, _watchBadge.frame.origin.y + _watchBadge.frame.size.height + 8, _practiceBadge.image.size.width/2.2, _practiceBadge.image.size.height/2.2)];
             [_reviewBadge setFrame:CGRectMake(_watchBadge.frame.origin.x, _practiceBadge.frame.origin.y + _practiceBadge.frame.size.height + 8, _reviewBadge.image.size.width/2.2, _reviewBadge.image.size.height/2.2)];

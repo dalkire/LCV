@@ -19,11 +19,10 @@
     int width = 0;
     int height = 0;
     switch (dvc) {
-        case IPHONE_OLD:
+        case IPHONE:
             width = 320;
             height = 320;
             break;
-        case IPHONE_RETINA:
         case IPAD:
             width = 640;
             height = 640;
@@ -33,7 +32,7 @@
             break;
     }
     
-    if (self = [super initWithFrame:CGRectMake(0, 44, width, height)]) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, width, height)]) {
         _board = [[BoardImageView alloc] initForDevice:_device];
         [_board setBackgroundColor:[UIColor purpleColor]];
 		

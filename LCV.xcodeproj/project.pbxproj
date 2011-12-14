@@ -393,12 +393,9 @@
 				89C31090148822A800DFAADC /* BoardImageView.h */,
 				89C31091148822A800DFAADC /* BoardImageView.m */,
 				89CD840E148A50D500649DBA /* Core Data */,
-				89C31092148822A800DFAADC /* BoardView.h */,
-				89C31093148822A800DFAADC /* BoardView.m */,
-				89CD8421148AFC0C00649DBA /* images */,
-				89C31094148822A800DFAADC /* BoardViewController.h */,
-				89C31095148822A800DFAADC /* BoardViewController.m */,
+				89896BA814992D9D00AA27B8 /* Watching */,
 				89CD840A1489D34500649DBA /* Practice */,
+				89CD8421148AFC0C00649DBA /* images */,
 				89C31096148822A800DFAADC /* CurrentGamesViewController.h */,
 				89C31097148822A800DFAADC /* CurrentGamesViewController.m */,
 				89C31098148822A800DFAADC /* Definitions.h */,
@@ -430,6 +427,17 @@
 				897B5CF91487D10F003EE329 /* LCV-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		89896BA814992D9D00AA27B8 /* Watching */ = {
+			isa = PBXGroup;
+			children = (
+				89C31092148822A800DFAADC /* BoardView.h */,
+				89C31093148822A800DFAADC /* BoardView.m */,
+				89C31094148822A800DFAADC /* BoardViewController.h */,
+				89C31095148822A800DFAADC /* BoardViewController.m */,
+			);
+			name = Watching;
 			sourceTree = "<group>";
 		};
 		899387AA148930B1006FF9DA /* Menu */ = {

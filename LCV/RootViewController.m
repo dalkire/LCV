@@ -204,21 +204,30 @@
 
 - (void)loadWatchView
 {
-    _currentGamesViewController = [[CurrentGamesViewController alloc] initWithNibName:nil bundle:nil];
-    [[StreamController sharedStreamController] setCurrentGamesViewController:_currentGamesViewController];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _boardViewController = [[BoardViewController alloc] initWithNibName:nil bundle:nil];
+        [[StreamController sharedStreamController] setWatchingViewController:_boardViewController];
+        
+        _currentGamesViewController = [[CurrentGamesViewController alloc] initWithNibName:nil bundle:nil];
+        [_currentGamesViewController setRootViewController:self];
+        [[StreamController sharedStreamController] setCurrentGamesViewController:_currentGamesViewController];
     
-	if ([StreamController sharedStreamController].server == FICS) {
-		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:(UITableViewController *)self];
-	}
-	else if ([StreamController sharedStreamController].server == ICC) {
-		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)_currentGamesViewController];
-	}
+        if ([StreamController sharedStreamController].server == FICS) {
+            [[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:(UITableViewController *)self];
+        }
+        else if ([StreamController sharedStreamController].server == ICC) {
+            [[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)_currentGamesViewController];
+        }
     
-    int len = [[self.view subviews] count];
-    for (int i = 0; i < len; i++) {
-        [[[self.view subviews] objectAtIndex:i] removeFromSuperview];
+        int len = [[self.view subviews] count];
+        for (int i = 0; i < len; i++) {
+            [[[self.view subviews] objectAtIndex:i] removeFromSuperview];
+        }
+        [self.view insertSubview:_boardViewController.view atIndex:0];
+        
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:_currentGamesViewController];
+        [self presentModalViewController:navController animated:YES];
     }
-    [self.view insertSubview:_currentGamesViewController.view atIndex:0];
     NSLog(@"load watch View");
 }
 

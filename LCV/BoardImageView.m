@@ -30,12 +30,11 @@
     int height = 0;
     _squareSize = 40;
     switch (dvc) {
-        case IPHONE_OLD:
+        case IPHONE:
             width = 320;
             height = 320;
             _squareSize = 40;
             break;
-        case IPHONE_RETINA:
         case IPAD:
             width = 640;
             height = 640;

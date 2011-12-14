@@ -12,12 +12,30 @@
 @implementation BoardView
 
 @synthesize board, blackPlayerLabel, whitePlayerLabel, blackTimeLabel, whiteTimeLabel, blackTimeInSeconds, whiteTimeInSeconds, moveListView, movesScrollView;
+@synthesize device = _device;
 
 
-- (id)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-        board = [[BoardImageView alloc] initWithFrame:CGRectMake(0, 26, 320, 320)];
-		blackPlayerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, 225, 18)];
+- (id)initForDevice:(int)dvc {    
+    _device = dvc;
+    int width = 0;
+    int height = 0;
+    switch (dvc) {
+        case IPHONE:
+            width = 320;
+            height = 320;
+            break;
+        case IPAD:
+            width = 640;
+            height = 640;
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (self = [super initWithFrame:CGRectMake(0, 0, width, height)]) {
+        board = [[BoardImageView alloc] initForDevice:_device];
+		/*blackPlayerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, 225, 18)];
 		whitePlayerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 350, 225, 18)];
 		blackPlayerLabel.backgroundColor = [UIColor blackColor];
 		blackPlayerLabel.font = [UIFont fontWithName:@"Verdana-Bold" size:14];
@@ -47,14 +65,14 @@
 		moveListView = [[MoveListView alloc] initWithFrame:CGRectMake(0, 0, 300, 39)];
 		[movesScrollView setContentSize:moveListView.frame.size];
 		moveListView.backgroundColor = [UIColor blackColor];
-		[movesScrollView addSubview:moveListView];
+		[movesScrollView addSubview:moveListView];*/
 		
 		[self addSubview:board];
-		[self addSubview:blackPlayerLabel];
-		[self addSubview:whitePlayerLabel];
-		[self addSubview:blackTimeLabel];
-		[self addSubview:whiteTimeLabel];
-		[self addSubview:movesScrollView];
+		//[self addSubview:blackPlayerLabel];
+		//[self addSubview:whitePlayerLabel];
+		//[self addSubview:blackTimeLabel];
+		//[self addSubview:whiteTimeLabel];
+		//[self addSubview:movesScrollView];
     }
     return self;
 }

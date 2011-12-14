@@ -157,7 +157,7 @@
 		}
 	}
 	
-	if ([[StreamController sharedStreamController].server isEqualToString:@"fics"]) {
+	if ([StreamController sharedStreamController].server == FICS) {
 		if (regularMoveNumber > 3) {
 			[(UIScrollView *)[self superview] scrollRectToVisible:CGRectMake(0, [StreamController sharedStreamController].currentMoveNumber*13-39, 300, 39) animated:animated];
 		}
@@ -165,7 +165,7 @@
 			[(UIScrollView *)[self superview] scrollRectToVisible:CGRectMake(0, 0, 300, 39) animated:animated];
 		}
 	}
-	else {
+	else if ([StreamController sharedStreamController].server == ICC) {
 		if (regularMoveNumber > 3) {
 			[(UIScrollView *)[self superview] scrollRectToVisible:CGRectMake(0, regularMoveNumber*13-39, 300, 39) animated:animated];
 		}

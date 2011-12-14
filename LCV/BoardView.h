@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Definitions.h"
 #import "BoardImageView.h"
+
 @class MoveListView;
 
 @interface BoardView : UIView {
@@ -20,6 +22,7 @@
 	UILabel *whiteTimeLabel;
 	NSUInteger blackTimeInSeconds;
 	NSUInteger whiteTimeInSeconds;
+    int device;
 }
 
 @property (nonatomic, retain) BoardImageView *board;
@@ -31,7 +34,9 @@
 @property (nonatomic, retain) IBOutlet UILabel *whiteTimeLabel;
 @property NSUInteger blackTimeInSeconds;
 @property NSUInteger whiteTimeInSeconds;
+@property int device;
 
+- (id)initForDevice:(int)dvc;
 - (void)setTime:(NSNumber *)seconds forColor:(NSString *)color;
 - (void)clearTime;
 - (void)resetMoveListView;

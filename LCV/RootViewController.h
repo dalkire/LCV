@@ -33,7 +33,7 @@
 @property (nonatomic, retain) UINavigationController *navigationController;
 @property (nonatomic, retain) MenuTableViewController *menuTableViewController;
 @property (nonatomic, retain) CurrentGamesViewController *currentGamesViewController;
-@property (nonatomic, retain) CurrentGamesViewController *boardViewController;
+@property (nonatomic, retain) BoardViewController *boardViewController;
 
 - (void)didTouchMenu;
 - (void)loadPracticeView;

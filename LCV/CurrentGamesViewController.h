@@ -8,16 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class RootViewController;
+
 @interface CurrentGamesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    RootViewController *rootViewController;
 	NSArray *currentGames;
-	//IBOutlet UIToolbar *toolbar;
+	UIToolbar *toolbar;
 	NSString *observing;
 	BOOL toBeCleared;
 	UIActivityIndicatorView *activityIndicatorView;
 }
 
+@property (nonatomic, retain) RootViewController *rootViewController;
 @property (nonatomic, retain) NSArray *currentGames;
-//@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
+@property (nonatomic, retain) UIToolbar *toolbar;
 @property (nonatomic, retain) NSString *observing;
 @property BOOL toBeCleared;
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
@@ -28,5 +32,6 @@
 - (void)showBoardView;
 - (void)showInfoView;
 - (void)clearCurrentGamesTable;
+- (void)dismissModal;
 
 @end

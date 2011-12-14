@@ -6,15 +6,22 @@
 //  Copyright PixelSift Studios 2010. All rights reserved.
 //
 
-#define IPHONE_OLD      1
-#define IPHONE_RETINA   2
-#define IPAD            3
+#define IPHONE      1
+#define IPAD        3
 
 #define NONE        0
 #define WATCHING    200
 #define PRACTICING  201
 #define ICC         300
 #define FICS        301
+
+#define ALPHA       0
+#define LINE        1
+#define MAGNETIC    2
+#define MARK        3
+#define MOTIF       4
+#define USUAL       5
+#define UTRECHT     6
 
 #define CN_NONE				-999
 

@@ -37,56 +37,41 @@
 #pragma mark - View lifecycle
 
 - (void)loadView
-{    
-    float width = 0;
-    float height = 0;
-    _device = IPHONE_RETINA;
+{   
+    [super loadView];
+    float width = [UIScreen mainScreen].bounds.size.width;
+    float height = [UIScreen mainScreen].bounds.size.height - 20;
+    _device = IPHONE;
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        NSLog(@"PHONE");
-        width = [UIScreen mainScreen].bounds.size.width;
-        height = [UIScreen mainScreen].bounds.size.height;
-        
-        if (width < 600) {
-            _device = IPHONE_OLD;
-        }
-    }
-    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSLog(@"PAD");
         _device = IPAD;
         width = [UIScreen mainScreen].bounds.size.height;
-        height = [UIScreen mainScreen].bounds.size.width;
+        height = [UIScreen mainScreen].bounds.size.width - 20;
     }
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 20, width, height)];
     view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
     
-    UIBarButtonItem *menuBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-menu.png"] 
+    UIBarButtonItem *menuBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-home.png"] 
                                                                style:UIBarButtonItemStyleBordered 
                                                               target:self 
                                                               action:@selector(didTouchMenu)];
-    /*UIBarButtonItem *editBtn =[[UIBarButtonItem alloc] 
-                               initWithBarButtonSystemItem:UIBarButtonSystemItemEdit 
-                               target:self 
-                               action:@selector(didTouchEdit)];
-    UIBarButtonItem *addBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-add.png"] 
-                                                              style:UIBarButtonItemStyleBordered 
-                                                             target:self 
-                                                             action:@selector(addCourseModal)];*/
+    
     UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
-    _toolbar = [[UIToolbar alloc] init];
+    _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, height - 44, width, 44)];
     [_toolbar setBarStyle:UIBarStyleBlack];
     [_toolbar sizeToFit];
     [_toolbar setItems:[NSArray arrayWithObjects:menuBtn, flex, nil]];
     
-    [view addSubview:_toolbar];
     [view setBackgroundColor:[UIColor yellowColor]];
     
     _practiceView = [[PracticeView alloc] initForDevice:_device];
     [[_practiceView board] setUserInteractionEnabled:YES];
     [view addSubview:_practiceView];
     [self setInStartingPosition:YES];
+    [view addSubview:_toolbar];
     
     [self setView:view];
     [_toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];

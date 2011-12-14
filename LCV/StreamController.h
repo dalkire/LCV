@@ -10,6 +10,7 @@
 #import "PracticeViewController.h"
 
 @class PracticeViewController;
+@class BoardViewController;
 
 @interface StreamController : NSObject <NSStreamDelegate> {
     id delegate;
@@ -43,6 +44,7 @@
 	UIViewController *caller;
 	UIViewController *boardViewController;
 	UIViewController *currentGamesViewController;
+    BoardViewController *watchingViewController;
     PracticeViewController *trainingViewController;
 	UIViewController *mainViewController;
 	NSString *resultText;
@@ -70,6 +72,7 @@
 @property (nonatomic, retain) UIViewController *caller;
 @property (nonatomic, retain) UIViewController *boardViewController;
 @property (nonatomic, retain) UIViewController *currentGamesViewController;
+@property (nonatomic, retain) BoardViewController *watchingViewController;
 @property (nonatomic, retain) PracticeViewController *practiceViewController;
 @property (nonatomic, retain) UIViewController *mainViewController;
 @property BOOL firstPass;
