@@ -10,21 +10,34 @@
 
 @implementation ActionBadgesViewController
 
-@synthesize delegate        = _delegate;
-@synthesize bg              = _bg;
-@synthesize watchBadge      = _watchBadge;
-@synthesize practiceBadge   = _practiceBadge;
-@synthesize reviewBadge     = _reviewBadge;
-@synthesize playBadge       = _playBadge;
-@synthesize device          = _device;
+@synthesize delegate                = _delegate;
+@synthesize toolbar                 = _toolbar;
+@synthesize bg                      = _bg;
+@synthesize watchBadge              = _watchBadge;
+@synthesize practiceBadge           = _practiceBadge;
+@synthesize reviewBadge             = _reviewBadge;
+@synthesize playBadge               = _playBadge;
+@synthesize device                  = _device;
+@synthesize menuTableViewController = _menuTableViewController;
+@synthesize menuPopover             = _menuPopover;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        //[self.view setUserInteractionEnabled:YES];
+        float width = [UIScreen mainScreen].bounds.size.width;
+        float height = [UIScreen mainScreen].bounds.size.height - 20; // - 20: status bar
+        _device = IPHONE;
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            NSLog(@"PAD");
+            _device = IPAD;
+            width = [UIScreen mainScreen].bounds.size.height;
+            height = [UIScreen mainScreen].bounds.size.width - 20;  // - 20: status bar
+        }
+        
         _bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg-red.png"]];
-        [_bg setFrame:CGRectMake(_bg.frame.origin.x, _bg.frame.origin.y - 20, _bg.image.size.width, _bg.image.size.height)];
+        [_bg setFrame:CGRectMake(0, 0, width, height - 44)]; // - 44: toolbar
         
         _watchBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"button-watch.png"]];
         _practiceBadge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"button-practice.png"]];
@@ -42,6 +55,10 @@
         
         [_playBadge setUserInteractionEnabled:YES];
         [_playBadge addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchPlayBadge)]];
+        
+        _menuTableViewController  = [[MenuTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        [_menuTableViewController setTitle:@"Settings"];
+        [_menuTableViewController setDelegate:self];
     }
     return self;
 }
@@ -85,45 +102,115 @@
 - (void)loadView
 {
     float width = [UIScreen mainScreen].bounds.size.width;
-    float height = [UIScreen mainScreen].bounds.size.height;
+    float height = [UIScreen mainScreen].bounds.size.height - 20;
     _device = IPHONE;
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSLog(@"PAD");
         _device = IPAD;
         width = [UIScreen mainScreen].bounds.size.height;
-        height = [UIScreen mainScreen].bounds.size.width;
+        height = [UIScreen mainScreen].bounds.size.width - 20;
     }
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    UIView *container = [[UIView alloc] init];
+    
+    float badgeWidth = _watchBadge.image.size.width;
+    float badgeHeight = _watchBadge.image.size.height;
     
     switch (_device) {
         case IPHONE:
-            [_watchBadge setFrame:CGRectMake((width - _watchBadge.image.size.width/2.2)/2, 60, _watchBadge.image.size.width/2.2, _watchBadge.image.size.height/2.2)];
-            [_practiceBadge setFrame:CGRectMake(_watchBadge.frame.origin.x, _watchBadge.frame.origin.y + _watchBadge.frame.size.height + 8, _practiceBadge.image.size.width/2.2, _practiceBadge.image.size.height/2.2)];
-            [_reviewBadge setFrame:CGRectMake(_watchBadge.frame.origin.x, _practiceBadge.frame.origin.y + _practiceBadge.frame.size.height + 8, _reviewBadge.image.size.width/2.2, _reviewBadge.image.size.height/2.2)];
-            [_playBadge setFrame:CGRectMake(_watchBadge.frame.origin.x, _reviewBadge.frame.origin.y + _reviewBadge.frame.size.height + 8, _playBadge.image.size.width/2.2, _playBadge.image.size.height/2.2)];
+            badgeWidth = _watchBadge.image.size.width/2.2;
+            badgeHeight = _watchBadge.image.size.height/2.2;
+            
+            [_watchBadge setFrame:CGRectMake(0, 0, badgeWidth, badgeHeight)];
+            [_practiceBadge setFrame:CGRectMake(0, badgeHeight + 8, badgeWidth, badgeHeight)];
+            [_reviewBadge setFrame:CGRectMake(0, (badgeHeight + 8)*2, badgeWidth, badgeHeight)];
+            [_playBadge setFrame:CGRectMake(0, (badgeHeight + 8)*3, badgeWidth, badgeHeight)];
+            
+            [container addSubview:_watchBadge];
+            [container addSubview:_practiceBadge];
+            [container addSubview:_reviewBadge];
+            [container addSubview:_playBadge];
+            
+            container.frame = CGRectMake(0, 0, badgeWidth, badgeHeight*4 + 8*3);
+            container.frame = CGRectMake((width - container.frame.size.width)/2, (height - 44 - container.frame.size.height)/2, container.frame.size.width, container.frame.size.height);
+            
             break;
         case IPAD:
-            [_watchBadge setFrame:CGRectMake(10, 140, _watchBadge.image.size.width, _watchBadge.image.size.height)];
-            [_practiceBadge setFrame:CGRectMake(20 + _watchBadge.image.size.width + 10, _watchBadge.frame.origin.y, _practiceBadge.image.size.width, _practiceBadge.image.size.height)];
-            [_reviewBadge setFrame:CGRectMake(_watchBadge.frame.origin.x, _watchBadge.frame.origin.y + _watchBadge.image.size.height + 10, _reviewBadge.image.size.width, _reviewBadge.image.size.height)];
-            [_playBadge setFrame:CGRectMake(_practiceBadge.frame.origin.x, _reviewBadge.frame.origin.y, _playBadge.image.size.width, _playBadge.image.size.height)];
+            badgeWidth = _watchBadge.image.size.width/1.3;
+            badgeHeight = _watchBadge.image.size.height/1.3;
+            
+            [_watchBadge setFrame:CGRectMake(0, 0, badgeWidth, badgeHeight)];
+            [_practiceBadge setFrame:CGRectMake(badgeWidth + 40, 0, badgeWidth, badgeHeight)];
+            [_reviewBadge setFrame:CGRectMake(0, badgeHeight + 40, badgeWidth, badgeHeight)];
+            [_playBadge setFrame:CGRectMake(badgeWidth + 40, badgeHeight + 40, badgeWidth, badgeHeight)];
+            
+            [container addSubview:_watchBadge];
+            [container addSubview:_practiceBadge];
+            [container addSubview:_reviewBadge];
+            [container addSubview:_playBadge];
+            
+            container.frame = CGRectMake(0, 0, badgeWidth*2 + 40, badgeHeight*2 + 40);
+            container.frame = CGRectMake((width - container.frame.size.width)/2, (height - 44 - container.frame.size.height)/2, container.frame.size.width, container.frame.size.height);
+            
             break;
             
         default:
             break;
     }
     
-    [view addSubview:_bg];
     
-    [view addSubview:_watchBadge];
-    [view addSubview:_practiceBadge];
-    [view addSubview:_reviewBadge];
-    [view addSubview:_playBadge];
+    UIBarButtonItem *menuBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-settings.png"] 
+                                                               style:UIBarButtonItemStyleBordered 
+                                                              target:self 
+                                                              action:@selector(didTouchMenu)];
+    
+    UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, height - 44, width, 44)];
+    [_toolbar setBarStyle:UIBarStyleBlack];
+    [_toolbar setItems:[NSArray arrayWithObjects:flex, menuBtn, nil]];
+    
+    [view addSubview:_bg];
+    [view addSubview:container];
+    [view addSubview:_toolbar];
     
     [self setView:view];
     [view release];
+}
+
+- (void)didTouchMenu
+{
+    NSLog(@"Did touch menu");
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:_menuTableViewController];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [navigationController.view setFrame:CGRectMake(navigationController.view.frame.origin.x, 
+                                                       navigationController.view.frame.origin.y - 20, 
+                                                        navigationController.view.frame.size.width, 
+                                                        navigationController.view.frame.size.height)];
+        [navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+        [self presentModalViewController:navigationController animated:YES];
+    }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        navigationController = [[UINavigationController alloc] initWithRootViewController:_menuTableViewController];
+        [navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+        
+        _menuPopover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+        [_menuPopover presentPopoverFromBarButtonItem:[[_toolbar items] objectAtIndex:1] permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+    }
+}
+
+#pragma mark - delegate functions
+
+- (void)dismissMenu
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [_menuPopover dismissPopoverAnimated:YES];
+    }
 }
 
 /*

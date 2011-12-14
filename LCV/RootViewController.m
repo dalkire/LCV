@@ -23,11 +23,9 @@
 
 @implementation RootViewController
 
-@synthesize toolbar                     = _toolbar;
 @synthesize streamController            = _streamController;
 @synthesize navigationController        = _navigationController;
 @synthesize currentViewController       = _currentViewController;
-@synthesize menuTableViewController     = _menuTableViewController;
 @synthesize currentGamesViewController  = _currentGamesViewController;
 @synthesize boardViewController         = _boardViewController;
 
@@ -40,8 +38,6 @@
         _navigationController = nil;
         _streamController = [StreamController sharedStreamController];
         [_streamController setDelegate:self];
-        _menuTableViewController  = [[MenuTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        [_menuTableViewController setDelegate:self];
     }
     return self;
 }
@@ -76,31 +72,12 @@
     
     UIView *viewInner = [[UIView alloc] initWithFrame:CGRectMake(0, 20, width, height - 20)];
     
-    UIBarButtonItem *menuBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-settings.png"] 
-                                                                   style:UIBarButtonItemStyleBordered 
-                                                                  target:self 
-                                                                  action:@selector(didTouchMenu)];
-    UIBarButtonItem *editBtn =[[UIBarButtonItem alloc] 
-                               initWithBarButtonSystemItem:UIBarButtonSystemItemEdit 
-                               target:self 
-                               action:@selector(didTouchEdit)];
-    UIBarButtonItem *addBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-add.png"] 
-                                                              style:UIBarButtonItemStyleBordered 
-                                                             target:self 
-                                                             action:@selector(addCourseModal)];
-    UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, width, 44)];
-    [_toolbar setBarStyle:UIBarStyleBlack];
-    [_toolbar setItems:[NSArray arrayWithObjects:menuBtn, nil]];
-    
     LoadingView *loadingView = [[LoadingView alloc] init];
     [loadingView setTag:VIEW_LOADING_VIEW];
     
     ActionBadgesViewController *actionBadgesViewController = [[ActionBadgesViewController alloc] initWithNibName:nil bundle:nil];
     [actionBadgesViewController setDelegate:self];
     [viewInner addSubview:actionBadgesViewController.view];
-    
-    [viewInner addSubview:_toolbar];
     
     [view addSubview:viewInner];
     [view addSubview:loadingView];
@@ -159,37 +136,6 @@
     }
 }
 
-#pragma mark - toolbar actions
-
-- (void)didTouchMenu
-{
-    NSLog(@"Did touch menu");
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        _navigationController = [[UINavigationController alloc] initWithRootViewController:_menuTableViewController];
-        [_navigationController.view setFrame:CGRectMake(_navigationController.view.frame.origin.x, 
-                                                        _navigationController.view.frame.origin.y - 20, 
-                                                        _navigationController.view.frame.size.width, 
-                                                        _navigationController.view.frame.size.height)];
-        [_navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-        [self presentModalViewController:_navigationController animated:YES];
-    }
-    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        _navigationController = [[UINavigationController alloc] initWithRootViewController:_menuTableViewController];
-        [_navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-        [_menuTableViewController setTitle:@"Settings"];
-        
-        UIPopoverController *pop = [[UIPopoverController alloc] initWithContentViewController:_navigationController];
-        [pop presentPopoverFromBarButtonItem:[[_toolbar items] objectAtIndex:0] permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-    }
-}
-
-#pragma mark - delegate functions
-
-- (void)dismissMenu
-{
-    [self dismissModalViewControllerAnimated:YES];
-}
-
 - (void)loadPracticeView
 {
     PracticeViewController *practiceViewController = [[PracticeViewController alloc] initWithNibName:nil bundle:nil];
@@ -204,30 +150,36 @@
 
 - (void)loadWatchView
 {
+    _boardViewController = [[BoardViewController alloc] initWithNibName:nil bundle:nil];
+    [[StreamController sharedStreamController] setWatchingViewController:_boardViewController];
+        
+    _currentGamesViewController = [[CurrentGamesViewController alloc] initWithNibName:nil bundle:nil];
+    [_currentGamesViewController setRootViewController:self];
+    [[StreamController sharedStreamController] setCurrentGamesViewController:_currentGamesViewController];
+    
+    if ([StreamController sharedStreamController].server == FICS) {
+        [[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:(UITableViewController *)self];
+    }
+    else if ([StreamController sharedStreamController].server == ICC) {
+        [[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)_currentGamesViewController];
+    }
+    
+    int len = [[self.view subviews] count];
+    for (int i = 0; i < len; i++) {
+        [[[self.view subviews] objectAtIndex:i] removeFromSuperview];
+    }
+    [self.view insertSubview:_boardViewController.view atIndex:0];
+        
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:_currentGamesViewController];
+    
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        _boardViewController = [[BoardViewController alloc] initWithNibName:nil bundle:nil];
-        [[StreamController sharedStreamController] setWatchingViewController:_boardViewController];
-        
-        _currentGamesViewController = [[CurrentGamesViewController alloc] initWithNibName:nil bundle:nil];
-        [_currentGamesViewController setRootViewController:self];
-        [[StreamController sharedStreamController] setCurrentGamesViewController:_currentGamesViewController];
-    
-        if ([StreamController sharedStreamController].server == FICS) {
-            [[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:(UITableViewController *)self];
-        }
-        else if ([StreamController sharedStreamController].server == ICC) {
-            [[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)_currentGamesViewController];
-        }
-    
-        int len = [[self.view subviews] count];
-        for (int i = 0; i < len; i++) {
-            [[[self.view subviews] objectAtIndex:i] removeFromSuperview];
-        }
-        [self.view insertSubview:_boardViewController.view atIndex:0];
-        
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:_currentGamesViewController];
         [self presentModalViewController:navController animated:YES];
     }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        UIPopoverController *gamesPop = [[UIPopoverController alloc] initWithContentViewController:navController];
+        //[gamesPop presentPopoverFromBarButtonItem:[[_toolbar items] objectAtIndex:0] permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+    }
+    
     NSLog(@"load watch View");
 }
 
