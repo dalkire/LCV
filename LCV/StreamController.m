@@ -217,7 +217,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 				rbuf[bytesRead] = 0;
 				CFMutableStringRef cfReplyContent = CFStringCreateMutable(kCFAllocatorDefault, 0);
 				CFStringAppendCString(cfReplyContent, (const char *)rbuf, kCFStringEncodingASCII);
-				NSLog(@"%@", (NSMutableString *)cfReplyContent);
+				//NSLog(@"%@", (NSMutableString *)cfReplyContent);
                 if (_server == FICS) {
                     if ([self mode] == PRACTICING && _practiceViewController) {
                         
@@ -240,7 +240,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
                                     absoluteMoveNumber++;
                                     NSLog(@"CLF=%d, CUR=%d, ABS=%d", currentFicsLocalMoveNumber, currentMoveNumber, absoluteMoveNumber);
                                 
-                                    NSLog(@"%@", (NSMutableString *)cfReplyContent);
+                                    //NSLog(@"%@", (NSMutableString *)cfReplyContent);
                                     [(PracticeViewController *)_practiceViewController setPositionFromStyle12:currStyle12String];
                                 }
                             }
@@ -278,7 +278,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
                                     [fullGames appendFormat:@"%@\r\n", [mya objectAtIndex:1]];
                                 }
                             }
-                            [(CurrentGamesViewController *)_currentGamesViewController commandResult:(NSString *)fullGames fromCommand:155];
+                            [_currentGamesViewController commandResult:(NSString *)fullGames fromCommand:155];
                         }	
                         if ([(NSMutableString *)cfReplyContent rangeOfString:@"\r<12>"].location != NSNotFound) {
                             NSMutableArray *contentArray = [[NSMutableArray alloc] initWithArray:[(NSMutableString *)cfReplyContent componentsSeparatedByString:@"\r"]];

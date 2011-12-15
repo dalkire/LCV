@@ -9,11 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import "CurrentGamesViewController.h"
 
 @class BoardView, Move;
+@class RootViewController;
 
-@interface BoardViewController : UIViewController<MFMailComposeViewControllerDelegate> {
-	IBOutlet UIToolbar *toolbar;
+@interface BoardViewController : UIViewController <MFMailComposeViewControllerDelegate> {
+    RootViewController *rootViewController;
+    UINavigationController *navController;
+    CurrentGamesViewController *currentGamesViewController;
+    UIPopoverController *currentGamesPopover;
+	UIToolbar *toolbar;
 	BoardView *board;
 	NSString *blackName;
 	NSString *whiteName;
@@ -25,7 +31,11 @@
     int device;
 }
 
-@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
+@property (nonatomic, retain) RootViewController *rootViewController;
+@property (nonatomic, retain) UINavigationController *navController;
+@property (nonatomic, retain) CurrentGamesViewController *currentGamesViewController;
+@property (nonatomic, retain) UIPopoverController *currentGamesPopover;
+@property (nonatomic, retain) UIToolbar *toolbar;
 @property (nonatomic, retain) BoardView *board;
 @property (nonatomic, retain) NSString *blackName;
 @property (nonatomic, retain) NSString *whiteName;

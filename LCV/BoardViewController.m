@@ -22,10 +22,43 @@
 
 @implementation BoardViewController
 
-@synthesize toolbar, board, blackName, whiteName, blackElo, whiteElo, resultText, iccResultText, flipped;
-@synthesize device = _device;
+@synthesize rootViewController          = _rootViewController;
+@synthesize navController               = _navController;
+@synthesize currentGamesViewController  = _currentGamesViewController;
+@synthesize currentGamesPopover         = _currentGamesPopover;
+@synthesize toolbar                     = _toolbar; 
+@synthesize board;
+@synthesize blackName;
+@synthesize whiteName;
+@synthesize blackElo;
+@synthesize whiteElo;
+@synthesize resultText;
+@synthesize iccResultText;
+@synthesize flipped;
+@synthesize device                      = _device;
 
-- (void)viewDidLoad {   
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        _currentGamesViewController  = [[CurrentGamesViewController alloc] initWithStyle:UITableViewStylePlain];
+        [_currentGamesViewController setTitle:@"Current Games"];
+        [_currentGamesViewController setWatchingViewController:self];
+        
+        _navController = [[UINavigationController alloc] initWithRootViewController:_currentGamesViewController];
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            _currentGamesPopover = [[UIPopoverController alloc] initWithContentViewController:_navController];
+        }
+        NSLog(@"watching view controller self: %@", self);
+        [[StreamController sharedStreamController] setCurrentGamesViewController:_currentGamesViewController];
+    }
+    return self;
+}
+
+- (void)loadView
+{
+    [super loadView];
+    
     float width = [UIScreen mainScreen].bounds.size.width;
     float height = [UIScreen mainScreen].bounds.size.height - 20;
     _device = IPHONE;
@@ -33,31 +66,32 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSLog(@"PAD");
         _device = IPAD;
-        width = [UIScreen mainScreen].bounds.size.height - 20;
-        height = [UIScreen mainScreen].bounds.size.width;
+        width = [UIScreen mainScreen].bounds.size.height;
+        height = [UIScreen mainScreen].bounds.size.width - 20;
     }
     
-    [super viewDidLoad];
-	toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, height - 44, width, 44)];
-	toolbar.barStyle = UIBarStyleBlack;
-	UIBarButtonItem *gamesBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"games-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showCurrentGamesView)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 20, width, height)];
+    
+	_toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, height - 44, width, 44)];
+	_toolbar.barStyle = UIBarStyleBlack;
+	UIBarButtonItem *gamesBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-menu.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showCurrentGamesView)];
 	UIBarButtonItem *flipBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"flip-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(flipBoard)];
 	UIBarButtonItem *emailBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"email-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(sendMail)];
 	UIBarButtonItem *backwardBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backward-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goBackward)];
 	UIBarButtonItem *forwardBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forward-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward)];
 	UIBarButtonItem *flexibleSpaceBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
 	NSArray *barItems = [[NSArray alloc] initWithObjects:gamesBarButton, flexibleSpaceBarButton, flipBarButton, flexibleSpaceBarButton, emailBarButton, flexibleSpaceBarButton, backwardBarButton, flexibleSpaceBarButton, forwardBarButton, nil];
-	toolbar.items = barItems;
+	_toolbar.items = barItems;
 	[gamesBarButton release];
 	[flexibleSpaceBarButton release];
 	[barItems release];
-	[self.view addSubview:toolbar];
+	[view addSubview:_toolbar];
 	//[self.view setBackgroundColor:[UIColor blackColor]];
-		
+    
 	BoardView *boardView = [[BoardView alloc] initForDevice:_device];
 	boardView.tag = 1;
 	board = boardView;
-	[self.view addSubview:boardView];
+	[view addSubview:boardView];
 	[boardView release];
 	
 	blackName = [[NSString alloc] initWithString:@""];
@@ -67,6 +101,12 @@
 	resultText = [[NSString alloc] initWithString:@""];
 	iccResultText = [[NSString alloc] initWithString:@""];
 	flipped = NO;
+    [self setView:view];
+    //[self showCurrentGamesView];
+    //[view release];
+}
+
+- (void)viewDidLoad {   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,7 +114,7 @@
 }
 
 - (void)viewDidUnload {
-	self.toolbar = nil;
+	_toolbar = nil;
 	self.board = nil;
 	self.blackName = nil;
 	self.whiteName = nil;
@@ -84,9 +124,19 @@
 	self.iccResultText = nil;
 }
 
+- (void)dismissMenu
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [_currentGamesPopover dismissPopoverAnimated:YES];
+    }
+}
+
 
 - (void)dealloc {
-	[toolbar release];
+	[_toolbar release];
 	[board release];
 	[blackName release];
 	[whiteName release];
@@ -668,13 +718,28 @@
 
 - (void)showCurrentGamesView {
 	if ([StreamController sharedStreamController].server == FICS) {
-		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:(UITableViewController *)self];
+		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"~~startgames\r\ngames /b\r\n~~endgames\r\n" fromViewController:_currentGamesViewController];
 	}
 	else {
-		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)[StreamController sharedStreamController].currentGamesViewController];
+		[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:_currentGamesViewController];
 	}
-# warning 
-	//[(MainViewController *)[StreamController sharedStreamController].mainViewController showCurrentGamesViewController];
+    
+    NSLog(@"Did touch menu");
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [_navController.view setFrame:CGRectMake(_navController.view.frame.origin.x, 
+                                                       _navController.view.frame.origin.y - 20, 
+                                                       _navController.view.frame.size.width, 
+                                                       _navController.view.frame.size.height)];
+        [_navController.navigationBar setBarStyle:UIBarStyleBlack];
+        [self presentModalViewController:_navController animated:YES];
+    }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        _navController = [[UINavigationController alloc] initWithRootViewController:_currentGamesViewController];
+        [_navController.navigationBar setBarStyle:UIBarStyleBlack];
+        
+        [_currentGamesPopover presentPopoverFromBarButtonItem:[[_toolbar items] objectAtIndex:0] permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+    }
 }
 
 - (void)setPlayerLabel:(NSString *)name forColor:(NSString *)color {

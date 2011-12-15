@@ -23,7 +23,7 @@
     int currentViewController;
     UINavigationController *navigationController;
     CurrentGamesViewController *currentGamesViewController;
-    BoardViewController *boardViewController;
+    BoardViewController *watchingViewController;
 }
 
 //@property (nonatomic, retain) UIToolbar *toolbar;
@@ -31,7 +31,7 @@
 @property int currentViewController;
 @property (nonatomic, retain) UINavigationController *navigationController;
 @property (nonatomic, retain) CurrentGamesViewController *currentGamesViewController;
-@property (nonatomic, retain) BoardViewController *boardViewController;
+@property (nonatomic, retain) BoardViewController *watchingViewController;
 
 - (void)didTouchMenu;
 - (void)loadPracticeView;

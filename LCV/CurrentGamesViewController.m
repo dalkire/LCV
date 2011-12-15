@@ -20,43 +20,65 @@
 
 @implementation CurrentGamesViewController
 
-@synthesize rootViewController = _rootViewController;
-@synthesize currentGames;
-@synthesize toolbar = _toolbar;
+@synthesize rootViewController      = _rootViewController;
+@synthesize watchingViewController  = _watchingViewController;
+@synthesize currentGames            = _currentGames;
+@synthesize toolbar                 = _toolbar;
 @synthesize observing;
 @synthesize toBeCleared;
-@synthesize activityIndicatorView = _activityIndicatorView;
+@synthesize activityIndicatorView   = _activityIndicatorView;
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    NSLog(@"init with style");
+    self = [super initWithStyle:style];
+    if (self) {
+        [self.tableView setDelegate:self];
+        [self.tableView setDataSource:self];
+        
+        UIBarButtonItem *doneBtn =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                target:self 
+                                                                                action:@selector(didTouchDoneBtn)];
+        [self.navigationItem setRightBarButtonItem:doneBtn];
+        
+        _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [_activityIndicatorView setFrame:CGRectMake((self.view.frame.size.width - 20)/2, (self.view.frame.size.height - 20)/2, 20, 20)];
+        [_activityIndicatorView setHidesWhenStopped:YES];
+        [_activityIndicatorView startAnimating];
+        
+        _currentGames = [[NSMutableArray alloc] initWithCapacity:0];
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            self.tableView.frame = CGRectMake(0, 0, 320, 416);
+        }
+        else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            self.tableView.frame = CGRectMake(0, 0, 320, 416);
+        }
+        
+        [self.tableView addSubview:_activityIndicatorView];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"VDL CGVC");
+    //UITableView *tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 460) style:UITableViewStylePlain];
     
-    UITableView *tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 460) style:UITableViewStylePlain];
-    [tv setDelegate:self];
-    [tv setDataSource:self];
-    
-    [self.view addSubview:tv];
-    
-    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [_activityIndicatorView setFrame:CGRectMake((self.view.frame.size.width - 20)/2, (self.view.frame.size.height - 20)/2, 20, 20)];
-    [_activityIndicatorView setHidesWhenStopped:YES];
-	[_activityIndicatorView startAnimating];
-	
-	NSArray *arr = [[NSArray alloc] initWithObjects:nil];
-	self.currentGames = arr;
-	[arr release];
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        tv.frame = CGRectMake(0, 0, 320, 416);
-        UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissModal)];
-        [self.navigationItem setRightBarButtonItem:doneBtn];
-        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-    }
-    [self.view addSubview:_activityIndicatorView];
+    //[self.view addSubview:tv];
+    [self refresh];
 }
 
-- (void)dismissModal
+- (void)didTouchDoneBtn
 {
-    [_rootViewController dismissModalViewControllerAnimated:YES];
+    NSLog(@"in current games pressing done %@", _watchingViewController);
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [_watchingViewController dismissModalViewControllerAnimated:YES];
+    }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        NSLog(@"CGpop: %@", _watchingViewController.currentGamesPopover);
+        [_watchingViewController.currentGamesPopover dismissPopoverAnimated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,11 +115,11 @@
 	if (cell == nil) {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleTableIdentifier] autorelease];
 	}
-	  cell.textLabel.text = [[currentGames objectAtIndex:row] valueForKey:@"game_players"];
+	  cell.textLabel.text = [[_currentGames objectAtIndex:row] valueForKey:@"game_players"];
 	  cell.textLabel.font = [UIFont fontWithName:@"Verdana-Bold" size:12];
-	  cell.detailTextLabel.text = [[currentGames objectAtIndex:row] valueForKey:@"game_desc"];
+	  cell.detailTextLabel.text = [[_currentGames objectAtIndex:row] valueForKey:@"game_desc"];
 	  cell.detailTextLabel.font = [UIFont fontWithName:@"Verdana-Bold" size:10];
-	  cell.tag = (NSInteger)[[currentGames objectAtIndex:row] valueForKey:@"game_id"];
+	  cell.tag = (NSInteger)[[_currentGames objectAtIndex:row] valueForKey:@"game_id"];
 	
 	return cell;
 }
@@ -110,28 +132,28 @@
 	}
 	
     NSUInteger row = [indexPath row]; 
-    NSString *gameID = [[currentGames objectAtIndex:row] valueForKey:@"game_id"];
+    NSString *gameID = [[_currentGames objectAtIndex:row] valueForKey:@"game_id"];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	BoardViewController *bvc = _rootViewController.boardViewController;
+	BoardViewController *bvc = _rootViewController.watchingViewController;
 	
-	NSString *whitePlayerLabel = [[NSString alloc] initWithFormat:@"%@ %@", [[currentGames objectAtIndex:row] valueForKey:@"white_player"], [[currentGames objectAtIndex:row] valueForKey:@"white_rating"]];
-	NSString *blackPlayerLabel = [[NSString alloc] initWithFormat:@"%@ %@", [[currentGames objectAtIndex:row] valueForKey:@"black_player"], [[currentGames objectAtIndex:row] valueForKey:@"black_rating"]];
+	NSString *whitePlayerLabel = [[NSString alloc] initWithFormat:@"%@ %@", [[_currentGames objectAtIndex:row] valueForKey:@"white_player"], [[_currentGames objectAtIndex:row] valueForKey:@"white_rating"]];
+	NSString *blackPlayerLabel = [[NSString alloc] initWithFormat:@"%@ %@", [[_currentGames objectAtIndex:row] valueForKey:@"black_player"], [[_currentGames objectAtIndex:row] valueForKey:@"black_rating"]];
 	[bvc setPlayerLabel:whitePlayerLabel forColor:@"white"];
 	[bvc setPlayerLabel:blackPlayerLabel forColor:@"black"];
-	bvc.whiteName = [NSString stringWithString:[[currentGames objectAtIndex:row] valueForKey:@"white_player"]];
-	bvc.blackName = [NSString stringWithString:[[currentGames objectAtIndex:row] valueForKey:@"black_player"]];
-	bvc.whiteElo = [NSString stringWithString:[[currentGames objectAtIndex:row] valueForKey:@"white_rating"]];
-	bvc.blackElo = [NSString stringWithString:[[currentGames objectAtIndex:row] valueForKey:@"black_rating"]];
+	bvc.whiteName = [NSString stringWithString:[[_currentGames objectAtIndex:row] valueForKey:@"white_player"]];
+	bvc.blackName = [NSString stringWithString:[[_currentGames objectAtIndex:row] valueForKey:@"black_player"]];
+	bvc.whiteElo = [NSString stringWithString:[[_currentGames objectAtIndex:row] valueForKey:@"white_rating"]];
+	bvc.blackElo = [NSString stringWithString:[[_currentGames objectAtIndex:row] valueForKey:@"black_rating"]];
 	[whitePlayerLabel release];
 	[blackPlayerLabel release];
 	
-	[_rootViewController.boardViewController resetResults];
+	[_rootViewController.watchingViewController resetResults];
 	
 	if ([StreamController sharedStreamController].server == ICC) {
-		[_rootViewController.boardViewController resetBoard];
+		[_rootViewController.watchingViewController resetBoard];
 	}
 	
-	[_rootViewController.boardViewController resetMoveListView];
+	[_rootViewController.watchingViewController resetMoveListView];
 	NSMutableString *command = [[NSMutableString alloc] initWithFormat:@"observe %@\r\n", gameID];
 	self.observing = gameID;
 	[StreamController sharedStreamController].observing = [self.observing integerValue];
@@ -139,15 +161,15 @@
 	[StreamController sharedStreamController].currentFicsLocalMoveNumber = 0;
 	[[StreamController sharedStreamController] sendCommand:command];
 	[command release];
-	[self dismissModal];
 } 
 
 - (void)commandResult:(NSString *)result fromCommand:(NSInteger)command {
-	self.currentGames = [self parseCurrentGamesFromCommandResult:result];
-	[[self.view.subviews objectAtIndex:0] performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+	_currentGames = [self parseCurrentGamesFromCommandResult:result];
+    NSLog(@"_currentgames count: %d", [_currentGames count]);
+    [self.tableView reloadData];
 }
 
-- (NSArray *)parseCurrentGamesFromCommandResult:(NSString *)result {
+- (NSMutableArray *)parseCurrentGamesFromCommandResult:(NSString *)result {
 	[_activityIndicatorView stopAnimating];
 	
 	NSArray *arr;// = [NSArray array];
@@ -191,7 +213,6 @@
 	
 	[rowArray release];
 	return resultArray;
-	[resultArray release];
 }
 
 - (void)refresh {
@@ -204,11 +225,11 @@
 	else {
 		if ([defaults valueForKey:@"iccusername"] == NULL || [[defaults valueForKey:@"iccusername"] isEqualToString:@""] || [[defaults valueForKey:@"iccusername"] isEqualToString:@"g"] || [[defaults valueForKey:@"iccusername"] isEqualToString:@"guest"]) {
 			NSLog(@"GUEST");
-			[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)self];
+			[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:self];
 		}
 		else {
 			NSLog(@"NON_GUEST");
-			[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *R-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)self];
+			[[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *R-w-L-d-z-e-o\r\n" fromViewController:self];
 		}
 	}
 }
@@ -217,21 +238,18 @@
 # warning 
     //[(MainViewController *)[StreamController sharedStreamController].mainViewController showBoardViewController];
 	[self clearCurrentGamesTable];
-	[[self.view.subviews objectAtIndex:0] performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
 - (void)showInfoView {
 # warning 
 	//[(MainViewController *)[StreamController sharedStreamController].mainViewController showInfoViewController];
 	[self clearCurrentGamesTable];
-	[[self.view.subviews objectAtIndex:0] performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
 - (void)clearCurrentGamesTable {
-	self.currentGames = nil;
-	self.currentGames = [[NSArray alloc] init];
-//	[activityIndicatorView startAnimating];
-	[[self.view.subviews objectAtIndex:0] performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO]; 
+	_currentGames = [[NSMutableArray alloc] initWithCapacity:0];
+	[activityIndicatorView startAnimating];
+    [self.tableView reloadData];
 }
 
 #pragma mark -

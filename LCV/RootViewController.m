@@ -27,7 +27,7 @@
 @synthesize navigationController        = _navigationController;
 @synthesize currentViewController       = _currentViewController;
 @synthesize currentGamesViewController  = _currentGamesViewController;
-@synthesize boardViewController         = _boardViewController;
+@synthesize watchingViewController      = _watchingViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -150,10 +150,11 @@
 
 - (void)loadWatchView
 {
-    _boardViewController = [[BoardViewController alloc] initWithNibName:nil bundle:nil];
-    [[StreamController sharedStreamController] setWatchingViewController:_boardViewController];
+    _watchingViewController = [[BoardViewController alloc] initWithNibName:nil bundle:nil];
+    [[StreamController sharedStreamController] setWatchingViewController:_watchingViewController];
+    //[_watchingViewController showCurrentGamesView];
         
-    _currentGamesViewController = [[CurrentGamesViewController alloc] initWithNibName:nil bundle:nil];
+    /*_currentGamesViewController = [[CurrentGamesViewController alloc] initWithNibName:nil bundle:nil];
     [_currentGamesViewController setRootViewController:self];
     [[StreamController sharedStreamController] setCurrentGamesViewController:_currentGamesViewController];
     
@@ -162,25 +163,31 @@
     }
     else if ([StreamController sharedStreamController].server == ICC) {
         [[StreamController sharedStreamController] sendCommand:(NSMutableString *)@"games *-T-r-w-L-d-z-e-o\r\n" fromViewController:(UITableViewController *)_currentGamesViewController];
-    }
+    }*/
     
     int len = [[self.view subviews] count];
     for (int i = 0; i < len; i++) {
         [[[self.view subviews] objectAtIndex:i] removeFromSuperview];
     }
-    [self.view insertSubview:_boardViewController.view atIndex:0];
+    [self.view insertSubview:_watchingViewController.view atIndex:0];
         
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:_currentGamesViewController];
+    /*UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:_currentGamesViewController];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [self presentModalViewController:navController animated:YES];
+        [_watchingViewController presentModalViewController:navController animated:YES];
     }
     else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         UIPopoverController *gamesPop = [[UIPopoverController alloc] initWithContentViewController:navController];
-        //[gamesPop presentPopoverFromBarButtonItem:[[_toolbar items] objectAtIndex:0] permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
-    }
+        //_currentGamesViewController.tableView.frame = CGRectMake(0, 0, 320, 616);
+        [gamesPop presentPopoverFromBarButtonItem:[[_watchingViewController.toolbar items] objectAtIndex:0] permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+    }*/
     
     NSLog(@"load watch View");
+}
+
+- (void)showCurrentGamesViewController
+{
+    
 }
 
 - (void)didTouchWatchBadge

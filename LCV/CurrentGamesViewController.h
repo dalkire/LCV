@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+//#import "BoardViewController.h"
 
 @class RootViewController;
+@class BoardViewController;
 
-@interface CurrentGamesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface CurrentGamesViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource> {
     RootViewController *rootViewController;
-	NSArray *currentGames;
+    BoardViewController *watchingViewController;
+	NSMutableArray *currentGames;
 	UIToolbar *toolbar;
 	NSString *observing;
 	BOOL toBeCleared;
@@ -20,18 +23,18 @@
 }
 
 @property (nonatomic, retain) RootViewController *rootViewController;
-@property (nonatomic, retain) NSArray *currentGames;
+@property (nonatomic, retain) BoardViewController *watchingViewController;
+@property (nonatomic, retain) NSMutableArray *currentGames;
 @property (nonatomic, retain) UIToolbar *toolbar;
 @property (nonatomic, retain) NSString *observing;
 @property BOOL toBeCleared;
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
 
 - (void)commandResult:(NSString *)result fromCommand:(NSInteger)command;
-- (NSArray *)parseCurrentGamesFromCommandResult:(NSString *)result;
+- (NSMutableArray *)parseCurrentGamesFromCommandResult:(NSString *)result;
 - (void)refresh;
 - (void)showBoardView;
 - (void)showInfoView;
 - (void)clearCurrentGamesTable;
-- (void)dismissModal;
 
 @end

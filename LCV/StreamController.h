@@ -11,6 +11,7 @@
 
 @class PracticeViewController;
 @class BoardViewController;
+@class CurrentGamesViewController;
 
 @interface StreamController : NSObject <NSStreamDelegate> {
     id delegate;
@@ -43,7 +44,7 @@
 	NSUInteger observing;
 	UIViewController *caller;
 	UIViewController *boardViewController;
-	UIViewController *currentGamesViewController;
+	CurrentGamesViewController *currentGamesViewController;
     BoardViewController *watchingViewController;
     PracticeViewController *trainingViewController;
 	UIViewController *mainViewController;
@@ -71,7 +72,7 @@
 @property (nonatomic, retain) NSMutableArray *ficsMoveList;
 @property (nonatomic, retain) UIViewController *caller;
 @property (nonatomic, retain) UIViewController *boardViewController;
-@property (nonatomic, retain) UIViewController *currentGamesViewController;
+@property (nonatomic, retain) CurrentGamesViewController *currentGamesViewController;
 @property (nonatomic, retain) BoardViewController *watchingViewController;
 @property (nonatomic, retain) PracticeViewController *practiceViewController;
 @property (nonatomic, retain) UIViewController *mainViewController;
