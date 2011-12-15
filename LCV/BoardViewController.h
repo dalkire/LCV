@@ -29,6 +29,8 @@
 	NSString *iccResultText;
 	BOOL flipped;
     int device;
+    UISegmentedControl *actionsSegmentedControl;
+    UISegmentedControl *directionSegmentedControl;
 }
 
 @property (nonatomic, retain) RootViewController *rootViewController;
@@ -45,6 +47,8 @@
 @property (nonatomic, retain) NSString *iccResultText;
 @property BOOL flipped;
 @property int device;
+@property (nonatomic, retain) UISegmentedControl *actionsSegmentedControl;
+@property (nonatomic, retain) UISegmentedControl *directionSegmentedControl;
 
 - (void)commandResult:(NSString *)result fromCommand:(NSInteger *)command;
 - (void)moveList:(NSArray *)moveList;

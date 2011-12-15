@@ -6,12 +6,14 @@
 //  Copyright PixelSift Studios 2010. All rights reserved.
 //
 
-#define NONE        0
-#define WATCHING    200
-#define TRAINING    201
-#define ICC         300
-#define FICS        301
+#define SEGMENT_FLIP        0
+#define SEGMENT_MOVES       1
+#define SEGMENT_LIST        2
 
+#define SEGMENT_BACKWARD    0
+#define SEGMENT_FORWARD     1
+
+#import "RootViewController.h"
 #import "BoardViewController.h"
 #import "StreamController.h"
 #import "BoardView.h"
@@ -36,6 +38,8 @@
 @synthesize iccResultText;
 @synthesize flipped;
 @synthesize device                      = _device;
+@synthesize actionsSegmentedControl     = _actionsSegmentedControl;
+@synthesize directionSegmentedControl   = _directionSegmentedControl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -74,15 +78,52 @@
     
 	_toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, height - 44, width, 44)];
 	_toolbar.barStyle = UIBarStyleBlack;
-	UIBarButtonItem *gamesBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-menu.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showCurrentGamesView)];
+	UIBarButtonItem *homeBtn = [[UIBarButtonItem alloc] initWithImage:[RootViewController imageWithImage:[UIImage imageNamed:@"icon-home.png"] scaledToSize:CGSizeMake(20, 20)] 
+                                                                style:UIBarButtonItemStyleBordered 
+                                                               target:self 
+                                                               action:@selector(showCurrentGamesView)];
 	UIBarButtonItem *flipBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"flip-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(flipBoard)];
-	UIBarButtonItem *emailBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"email-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(sendMail)];
+	UIBarButtonItem *movesBtn = [[UIBarButtonItem alloc] initWithImage:[RootViewController imageWithImage:[UIImage imageNamed:@"icon-moves.png"] scaledToSize:CGSizeMake(20, 20)]  
+                                                                       style:UIBarButtonItemStyleBordered 
+                                                                      target:self 
+                                                                      action:@selector(didTouchMovesBtn)];
 	UIBarButtonItem *backwardBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backward-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goBackward)];
 	UIBarButtonItem *forwardBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forward-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward)];
+    
 	UIBarButtonItem *flexibleSpaceBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-	NSArray *barItems = [[NSArray alloc] initWithObjects:gamesBarButton, flexibleSpaceBarButton, flipBarButton, flexibleSpaceBarButton, emailBarButton, flexibleSpaceBarButton, backwardBarButton, flexibleSpaceBarButton, forwardBarButton, nil];
+	
+    
+    _actionsSegmentedControl = [[UISegmentedControl alloc] 
+                              initWithItems:[NSArray arrayWithObjects:[RootViewController imageWithImage:[UIImage imageNamed:@"icon-flip.png"] scaledToSize:CGSizeMake(20, 20)], 
+                                             [RootViewController imageWithImage:[UIImage imageNamed:@"icon-moves.png"] scaledToSize:CGSizeMake(20, 20)], 
+                                             [UIImage imageNamed:@"icon-menu.png"], nil]];
+    [_actionsSegmentedControl setMomentary:YES];
+    
+    _actionsSegmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    //[_actionsSegmentedControl setTintColor:[UIColor blackColor]];
+    //[_actionsSegmentedControl setSelectedSegmentIndex:SEGMENT_TODAY];
+    [_actionsSegmentedControl addTarget:self
+                          action:@selector(didTouchActionsSegmentedControl)
+                forControlEvents:UIControlEventValueChanged];
+    
+    UIBarButtonItem *actionsSegmentedButtons = [[UIBarButtonItem alloc] initWithCustomView:_actionsSegmentedControl];
+    
+    _directionSegmentedControl = [[UISegmentedControl alloc] 
+                                initWithItems:[NSArray arrayWithObjects:[RootViewController imageWithImage:[UIImage imageNamed:@"icon-backward.png"] scaledToSize:CGSizeMake(20, 20)], 
+                                               [RootViewController imageWithImage:[UIImage imageNamed:@"icon-forward.png"] scaledToSize:CGSizeMake(20, 20)], nil]];
+    [_directionSegmentedControl setMomentary:YES];
+    
+    _directionSegmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    //[_actionsSegmentedControl setTintColor:[UIColor blackColor]];
+    //[_actionsSegmentedControl setSelectedSegmentIndex:SEGMENT_TODAY];
+    [_directionSegmentedControl addTarget:self
+                                 action:@selector(didTouchDirectionSegmentedControl)
+                       forControlEvents:UIControlEventValueChanged];
+    
+    UIBarButtonItem *directionSegmentedButtons = [[UIBarButtonItem alloc] initWithCustomView:_directionSegmentedControl];
+    
+    NSArray *barItems = [[NSArray alloc] initWithObjects:homeBtn, flexibleSpaceBarButton, actionsSegmentedButtons, directionSegmentedButtons, nil];
 	_toolbar.items = barItems;
-	[gamesBarButton release];
 	[flexibleSpaceBarButton release];
 	[barItems release];
 	//[self.view setBackgroundColor:[UIColor blackColor]];
@@ -104,6 +145,41 @@
     [self setView:view];
     //[self showCurrentGamesView];
     //[view release];
+}
+
+- (void)didTouchActionsSegmentedControl
+{
+    switch ([_actionsSegmentedControl selectedSegmentIndex]) {
+        case SEGMENT_FLIP:
+            NSLog(@"touched segment flip");
+            [self flipBoard];
+            break;
+        case SEGMENT_MOVES:
+            NSLog(@"touched segment moves");
+            break;
+        case SEGMENT_LIST:
+            NSLog(@"touched segment list");
+            [self showCurrentGamesView];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)didTouchDirectionSegmentedControl
+{
+    switch ([_directionSegmentedControl selectedSegmentIndex]) {
+        case SEGMENT_BACKWARD:
+            NSLog(@"touched segment flip");
+            [self goBackward];
+            break;
+        case SEGMENT_FORWARD:
+            NSLog(@"touched segment forward");
+            [self goForward];
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)viewDidLoad {   
