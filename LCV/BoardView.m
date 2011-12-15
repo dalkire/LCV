@@ -17,25 +17,18 @@
 
 - (id)initForDevice:(int)dvc {    
     _device = dvc;
-    int width = 0;
-    int height = 0;
-    switch (dvc) {
-        case IPHONE:
-            width = 320;
-            height = 320;
-            break;
-        case IPAD:
-            width = 640;
-            height = 640;
-            break;
-            
-        default:
-            break;
+    float width = [UIScreen mainScreen].bounds.size.width;
+    float height = [UIScreen mainScreen].bounds.size.height - 20;
+    
+    if (_device == IPAD) {
+        NSLog(@"PAD");
+        width = [UIScreen mainScreen].bounds.size.height;
+        height = [UIScreen mainScreen].bounds.size.width - 20;
     }
     
-    if (self = [super initWithFrame:CGRectMake(0, 0, width, height)]) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, width, height - 44)]) {
         board = [[BoardImageView alloc] initForDevice:_device];
-		/*blackPlayerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, 225, 18)];
+		blackPlayerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, 225, 18)];
 		whitePlayerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 350, 225, 18)];
 		blackPlayerLabel.backgroundColor = [UIColor blackColor];
 		blackPlayerLabel.font = [UIFont fontWithName:@"Verdana-Bold" size:14];
@@ -65,13 +58,18 @@
 		moveListView = [[MoveListView alloc] initWithFrame:CGRectMake(0, 0, 300, 39)];
 		[movesScrollView setContentSize:moveListView.frame.size];
 		moveListView.backgroundColor = [UIColor blackColor];
-		[movesScrollView addSubview:moveListView];*/
+		[movesScrollView addSubview:moveListView];
+        
+        board.frame = CGRectMake(board.frame.origin.x, 
+                                 board.frame.origin.y + 26, 
+                                 board.frame.size.width, 
+                                 board.frame.size.height);
 		
 		[self addSubview:board];
-		//[self addSubview:blackPlayerLabel];
-		//[self addSubview:whitePlayerLabel];
-		//[self addSubview:blackTimeLabel];
-		//[self addSubview:whiteTimeLabel];
+		[self addSubview:blackPlayerLabel];
+		[self addSubview:whitePlayerLabel];
+		[self addSubview:blackTimeLabel];
+		[self addSubview:whiteTimeLabel];
 		//[self addSubview:movesScrollView];
     }
     return self;

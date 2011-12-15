@@ -85,7 +85,6 @@
 	[gamesBarButton release];
 	[flexibleSpaceBarButton release];
 	[barItems release];
-	[view addSubview:_toolbar];
 	//[self.view setBackgroundColor:[UIColor blackColor]];
     
 	BoardView *boardView = [[BoardView alloc] initForDevice:_device];
@@ -93,6 +92,7 @@
 	board = boardView;
 	[view addSubview:boardView];
 	[boardView release];
+	[view addSubview:_toolbar];
 	
 	blackName = [[NSString alloc] initWithString:@""];
 	whiteName = [[NSString alloc] initWithString:@""];

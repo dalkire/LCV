@@ -134,7 +134,7 @@
     NSUInteger row = [indexPath row]; 
     NSString *gameID = [[_currentGames objectAtIndex:row] valueForKey:@"game_id"];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	BoardViewController *bvc = _rootViewController.watchingViewController;
+	BoardViewController *bvc = _watchingViewController;
 	
 	NSString *whitePlayerLabel = [[NSString alloc] initWithFormat:@"%@ %@", [[_currentGames objectAtIndex:row] valueForKey:@"white_player"], [[_currentGames objectAtIndex:row] valueForKey:@"white_rating"]];
 	NSString *blackPlayerLabel = [[NSString alloc] initWithFormat:@"%@ %@", [[_currentGames objectAtIndex:row] valueForKey:@"black_player"], [[_currentGames objectAtIndex:row] valueForKey:@"black_rating"]];
@@ -161,6 +161,8 @@
 	[StreamController sharedStreamController].currentFicsLocalMoveNumber = 0;
 	[[StreamController sharedStreamController] sendCommand:command];
 	[command release];
+    
+    [self didTouchDoneBtn];
 } 
 
 - (void)commandResult:(NSString *)result fromCommand:(NSInteger)command {
