@@ -53,6 +53,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 @synthesize mode = _mode;
 @synthesize canMoveColor = _canMoveColor;
 @synthesize puzzleGameNumber = _puzzleGameNumber;
+@synthesize timer = _timer;
 
 #pragma mark ---- singleton object methods ----
 
@@ -78,10 +79,8 @@ static StreamController *sharedStreamControllerDelegate = nil;
 - (id)init {
     _delegate = nil;
     _sentConnectMessage = NO;
-	NSTimer *timer;
-    //[[timer alloc] init];
-	//timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
-	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+	//_timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+	//[[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 	firstPass = YES;
 	spaceAvailable = NO;
 	clockRunning = NO;
@@ -672,7 +671,7 @@ static StreamController *sharedStreamControllerDelegate = nil;
 		self.boardViewController = controller;
 	}
 	else if ([controller.title isEqualToString:@"CurrentGamesViewController"]) {
-		_currentGamesViewController = controller;
+		_currentGamesViewController = (CurrentGamesViewController *)controller;
 	}
 }
 

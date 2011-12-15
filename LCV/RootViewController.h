@@ -33,8 +33,8 @@
 @property (nonatomic, retain) CurrentGamesViewController *currentGamesViewController;
 @property (nonatomic, retain) BoardViewController *watchingViewController;
 
-- (void)didTouchMenu;
 - (void)loadPracticeView;
 - (void)loadWatchView;
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
 @end

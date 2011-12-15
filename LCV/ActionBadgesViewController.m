@@ -7,6 +7,7 @@
 //
 
 #import "ActionBadgesViewController.h"
+#import "RootViewController.h"
 
 @implementation ActionBadgesViewController
 
@@ -160,8 +161,7 @@
             break;
     }
     
-    
-    UIBarButtonItem *menuBtn =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-settings.png"] 
+    UIBarButtonItem *menuBtn =[[UIBarButtonItem alloc] initWithImage:[RootViewController imageWithImage:[UIImage imageNamed:@"icon-settings.png"] scaledToSize:CGSizeMake(20, 20)]  
                                                                style:UIBarButtonItemStyleBordered 
                                                               target:self 
                                                               action:@selector(didTouchMenu)];

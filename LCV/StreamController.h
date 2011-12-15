@@ -54,6 +54,7 @@
     int mode;
     NSString *canMoveColor;
     int puzzleGameNumber;
+    NSTimer *timer;
 }
 
 @property (nonatomic, retain) id delegate;
@@ -96,6 +97,7 @@
 @property int mode;
 @property (nonatomic, retain) NSString *canMoveColor;
 @property int puzzleGameNumber;
+@property (nonatomic, retain) NSTimer *timer;
 
 + (StreamController *)sharedStreamController;
 - (void)sendCommand:(NSMutableString *)command fromViewController:(UITableViewController *)viewController;

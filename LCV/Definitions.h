@@ -23,6 +23,13 @@
 #define USUAL       5
 #define UTRECHT     6
 
+#define CUSTOM      0
+#define PAPER       1
+#define PINSTRIPES  2
+#define PLAIN       3
+#define WOOD_DARK   4
+#define WOOD_LIGHT  5
+
 #define CN_NONE				-999
 
 #define CN_TELL				101

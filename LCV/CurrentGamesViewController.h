@@ -33,8 +33,6 @@
 - (void)commandResult:(NSString *)result fromCommand:(NSInteger)command;
 - (NSMutableArray *)parseCurrentGamesFromCommandResult:(NSString *)result;
 - (void)refresh;
-- (void)showBoardView;
-- (void)showInfoView;
 - (void)clearCurrentGamesTable;
 
 @end

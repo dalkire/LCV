@@ -26,7 +26,12 @@
         _preferences = [[NSMutableArray alloc] initWithObjects:@"Pieces", @"Board", nil];
         _about = [[NSMutableArray alloc] initWithObjects:@"Help", @"About", @"Donate", nil];
         _sections = [[NSMutableArray alloc] initWithObjects:_accounts, _preferences, _about, nil];
-        //[self.view setBackgroundColor:[UIColor Color]];
+        
+        [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
+        
+        UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg-red.png"]];
+        [bg setContentMode:UIViewContentModeCenter];
+        [self.tableView setBackgroundView:bg];
     }
     return self;
 }
@@ -46,7 +51,7 @@
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.
-     self.clearsSelectionOnViewWillAppear = NO;
+     self.clearsSelectionOnViewWillAppear = YES;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     UIBarButtonItem *doneBtn =[[UIBarButtonItem alloc] 
@@ -141,7 +146,7 @@
     return @"";
 }
 
-/*- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 30;
 }
@@ -154,13 +159,16 @@
     UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(10, 6, tableView.bounds.size.width - 10, 18)] autorelease];
     label.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
     [label setFont:[UIFont boldSystemFontOfSize:16]];
-    label.textColor = [UIColor whiteColor];
+    label.textColor = [UIColor colorWithRed:(float)0xEE/0xFF 
+                                      green:(float)0xEE/0xFF 
+                                       blue:(float)0xEE/0xFF 
+                                      alpha:1.0f];
     label.backgroundColor = [UIColor clearColor];
     [headerView addSubview:label];
     
     
     return headerView;
-}*/
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -222,9 +230,15 @@
         switch (indexPath.row) {
             case 0:                         //PIECES
                 NSLog(@"PIECES");
+                PiecesTableViewController *piecesTableViewController = [[PiecesTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+                [self.navigationController pushViewController:piecesTableViewController animated:YES];
+                [piecesTableViewController setDelegate:_delegate];
                 break;
             case 1:                         //BOARD
                 NSLog(@"BOARD");
+                BoardTableViewController *boardTableViewController = [[BoardTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+                [self.navigationController pushViewController:boardTableViewController animated:YES];
+                [boardTableViewController setDelegate:_delegate];
                 break;
                 
             default:

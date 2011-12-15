@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PiecesTableViewController.h"
+#import "BoardTableViewController.h"
 
 @interface MenuTableViewController : UITableViewController
 {
@@ -30,6 +32,5 @@
 @protocol MenuTableViewControllerDelegate <NSObject>
 
 - (void)dismissMenu;
-- (void)loadTrainingView;
 
 @end

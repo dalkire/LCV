@@ -236,18 +236,6 @@
 	}
 }
 
-- (void)showBoardView {
-# warning 
-    //[(MainViewController *)[StreamController sharedStreamController].mainViewController showBoardViewController];
-	[self clearCurrentGamesTable];
-}
-
-- (void)showInfoView {
-# warning 
-	//[(MainViewController *)[StreamController sharedStreamController].mainViewController showInfoViewController];
-	[self clearCurrentGamesTable];
-}
-
 - (void)clearCurrentGamesTable {
 	_currentGames = [[NSMutableArray alloc] initWithCapacity:0];
 	[activityIndicatorView startAnimating];

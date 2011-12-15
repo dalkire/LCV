@@ -152,6 +152,8 @@
 		89E03996148EA9C200EFE945 /* LCVicon-retina.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E03995148EA9C200EFE945 /* LCVicon-retina.png */; };
 		89E03998148EAA0C00EFE945 /* LCVicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E03997148EAA0C00EFE945 /* LCVicon.png */; };
 		89E0399A148EAA7500EFE945 /* LCVicon-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E03999148EAA7500EFE945 /* LCVicon-ipad.png */; };
+		89E500A9149A3CF90008589C /* PiecesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E500A8149A3CF90008589C /* PiecesTableViewController.m */; };
+		89E500B1149A73080008589C /* BoardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E500B0149A73070008589C /* BoardTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -321,6 +323,10 @@
 		89E03995148EA9C200EFE945 /* LCVicon-retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LCVicon-retina.png"; path = "../../LCVicon-retina.png"; sourceTree = "<group>"; };
 		89E03997148EAA0C00EFE945 /* LCVicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LCVicon.png; path = ../../LCVicon.png; sourceTree = "<group>"; };
 		89E03999148EAA7500EFE945 /* LCVicon-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LCVicon-ipad.png"; path = "../../LCVicon-ipad.png"; sourceTree = "<group>"; };
+		89E500A7149A3CF90008589C /* PiecesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PiecesTableViewController.h; sourceTree = "<group>"; };
+		89E500A8149A3CF90008589C /* PiecesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PiecesTableViewController.m; sourceTree = "<group>"; };
+		89E500AF149A73070008589C /* BoardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardTableViewController.h; sourceTree = "<group>"; };
+		89E500B0149A73070008589C /* BoardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -440,6 +446,10 @@
 			children = (
 				899387A7148930AC006FF9DA /* MenuTableViewController.h */,
 				899387A8148930AC006FF9DA /* MenuTableViewController.m */,
+				89E500A7149A3CF90008589C /* PiecesTableViewController.h */,
+				89E500A8149A3CF90008589C /* PiecesTableViewController.m */,
+				89E500AF149A73070008589C /* BoardTableViewController.h */,
+				89E500B0149A73070008589C /* BoardTableViewController.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -848,6 +858,8 @@
 				89945492148DBFC80003014A /* PracticeView.m in Sources */,
 				89858E7F1490504100763B8C /* LoadingView.m in Sources */,
 				8933A3A4149251E2006054C4 /* ActionBadgesViewController.m in Sources */,
+				89E500A9149A3CF90008589C /* PiecesTableViewController.m in Sources */,
+				89E500B1149A73080008589C /* BoardTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
