@@ -945,11 +945,13 @@
 		897B5D091487D10F003EE329 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: David Alkire (859647532Z)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LCV/LCV-Prefix.pch";
 				INFOPLIST_FILE = "LCV/LCV-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AD07FC6D-09EA-495B-8A8B-BD7CDBF8CD18";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -957,11 +959,13 @@
 		897B5D0A1487D10F003EE329 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: David Alkire (859647532Z)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LCV/LCV-Prefix.pch";
 				INFOPLIST_FILE = "LCV/LCV-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AD07FC6D-09EA-495B-8A8B-BD7CDBF8CD18";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
